@@ -105,12 +105,41 @@
   if (orderForm) {
     orderForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      var successMsg = document.getElementById('formSuccess');
-      if (successMsg) {
-        successMsg.classList.add('show');
-        trackEvent('order_submit', { package: orderForm.querySelector('[name="package"]').value });
-      }
-      orderForm.reset();
+      
+      var formData = new FormData(orderForm);
+      var data = {};
+      formData.forEach(function (value, key) {
+        data[key] = value;
+      });
+      
+      // Webhook URL — set this to your deployed webhook server
+      var WEBHOOK_URL = window.__WEBHOOK_URL__ || 'http://127.0.0.1:5000/webhook/order';
+      
+      fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(function (response) { return response.json(); })
+      .then(function (result) {
+        var successMsg = document.getElementById('formSuccess');
+        if (successMsg) {
+          successMsg.textContent = (window.__I18N__ && window.__I18N__.order_success) || 'شكراً لتواصلك معنا! سنتواصل معك خلال ٢٤ ساعة.';
+          successMsg.classList.add('show');
+        }
+        trackEvent('order_submit', { package: data.package || 'unknown' });
+      })
+      .catch(function (error) {
+        console.error('Order submission error:', error);
+        var successMsg = document.getElementById('formSuccess');
+        if (successMsg) {
+          successMsg.textContent = 'تم استلام طلبك! (وضع تجريبي — لم يتم الإرسال للخادم)';
+          successMsg.classList.add('show');
+        }
+      });
+      
+      // Don't reset immediately so user sees success message
+      setTimeout(function () { orderForm.reset(); }, 3000);
     });
   }
 
