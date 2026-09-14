@@ -10,7 +10,7 @@
    The order form in main.js reads window.__WEBHOOK_URL__.
    ============================================================ */
 
-window.__WEBHOOK_URL__ = 'http://127.0.0.1:5000/webhook/order';  /* CHANGE THIS */
+window.__WEBHOOK_URL__ = 'http://127.0.0.1:5002/webhook/order';  /* CHANGE THIS */
 
 /* Optional: custom success message per language */
 window.__ORDER_SUCCESS_EN__ = 'Thank you! We will contact you within 24 hours.';
