@@ -1,0 +1,250 @@
+/* ============================================================
+   PRICING STYLES
+   ============================================================ */
+.pricing {
+  padding: 120px 0;
+  background: linear-gradient(180deg, var(--bg) 0%, rgba(15,15,25,1) 100%);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.pricing-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 40px 30px;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-card:hover {
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.pricing-card.featured {
+  border-color: #f0c040;
+  background: rgba(240,192,64,0.05);
+  transform: scale(1.05);
+}
+
+.pricing-card.featured:hover {
+  transform: scale(1.05) translateY(-8px);
+}
+
+.pricing-card.monthly {
+  border-color: #6e45e2;
+  background: rgba(110,69,226,0.05);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f0c040;
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pricing-header h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.pricing-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.price-num {
+  font-size: 42px;
+  font-weight: 700;
+  color: #f0c040;
+}
+
+.price-currency {
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.price-period {
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.pricing-features {
+  list-style: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+  flex: 1;
+}
+
+.pricing-features li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 15px;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pricing-features li::before {
+  content: '✓';
+  color: #f0c040;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.pricing-note {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.pricing-note a {
+  color: #f0c040;
+  text-decoration: none;
+}
+
+.pricing-note a:hover {
+  text-decoration: underline;
+}
+
+.btn-block {
+  width: 100%;
+  text-align: center;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #f0c040;
+  color: #f0c040;
+}
+
+.btn-outline:hover {
+  background: #f0c040;
+  color: #000;
+}
+
+/* ============================================================
+   ORDER FORM STYLES
+   ============================================================ */
+.order {
+  padding: 120px 0;
+  background: linear-gradient(180deg, rgba(15,15,25,1) 0%, var(--bg) 100%);
+}
+
+.order-grid {
+  max-width: 700px;
+  margin: 60px auto 0;
+}
+
+.order-form {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--text, #fff);
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #f0c040;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-group select option {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+.form-success {
+  display: none;
+  text-align: center;
+  color: #4caf50;
+  font-size: 16px;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.form-success.show {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .pricing-card.featured {
+    transform: scale(1);
+  }
+  
+  .pricing-card.featured:hover {
+    transform: translateY(-8px);
+  }
+  
+  .order-form {
+    padding: 24px;
+  }
+}

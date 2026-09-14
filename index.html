@@ -61,6 +61,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pricing.css">
 </head>
 <body>
 
@@ -73,6 +74,7 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#about" data-i18n="nav_about">About</a></li>
         <li><a href="#services" data-i18n="nav_services">Services</a></li>
+        <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
         <li><a href="#work" data-i18n="nav_work">Work</a></li>
         <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
         <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
@@ -197,11 +199,108 @@
     </div>
   </section>
 
+
+  <!-- ========== PRICING ========== -->
+  <section id="pricing" class="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title" data-i18n="pricing_title">Packages &amp; Pricing</h2>
+      </div>
+      <p class="section-subtitle" data-i18n="pricing_subtitle">Choose the package that fits your project — all include AI video production, voiceover, and delivery within 48 hours.</p>
+      <div class="pricing-grid">
+        <!-- Basic -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3 data-i18n="pricing_basic_title">Basic</h3>
+            <div class="pricing-price">
+              <span class="price-num">1,000</span>
+              <span class="price-currency" data-i18n="pricing_currency">TWD</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li data-i18n="pricing_basic_f1">1 AI video (30 seconds)</li>
+            <li data-i18n="pricing_basic_f2">Script &amp; concept development</li>
+            <li data-i18n="pricing_basic_f3">AI voiceover (Arabic/English/Chinese)</li>
+            <li data-i18n="pricing_basic_f4">Music &amp; sound design</li>
+            <li data-i18n="pricing_basic_f5">Delivery within 3 days</li>
+            <li data-i18n="pricing_basic_f6">2 revision rounds</li>
+          </ul>
+          <a href="#order" class="btn btn-primary btn-block" data-i18n="pricing_cta">Order Now</a>
+        </div>
+        <!-- Standard -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge" data-i18n="pricing_popular">Most Popular</div>
+          <div class="pricing-header">
+            <h3 data-i18n="pricing_standard_title">Standard</h3>
+            <div class="pricing-price">
+              <span class="price-num">2,500</span>
+              <span class="price-currency" data-i18n="pricing_currency">TWD</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li data-i18n="pricing_standard_f1">3 AI videos (30 sec each)</li>
+            <li data-i18n="pricing_standard_f2">Full script &amp; storyboard</li>
+            <li data-i18n="pricing_standard_f3">AI voiceover + custom music</li>
+            <li data-i18n="pricing_standard_f4">Multi-language subtitles</li>
+            <li data-i18n="pricing_standard_f5">Delivery within 5 days</li>
+            <li data-i18n="pricing_standard_f6">4 revision rounds</li>
+            <li data-i18n="pricing_standard_f7">Commercial usage rights</li>
+          </ul>
+          <a href="#order" class="btn btn-primary btn-block" data-i18n="pricing_cta">Order Now</a>
+        </div>
+        <!-- Professional -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3 data-i18n="pricing_pro_title">Professional</h3>
+            <div class="pricing-price">
+              <span class="price-num">4,500–6,000</span>
+              <span class="price-currency" data-i18n="pricing_currency">TWD</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li data-i18n="pricing_pro_f1">5 AI videos (60 sec each)</li>
+            <li data-i18n="pricing_pro_f2">Premium script &amp; art direction</li>
+            <li data-i18n="pricing_pro_f3">Studio AI voiceover</li>
+            <li data-i18n="pricing_pro_f4">Full post-production &amp; grading</li>
+            <li data-i18n="pricing_pro_f5">Delivery within 7 days</li>
+            <li data-i18n="pricing_pro_f6">Unlimited revisions</li>
+            <li data-i18n="pricing_pro_f7">Full commercial rights</li>
+            <li data-i18n="pricing_pro_f8">Rush delivery available</li>
+          </ul>
+          <a href="#order" class="btn btn-primary btn-block" data-i18n="pricing_cta">Order Now</a>
+        </div>
+        <!-- Monthly -->
+        <div class="pricing-card monthly">
+          <div class="pricing-header">
+            <h3 data-i18n="pricing_monthly_title">Monthly Subscription</h3>
+            <div class="pricing-price">
+              <span class="price-num">8,000</span>
+              <span class="price-currency" data-i18n="pricing_currency">TWD</span>
+              <span class="price-period" data-i18n="pricing_period">/month</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li data-i18n="pricing_monthly_f1">10 AI videos / month</li>
+            <li data-i18n="pricing_monthly_f2">Unlimited concepts &amp; scripts</li>
+            <li data-i18n="pricing_monthly_f3">Priority support 24/7</li>
+            <li data-i18n="pricing_monthly_f4">Dedicated account manager</li>
+            <li data-i18n="pricing_monthly_f5">Full commercial rights</li>
+            <li data-i18n="pricing_monthly_f6">Unused videos roll over</li>
+            <li data-i18n="pricing_monthly_f7">Cancel anytime</li>
+          </ul>
+          <a href="#order" class="btn btn-outline btn-block" data-i18n="pricing_cta_monthly">Subscribe Now</a>
+        </div>
+      </div>
+      <p class="pricing-note" data-i18n="pricing_note">Need something custom? <a href="#contact">Contact us</a> for a tailored quote.</p>
+    </div>
+  </section>
+
   <!-- ========== WORK ========== -->
   <section id="work" class="work">
     <div class="container">
       <div class="section-header">
-        <span class="section-num">03</span>
+        <span class="section-num">04</span>
         <h2 class="section-title" data-i18n="work_title">Work</h2>
       </div>
       <div class="work-grid">
@@ -340,7 +439,7 @@
   <section id="skills" class="skills">
     <div class="container">
       <div class="section-header">
-        <span class="section-num">04</span>
+        <span class="section-num">05</span>
         <h2 class="section-title" data-i18n="skills_title">Skills</h2>
       </div>
       <div class="skills-grid">
@@ -382,7 +481,7 @@
   <section id="contact" class="contact">
     <div class="container">
       <div class="section-header">
-        <span class="section-num">05</span>
+        <span class="section-num">06</span>
         <h2 class="section-title" data-i18n="contact_title">Contact</h2>
       </div>
       <div class="contact-grid">
@@ -447,6 +546,49 @@
         </div>
       </div>
 </div>
+  </section>
+
+
+
+  <!-- ========== ORDER ========== -->
+  <section id="order" class="order">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2 class="section-title" data-i18n="order_title">Place Your Order</h2>
+      </div>
+      <p class="section-subtitle" data-i18n="order_subtitle">Fill the form below and we'll get back to you within 24 hours with a custom quote.</p>
+      <div class="order-grid">
+        <form class="order-form" id="orderForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="orderName" data-i18n="order_name_label">Full Name</label>
+              <input type="text" id="orderName" name="name" required autocomplete="name" data-i18n-placeholder="order_name_placeholder" placeholder="Your full name">
+            </div>
+            <div class="form-group">
+              <label for="orderEmail" data-i18n="order_email_label">Email Address</label>
+              <input type="email" id="orderEmail" name="email" required autocomplete="email" data-i18n-placeholder="order_email_placeholder" placeholder="your@email.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="orderPackage" data-i18n="order_package_label">Select Package</label>
+            <select id="orderPackage" name="package" required>
+              <option value="" data-i18n="order_package_default">Choose a package...</option>
+              <option value="basic" data-i18n="order_package_basic">Basic — 1,000 TWD</option>
+              <option value="standard" data-i18n="order_package_standard">Standard — 2,500 TWD</option>
+              <option value="professional" data-i18n="order_package_pro">Professional — 4,500–6,000 TWD</option>
+              <option value="monthly" data-i18n="order_package_monthly">Monthly — 8,000 TWD/month</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="orderMessage" data-i18n="order_message_label">Project Description</label>
+            <textarea id="orderMessage" name="message" rows="4" data-i18n-placeholder="order_message_placeholder" placeholder="Tell us about your project, style preferences, target audience..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" data-i18n="order_submit">Send Order Request</button>
+          <p class="form-success" id="formSuccess" data-i18n="order_success">Thank you! We'll contact you within 24 hours.</p>
+        </form>
+      </div>
+    </div>
   </section>
 
   </main>

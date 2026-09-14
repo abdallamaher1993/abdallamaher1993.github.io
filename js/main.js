@@ -46,6 +46,14 @@
       }
     });
 
+    // Handle placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (strings[key] !== undefined) {
+        el.setAttribute('placeholder', strings[key]);
+      }
+    });
+
     if (lang === 'ar') {
       html.setAttribute('dir', 'rtl');
       html.setAttribute('lang', 'ar');
@@ -91,6 +99,20 @@
   }
 
   /* ---- (Contact form removed) ---- */
+
+  /* ---- Order Form ---- */
+  var orderForm = document.getElementById('orderForm');
+  if (orderForm) {
+    orderForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var successMsg = document.getElementById('formSuccess');
+      if (successMsg) {
+        successMsg.classList.add('show');
+        trackEvent('order_submit', { package: orderForm.querySelector('[name="package"]').value });
+      }
+      orderForm.reset();
+    });
+  }
 
   /* ---- Footer Year ---- */
   var yearEl = document.getElementById('footerYear');
