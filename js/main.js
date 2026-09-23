@@ -20,15 +20,6 @@
   const i18nAriaEls = document.querySelectorAll('[data-i18n-aria]');
   const storedLang = localStorage.getItem('lang');
 
-  function currentLang() {
-    var lang = html.getAttribute('lang');
-    return I18N[lang] ? lang : 'en';
-  }
-  function t(key) {
-    var strings = I18N[currentLang()] || I18N.en;
-    return strings[key] !== undefined ? strings[key] : (I18N.en[key] || '');
-  }
-
   function applyLang(lang) {
     if (!I18N[lang]) return;
     const strings = I18N[lang];
@@ -231,5 +222,8 @@
       observer.observe(s);
     });
   }
+
+  /* Exposed for js/content-loader.js (content.json overlay + admin preview) */
+  window.__applyLang = applyLang;
 
 })();

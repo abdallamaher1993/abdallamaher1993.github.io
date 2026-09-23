@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>لوحة تحكم الموقع — Abdalla Maher</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-right">
+      <span class="logo">A<span class="accent">.</span>M</span>
+      <div class="titles">
+        <h1>لوحة تحكم الموقع</h1>
+        <span class="subtitle" id="loadStatus">جارٍ التحميل…</span>
+      </div>
+      <span class="dirty-badge" id="dirtyBadge" hidden>تغييرات غير منشورة</span>
+    </div>
+    <div class="topbar-actions">
+      <button type="button" class="btn btn-ghost" id="btnPreview" title="فتح/إغلاق المعاينة الحية">المعاينة الحية</button>
+      <button type="button" class="btn btn-ghost" id="btnDownload">تنزيل content.json</button>
+      <button type="button" class="btn btn-ghost" id="btnCopy">نسخ JSON</button>
+      <button type="button" class="btn btn-ghost btn-danger-quiet" id="btnReset">استعادة آخر نشر</button>
+      <button type="button" class="btn btn-primary" id="btnPublish">نشر إلى GitHub</button>
+    </div>
+  </header>
+
+  <div class="layout" id="layout">
+    <nav class="sidebar" id="sidebar" aria-label="أقسام المحتوى"></nav>
+
+    <main class="editor" id="editor">
+      <div class="lang-tabs" id="langTabs" role="tablist" aria-label="اللغة">
+        <button type="button" class="lang-tab active" data-lang="en" role="tab">English</button>
+        <button type="button" class="lang-tab" data-lang="ar" role="tab">العربية</button>
+        <button type="button" class="lang-tab" data-lang="zh-TW" role="tab">繁體中文</button>
+      </div>
+      <div id="fieldsHost"></div>
+    </main>
+
+    <aside class="preview-pane" id="previewPane" hidden>
+      <div class="preview-head">
+        <span>معاينة مباشرة — تتحدث أثناء الكتابة</span>
+        <a href="../index.html" target="_blank" rel="noopener" class="preview-open">فتح الموقع في تبويب ↗</a>
+      </div>
+      <iframe id="previewFrame" src="../index.html" title="معاينة الموقع"></iframe>
+    </aside>
+  </div>
+
+  <!-- نافذة النشر إلى GitHub -->
+  <div class="modal-backdrop" id="publishModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="publishTitle">
+      <h2 id="publishTitle">نشر content.json إلى GitHub</h2>
+      <p class="modal-note">سيتم تحديث الموقع المنشور خلال دقيقة تقريبًا. الرمز (Token) يُحفظ في متصفحك فقط ولا يُرفع لأي خادم سوى GitHub.</p>
+      <label class="modal-label" for="ghToken">رمز GitHub الشخصي (PAT) — صلاحية Contents: Read &amp; Write على مستودع hermes-agent</label>
+      <input type="password" id="ghToken" class="modal-input" placeholder="github_pat_..." autocomplete="off">
+      <label class="modal-label" for="ghBranch">الفرع</label>
+      <input type="text" id="ghBranch" class="modal-input" value="main">
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="btnPublishCancel">إلغاء</button>
+        <button type="button" class="btn btn-primary" id="btnPublishConfirm">نشر الآن</button>
+      </div>
+      <p class="modal-status" id="publishStatus"></p>
+    </div>
+  </div>
+
+  <div class="toast-host" id="toastHost" aria-live="polite"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

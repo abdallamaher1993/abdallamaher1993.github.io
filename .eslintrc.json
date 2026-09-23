@@ -14,7 +14,7 @@
   },
   "overrides": [
     {
-      "files": ["js/main.js", "js/project.js", "js/yt.js"],
+      "files": ["js/main.js", "js/project.js", "js/yt.js", "js/content-loader.js"],
       "globals": { "I18N": "readonly" }
     },
     {

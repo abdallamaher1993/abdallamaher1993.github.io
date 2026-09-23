@@ -3,6 +3,7 @@
   "private": true,
   "description": "Dev tooling for CI checks (HTML validity, CSS/JS lint) — this is a static site, no build step.",
   "scripts": {
+    "dev": "node admin/dev-server.js",
     "check:html": "html-validate \"*.html\"",
     "check:css": "stylelint \"css/**/*.css\"",
     "check:js": "eslint \"js/**/*.js\"",
