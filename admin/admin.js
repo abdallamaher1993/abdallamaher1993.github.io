@@ -541,8 +541,6 @@
     publishStatus.textContent = "";
     publishStatus.className = "modal-status";
     
-    // Show toast notification
-    toast('جارٍ النشر إلى GitHub... سيتم تحديث الموقع خلال دقيقة', true);
 
     var api = 'https://api.github.com/repos/' + REPO + '/contents/' + FILE_PATH;
     var headers = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
@@ -571,14 +569,12 @@
         return r.json();
       })
       .then(function (res) {
-        toast('✅ تم النشر بنجاح! الموقع يتحدث خلال دقيقة — commit: ' + (res.commit ? res.commit.sha.slice(0, 7) : ''), true);
         localStorage.removeItem(DRAFT_KEY);
         baseline = JSON.parse(currentJSON());
         baselineJSON = JSON.stringify(buildState());
         updateDirty();
       })
       .catch(function (err) {
-        toast('❌ فشل النشر: ' + err.message);
       });
   });
 
