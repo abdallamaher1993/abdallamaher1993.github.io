@@ -535,18 +535,22 @@
     if (!token) { publishStatus.textContent = 'أدخل رمز GitHub أولًا.'; publishStatus.className = 'modal-status err'; return; }
 
     localStorage.setItem(TOKEN_KEY, token);
+    
+    // Close modal immediately - publish in background
+    publishModal.hidden = true;
+    publishStatus.textContent = "";
+    publishStatus.className = "modal-status";
+    
     var btn = this;
     btn.disabled = true;
-    publishStatus.textContent = 'جارٍ الجلب من GitHub…';
-    publishStatus.className = 'modal-status';
-
+    
     var api = 'https://api.github.com/repos/' + REPO + '/contents/' + FILE_PATH;
     var headers = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
 
     fetch(api + '?ref=' + encodeURIComponent(branch), { headers: headers })
       .then(function (r) {
-        if (r.status === 404) return null; /* new file on this branch */
-        if (!r.ok) throw new Error('GET ' + r.status + ' — تحقق من الرمز والفرع وصلاحية Contents');
+        if (r.status === 404) return null;
+        if (!r.ok) throw new Error('GET ' + r.status + ' — تحقق من الرمز والفرع');
         return r.json();
       })
       .then(function (file) {
@@ -556,12 +560,33 @@
           branch: branch
         };
         if (file && file.sha) body.sha = file.sha;
-        publishStatus.textContent = 'جارٍ الرفع…';
-        return fetch(api, {
-          method: 'PUT',
-          headers: headers,
-          body: JSON.stringify(body)
-        });
+        return fetch(api, { method: 'PUT', headers: headers, body: JSON.stringify(body) });
+      })
+      .then(function (r) {
+        if (!r.ok) return r.json().then(function (e) { throw new Error(e.message || ('PUT ' + r.status)); });
+        return r.json();
+      })
+      .then(function (res) {
+        // Success toast
+        var toastEl = document.createElement('div');
+        toastEl.className = 'toast ok';
+        toastEl.textContent = '✓ Published: ' + (res.commit ? res.commit.sha.slice(0,7) : '');
+        document.getElementById('toastHost').appendChild(toastEl);
+        setTimeout(function () { toastEl.remove(); }, 3000);
+        // Update baseline
+        localStorage.removeItem(DRAFT_KEY);
+        baseline = JSON.parse(currentJSON());
+        baselineJSON = JSON.stringify(buildState());
+        updateDirty();
+      })
+      .catch(function (err) {
+        // Reopen modal on error
+        publishModal.hidden = false;
+        publishStatus.textContent = 'فشل: ' + err.message;
+        publishStatus.className = 'modal-status err';
+      })
+      .finally(function () { btn.disabled = false; });
+  });
       })
       .then(function (r) {
         if (!r.ok) return r.json().then(function (e) { throw new Error(e.message || ('PUT ' + r.status)); });
@@ -576,7 +601,7 @@
         baseline = JSON.parse(currentJSON());
         baselineJSON = JSON.stringify(buildState());
         updateDirty();
-        setTimeout(function () { publishModal.hidden = true; publishStatus.textContent = ""; publishStatus.className = "modal-status"; }, 500););
+        publishModal.hidden = true; publishStatus.textContent = ""; publishStatus.className = "modal-status";
       })
       .catch(function (err) {
         publishStatus.textContent = 'فشل النشر: ' + err.message;
