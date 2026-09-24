@@ -292,8 +292,9 @@ a { color: inherit; }
   z-index: 50;
   padding: 20px;
 }
-/* display:flex overrides the [hidden] attribute — restore real hiding */
-.modal-backdrop[hidden] { display: none !important; }
+/* display rules override the [hidden] attribute — restore real hiding for ALL hidden elements
+   (modal backdrop AND the live-preview pane, which would otherwise cover the editor) */
+[hidden] { display: none !important; }
 .modal {
   background: var(--c-bg-alt);
   border: 1px solid var(--c-border);
