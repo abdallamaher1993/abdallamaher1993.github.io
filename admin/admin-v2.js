@@ -521,6 +521,12 @@
   });
 
   /* ---------- Publish to GitHub ---------- */
+  function tokenError(status, rateRemaining) {
+    if (status === 401) return 'الرمز مرفوض (401) — تأكد أنه صالح وأنه يملك صلاحية Contents: Read & Write على مستودع hermes-agent.';
+    if (status === 403 && rateRemaining === '0') return 'تم بلوغ حد الطلبات عند GitHub (rate limit) — انتظر دقائق ثم أعد المحاولة بنفس الرمز.';
+    if (status === 403) return 'مرفوض (403) — الرمز لا يملك صلاحية Contents على هذا المستودع.';
+    return null;
+  }
   var publishModal = $('publishModal'), publishStatus = $('publishStatus');
   var ghToken = $('ghToken'), ghBranch = $('ghBranch');
 
@@ -532,9 +538,9 @@
     ghToken.focus();
   });
 
-  $('btnPublishCancel').addEventListener('click', function () {
-    publishModal.hidden = true;
-  });
+  function closePublishModal() { publishModal.hidden = true; }
+  $('btnPublishCancel').addEventListener('click', closePublishModal);
+  $('btnPublishClose').addEventListener('click', closePublishModal);
 
   publishModal.addEventListener('click', function (e) {
     if (e.target === publishModal) publishModal.hidden = true;
@@ -557,7 +563,7 @@
     fetch(api + '?ref=' + encodeURIComponent(branch), { headers: headers })
       .then(function (r) {
         if (r.status === 404) return null; /* new file on this branch */
-        if (!r.ok) throw new Error('GET ' + r.status + ' — تحقق من الرمز والفرع وصلاحية Contents');
+        if (!r.ok) throw new Error(tokenError(r.status, r.headers.get('X-RateLimit-Remaining')) || ('GET ' + r.status + ' — تحقق من الرمز والفرع وصلاحية Contents'));
         return r.json();
       })
       .then(function (file) {
@@ -575,7 +581,11 @@
         });
       })
       .then(function (r) {
-        if (!r.ok) return r.json().then(function (e) { throw new Error(e.message || ('PUT ' + r.status)); });
+        if (!r.ok) {
+          var hint = tokenError(r.status, r.headers.get('X-RateLimit-Remaining'));
+          if (r.status === 409) hint = 'تعارض (409) — نُشر تحديث آخر قبل لحظات (مثلاً من تبويب آخر). أغلق ثم أعد المحاولة.';
+          return r.json().then(function (e) { throw new Error(hint || (e.message || ('PUT ' + r.status))); });
+        }
         return r.json();
       })
       .then(function (res) {
@@ -587,10 +597,14 @@
         baseline = JSON.parse(currentJSON());
         baselineJSON = JSON.stringify(buildState());
         updateDirty();
-        setTimeout(function () { publishModal.hidden = true; publishStatus.textContent = ""; publishStatus.className = "modal-status"; }, 800);
+        setTimeout(function () { publishModal.hidden = true; publishStatus.textContent = ""; publishStatus.className = "modal-status"; }, 1600);
       })
       .catch(function (err) {
-        publishStatus.textContent = 'فشل النشر: ' + err.message;
+        var m = String((err && err.message) || err);
+        if (/failed to fetch|networkerror|load failed|network request failed/i.test(m)) {
+          m = 'تعذر الوصول إلى GitHub — تحقق من اتصال الإنترنت ثم أعد المحاولة.';
+        }
+        publishStatus.textContent = 'فشل النشر: ' + m + ' (يمكنك إغلاق النافذة بزر × في الأعلى ومواصلة التعديل)';
         publishStatus.className = 'modal-status err';
       })
       .finally(function () { btn.disabled = false; });

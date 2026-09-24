@@ -55,17 +55,18 @@
   <!-- نافذة النشر إلى GitHub -->
   <div class="modal-backdrop" id="publishModal" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="publishTitle">
+      <button type="button" class="modal-close" id="btnPublishClose" aria-label="إغلاق النافذة">×</button>
       <h2 id="publishTitle">نشر content.json إلى GitHub</h2>
+      <p class="modal-status" id="publishStatus" aria-live="polite"></p>
       <p class="modal-note">سيتم تحديث الموقع المنشور خلال دقيقة تقريبًا. الرمز (Token) يُحفظ في متصفحك فقط ولا يُرفع لأي خادم سوى GitHub.</p>
       <label class="modal-label" for="ghToken">رمز GitHub الشخصي (PAT) — صلاحية Contents: Read &amp; Write على مستودع hermes-agent</label>
       <input type="password" id="ghToken" class="modal-input" placeholder="github_pat_..." autocomplete="off">
       <label class="modal-label" for="ghBranch">الفرع</label>
       <input type="text" id="ghBranch" class="modal-input" value="main">
       <div class="modal-actions">
-        <button type="button" class="btn btn-ghost" id="btnPublishCancel">إلغاء</button>
+        <button type="button" class="btn btn-ghost" id="btnPublishCancel">إغلاق</button>
         <button type="button" class="btn btn-primary" id="btnPublishConfirm">نشر الآن</button>
       </div>
-      <p class="modal-status" id="publishStatus"></p>
     </div>
   </div>
 
