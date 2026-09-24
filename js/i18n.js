@@ -116,6 +116,19 @@ const I18N = {
     work_p8_tag: 'Branded',
     work_p8_title: 'Branded AI Ads',
     work_p8_desc: 'AI-generated advertisement content for brands — combining product storytelling with cinematic AI visuals to create scroll-stopping, engagement-driving campaigns.',
+  /* Work p9–p12 (added 2026-09-25) */
+  work_p9_tag: 'Documentary',
+  work_p9_title: 'Tunguska 1908 — The Day the Forest Fell',
+  work_p9_desc: 'The 1908 Tunguska explosion flattened 80 million trees across the far east of Siberia. A cinematic AI reconstruction of the day the sky split open.',
+  work_p10_tag: 'Mystery',
+  work_p10_title: 'Dyatlov Pass — The Frozen Camp',
+  work_p10_desc: 'In 1959, nine experienced hikers abandoned their tent in the Ural mountains and died. A cinematic AI reconstruction of the most famous unsolved mountain mystery.',
+  work_p11_tag: 'Mystery',
+  work_p11_title: 'Roanoke — The Lost Colony',
+  work_p11_desc: 'POV of the last person to see Roanoke colony alive in 1587. 115 people vanished without a trace. A cinematic AI reconstruction of the lost colony.',
+  work_p12_tag: 'Documentary',
+  work_p12_title: 'The Sphinx — Painted Red',
+  work_p12_desc: 'A journey two thousand years back to the Great Sphinx in its original form — painted red, blue and gold, guarding a secret no one alive remembers.',
 
     /* Skills */
     skills_title: 'Skills',
@@ -333,6 +346,19 @@ const I18N = {
     work_p8_tag: 'تجاري',
     work_p8_title: 'إعلانات ذكاء اصطناعي تجارية',
     work_p8_desc: 'محتوى إعلاني بتقنيات الذكاء الاصطناعي للعلامات التجارية — يجمع سرد قصة المنتج مع المشاهد السينمائية لإنتاج حملات توقف التمرير وتزيد التفاعل.',
+  /* أعمال p9–p12 (أضيفت 2026-09-25) */
+  work_p9_tag: 'وثائقي',
+  work_p9_title: 'تونغوسكا 1908 — يوم انهارت الغابة',
+  work_p9_desc: 'انفجار تونغوسكا عام ١٩٠٨ سطر ٨٠ مليون شجرة في شرق سيبيريا. إعادة بناء سينمائية بالذكاء الاصطناعي ليوم انشقّ فيه السماء.',
+  work_p10_tag: 'غم',
+  work_p10_title: 'ممر دياتلوف — المخيم المتجمد',
+  work_p10_desc: 'في عام ١٩٥٩، هجر تسعة من المتنزهين المخضرمين خيمتهم في جبال الأورال وماتوا. إعادة بناء سينمائية لأشهر لغز جبلي غير محلّل.',
+  work_p11_tag: 'غم',
+  work_p11_title: 'روانوك — المستعمرة الضائعة',
+  work_p11_desc: 'من منظور آخر شاهد للمستعمرة حيّة عام ١٥٨٧. اختفى ١١٥ شخصاً دون أثر. إعادة بناء سينمائية للمستعمرة الضائعة.',
+  work_p12_tag: 'وثائقي',
+  work_p12_title: 'أبو الهول — بالطلي الأحمر',
+  work_p12_desc: 'رحلة عبر ألفي عام إلى تمثال أبو الهول في أصله — مطليّاً بالأحمر والأزرق والذهبي، يحرس سرّاً لا يذكره أحد من الأحياء.',
 
     /* Skills */
     skills_title: 'المهارات',
@@ -549,6 +575,19 @@ const I18N = {
     work_p8_tag: '品牌',
     work_p8_title: '品牌 AI 廣告',
     work_p8_desc: '為品牌打造的 AI 生成廣告內容——融合產品敘事與電影級 AI 視覺，創造讓人停下拇指、驅動互動的行銷作品。',
+  /* 作品 p9–p12 (2026-09-25 新增) */
+  work_p9_tag: '紀錄片',
+  work_p9_title: '通古斯 1908 — 森林倒下之日',
+  work_p9_desc: '1908 通古斯大爆炸摧毀西伯利亞遠東八千萬棵樹。以 AI 電影級重現天空撕裂的那一天。',
+  work_p10_tag: '懸疑',
+  work_p10_title: '夏特克山口 — 冰封營地',
+  work_p10_desc: '1959 年，九名經驗豐富的登山者在烏拉爾山拋棄帳篷身亡。以 AI 電影級重現最著名的未解山中懸案。',
+  work_p11_tag: '懸疑',
+  work_p11_title: '羅阿諾克 — 失落的殖民地',
+  work_p11_desc: '1587 年最後一位見到羅阿諾克殖民地存活者的視角。115 人無聲無息消失。以 AI 電影級重現失落殖民地。',
+  work_p12_tag: '紀錄片',
+  work_p12_title: '獅身人面像 — 紅色塗裝',
+  work_p12_desc: '回溯兩千年，親眼看見獅身人面像原本的面貌——塗上紅、藍、金色，守護著沒有人記得的祕密。',
 
     /* Skills */
     skills_title: '技能',

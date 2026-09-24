@@ -40,26 +40,42 @@
         "url": "https://www.youtube.com/watch?v=d4MIzWTf99A"
       },
       "p3": {
-        "image": "img/chernobyl.jpg",
-        "url": "https://www.youtube.com/watch?v=iAp6u-50q3s"
+        "image": "img/maryceleste.jpg",
+        "url": "https://www.youtube.com/watch?v=CLjUCxyEXuY"
       },
       "p4": {
         "image": "img/dawn.jpg",
         "url": "https://www.youtube.com/watch?v=EBdsozeCMXs"
       },
       "p5": {
-        "image": "img/minecraft.jpg",
-        "url": "https://www.youtube.com/watch?v=JDBnVETohnc"
+        "image": "img/chernobyl.jpg",
+        "url": "https://www.youtube.com/watch?v=iAp6u-50q3s"
       },
       "p6": {
+        "image": "img/tunguska.jpg",
+        "url": "https://www.youtube.com/watch?v=W0M6W4zl1rY"
+      },
+      "p7": {
+        "image": "img/dyatlov.jpg",
+        "url": "https://www.youtube.com/watch?v=VtiqIVDu_Gg"
+      },
+      "p8": {
+        "image": "img/roanoke.jpg",
+        "url": "https://www.youtube.com/watch?v=rzqc57VJfoE"
+      },
+      "p9": {
         "image": "img/thoth.jpg",
         "url": "https://www.youtube.com/watch?v=5nK-F3Frp_s"
       },
-      "p7": {
-        "image": "img/maryceleste.jpg",
-        "url": "https://www.youtube.com/watch?v=CLjUCxyEXuY"
+      "p10": {
+        "image": "img/sphinx.jpg",
+        "url": "https://www.youtube.com/watch?v=7gbQvuQcGu0"
       },
-      "p8": {
+      "p11": {
+        "image": "img/minecraft.jpg",
+        "url": "https://www.youtube.com/watch?v=JDBnVETohnc"
+      },
+      "p12": {
         "image": "img/nur.jpg",
         "url": "https://www.youtube.com/watch?v=kRBwPvFz4Mg"
       }
