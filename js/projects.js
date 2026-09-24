@@ -43,7 +43,7 @@ const PROJECTS = [
     tagKey: 'work_p4_tag',
     descKey: 'work_p4_desc',
     storyKey: 'story_p4',
-    videoId: 'uuuDBv5d8I4',
+    videoId: 'EBdsozeCMXs',
     image: 'img/dawn.jpg',
     platform: 'YouTube',
     year: '2025'
@@ -71,13 +71,13 @@ const PROJECTS = [
     year: '2025'
   },
   {
-    id: 'time-travelers-confessions',
+    id: 'mary-celeste',
     titleKey: 'work_p7_title',
     tagKey: 'work_p7_tag',
     descKey: 'work_p7_desc',
     storyKey: 'story_p7',
     videoId: 'CLjUCxyEXuY',
-    image: 'img/oasis.jpg',
+    image: 'img/maryceleste.jpg',
     platform: 'YouTube',
     year: '2025'
   },

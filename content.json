@@ -1,43 +1,67 @@
 {
-  "version": 1,
-  "updated": "2026-09-24",
+  "version": 2,
+  "updated": "2026-09-25",
   "site": {
-    "email": "fresh@example.com",
+    "email": "abdalla2.1993@gmail.com",
     "webhookUrl": "",
-    "socials": {},
-    "prices": {},
+    "sections": {
+      "about": true,
+      "services": true,
+      "pricing": true,
+      "work": true,
+      "skills": true,
+      "contact": true,
+      "order": true
+    },
+    "socials": {
+      "youtube": "https://www.youtube.com/@abdallamaher_1",
+      "linkedin": "https://linkedin.com/in/abdalla-maher-944529181",
+      "github": "https://github.com/abdallamaher1993",
+      "instagram": "https://instagram.com/abdallamaher1993",
+      "bilibili": "",
+      "x": "",
+      "facebook": "",
+      "discord": "",
+      "whatsapp": ""
+    },
+    "prices": {
+      "basic": "1,000",
+      "standard": "2,500",
+      "pro": "4,500–6,000",
+      "monthly": "8,000"
+    },
     "projects": {
       "p1": {
-        "image": "",
-        "url": ""
+        "image": "img/menes.jpg",
+        "url": "https://www.youtube.com/playlist?list=PLRDPMFG0u-NM"
       },
       "p2": {
-        "image": "",
-        "url": ""
+        "image": "img/titanic.jpg",
+        "url": "https://www.youtube.com/watch?v=d4MIzWTf99A"
       },
       "p3": {
-        "image": "",
-        "url": ""
+        "image": "img/chernobyl.jpg",
+        "url": "https://www.youtube.com/watch?v=iAp6u-50q3s"
       },
       "p4": {
-        "image": "",
-        "url": ""
+        "image": "img/dawn.jpg",
+        "url": "https://www.youtube.com/watch?v=EBdsozeCMXs"
       },
       "p5": {
-        "image": "",
-        "url": ""
+        "image": "img/minecraft.jpg",
+        "url": "https://www.youtube.com/watch?v=JDBnVETohnc"
       },
       "p6": {
-        "image": "",
-        "url": ""
+        "image": "img/thoth.jpg",
+        "url": "https://www.youtube.com/watch?v=5nK-F3Frp_s"
       },
       "p7": {
-        "image": "",
-        "url": ""
+        "image": "img/maryceleste.jpg",
+        "url": "https://www.youtube.com/watch?v=CLjUCxyEXuY"
       },
       "p8": {
-        "image": "",
-        "url": ""
+        "image": "img/nur.jpg",
+        "url": "https://www.youtube.com/watch?v=kRBwPvFz4Mg"
       }
     }
   },

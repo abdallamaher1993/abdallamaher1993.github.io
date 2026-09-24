@@ -36,7 +36,21 @@
     return out;
   }
 
+  var SECTION_DEFS = [
+    { id: 'about', label: 'نبذة عني' },
+    { id: 'services', label: 'الخدمات' },
+    { id: 'pricing', label: 'الأسعار' },
+    { id: 'work', label: 'الأعمال' },
+    { id: 'skills', label: 'المهارات' },
+    { id: 'contact', label: 'التواصل' },
+    { id: 'order', label: 'نموذج الطلب' }
+  ];
+
   var GROUPS = [
+    {
+      id: 'sections', label: 'الأقسام — إظهار / إخفاء', custom: 'sections',
+      desc: 'تحكّم في إظهار أو إخفاء أي قسم كامل من الصفحة الرئيسية. القسم المخفي يختفي مع رابطه من شريط التنقل. التعديل والنص (المحتوى) في أقسامه الخاصة.'
+    },
     {
       id: 'site', label: 'بيانات الموقع والروابط', custom: true,
       desc: 'البريد الإلكتروني، رابط استقبال الطلبات (Webhook)، روابط منصات التواصل، أسعار البطاقات الأربع، وصور وروابط مشاريع الأعمال الثمانية. الحقول النصية للموقع نفسها (العناوين والأوصاف) في الأقسام التالية.'
@@ -243,6 +257,7 @@
     site.socials = site.socials || {};
     site.prices = site.prices || {};
     site.projects = site.projects || {};
+    site.sections = site.sections || {};
     return { site: site, i18n: i18n };
   }
 
@@ -336,6 +351,7 @@
     fieldsHost.appendChild(h);
     fieldsHost.appendChild(d);
 
+    if (g.custom === 'sections') { renderSectionsFields(); return; }
     if (g.custom) { renderSiteFields(); return; }
 
     g.fields.forEach(function (f) {
@@ -453,6 +469,39 @@
     });
     renderFields();
   });
+
+  function renderSectionsFields() {
+    subhead('إظهار / إخفاء الأقسام');
+    var hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.innerHTML = 'أي قسم تطفئه يختفي من الصفحة الرئيسية (ومن روابط الشريط العلوي) بعد النشر. علامة الصح = ظاهر.';
+    fieldsHost.appendChild(hint);
+    var sec = state.site.sections || (state.site.sections = {});
+    SECTION_DEFS.forEach(function (sd) {
+      var on = sec[sd.id] !== false; /* absent = visible */
+      var row = document.createElement('label');
+      row.className = 'adm-switch-row';
+      var name = document.createElement('span');
+      name.className = 'adm-switch-name';
+      name.textContent = sd.label;
+      var code = document.createElement('code');
+      code.textContent = '#' + sd.id;
+      name.appendChild(document.createTextNode(' '));
+      name.appendChild(code);
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = on;
+      cb.className = 'adm-switch';
+      cb.addEventListener('change', function () {
+        sec[sd.id] = cb.checked;
+        schedulePersist();
+        schedulePreview();
+      });
+      row.appendChild(name);
+      row.appendChild(cb);
+      fieldsHost.appendChild(row);
+    });
+  }
 
   /* ---------- Persist / dirty ---------- */
   var schedulePersist = debounce(function () {

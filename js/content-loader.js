@@ -31,6 +31,19 @@
   function overlaySite(site) {
     if (!site || typeof site !== 'object') return;
 
+    /* Section visibility — hide/show any top-level section.
+       {about:true, services:false, ...} from content.json (admin → الأقسام).
+       Missing key or missing map = section stays visible (default). */
+    if (site.sections && typeof site.sections === 'object') {
+      Object.keys(site.sections).forEach(function (id) {
+        var visible = site.sections[id] !== false;
+        var sec = document.getElementById(id);
+        if (sec) sec.hidden = !visible;
+        var nav = document.querySelector('.nav-links a[href="#' + id + '"]');
+        if (nav) nav.style.display = visible ? '' : 'none';
+      });
+    }
+
     /* Email */
     if (typeof site.email === 'string' && site.email) {
       document.querySelectorAll('a[data-cfg="email"]').forEach(function (a) {

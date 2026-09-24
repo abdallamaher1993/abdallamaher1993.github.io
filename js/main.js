@@ -270,7 +270,11 @@
     });
   });
 
-  /* ---- Section fade-in (skipped for reduced motion) ---- */
+  /* ---- Section fade-in (skipped for reduced motion) ----
+     Fail-safe: sections are visible by default; they only animate
+     (start hidden off-screen) after the user has actually scrolled,
+     so a headless render or a no-IntersectionObserver client never
+     sees a blank page. */
   if ('IntersectionObserver' in window && !prefersReducedMotion) {
     var sections = document.querySelectorAll('section');
     var observer = new IntersectionObserver(function (entries) {
@@ -278,13 +282,14 @@
         if (entry.isIntersecting) {
           entry.target.style.opacity = '1';
           entry.target.style.transform = 'translateY(0)';
+        } else if (window.pageYOffset > 0) {
+          entry.target.style.opacity = '0';
+          entry.target.style.transform = 'translateY(24px)';
         }
       });
     }, { threshold: 0.1 });
 
     sections.forEach(function (s) {
-      s.style.opacity = '0';
-      s.style.transform = 'translateY(24px)';
       s.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
       observer.observe(s);
     });
