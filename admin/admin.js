@@ -535,19 +535,17 @@
     if (!token) { publishStatus.textContent = 'أدخل رمز GitHub أولًا.'; publishStatus.className = 'modal-status err'; return; }
 
     localStorage.setItem(TOKEN_KEY, token);
-    
-    // Close modal immediately
-    publishModal.hidden = true;
-    publishStatus.textContent = "";
-    publishStatus.className = "modal-status";
-    
+    var btn = this;
+    btn.disabled = true;
+    publishStatus.textContent = 'جارٍ الجلب من GitHub…';
+    publishStatus.className = 'modal-status';
 
     var api = 'https://api.github.com/repos/' + REPO + '/contents/' + FILE_PATH;
     var headers = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
 
     fetch(api + '?ref=' + encodeURIComponent(branch), { headers: headers })
       .then(function (r) {
-        if (r.status === 404) return null;
+        if (r.status === 404) return null; /* new file on this branch */
         if (!r.ok) throw new Error('GET ' + r.status + ' — تحقق من الرمز والفرع وصلاحية Contents');
         return r.json();
       })
@@ -558,6 +556,7 @@
           branch: branch
         };
         if (file && file.sha) body.sha = file.sha;
+        publishStatus.textContent = 'جارٍ الرفع…';
         return fetch(api, {
           method: 'PUT',
           headers: headers,
@@ -569,13 +568,21 @@
         return r.json();
       })
       .then(function (res) {
+        publishStatus.textContent = 'تم النشر بنجاح — commit: ' + (res.commit ? res.commit.sha.slice(0, 7) : '');
+        publishStatus.className = 'modal-status ok';
+        toast('تم النشر إلى GitHub — الموقع يتحدث خلال دقيقة تقريبًا', true);
+        /* treat published state as new baseline */
         localStorage.removeItem(DRAFT_KEY);
         baseline = JSON.parse(currentJSON());
         baselineJSON = JSON.stringify(buildState());
         updateDirty();
+        setTimeout(function () { publishModal.hidden = true; publishStatus.textContent = ""; publishStatus.className = "modal-status"; }, 800);
       })
       .catch(function (err) {
-      });
+        publishStatus.textContent = 'فشل النشر: ' + err.message;
+        publishStatus.className = 'modal-status err';
+      })
+      .finally(function () { btn.disabled = false; });
   });
 
   /* ---------- Go ---------- */
