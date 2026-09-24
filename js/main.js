@@ -106,7 +106,7 @@
 
   function isPublicWebhook(u) {
     if (typeof u !== 'string') return false;
-    var m = u.match(/^https:\/\/([^\/]+)/i);
+    var m = u.match(/^https:\/\/([^/]+)/i);
     if (!m) return false;
     var host = m[1].toLowerCase();
     return host !== 'localhost' && host.indexOf('127.') !== 0 &&
