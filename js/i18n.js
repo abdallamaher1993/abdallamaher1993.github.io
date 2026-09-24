@@ -167,6 +167,7 @@ const I18N = {
     order_message_placeholder: 'Tell us about your project, style preferences, target audience...',
     order_submit: 'Send Order Request',
     order_success: 'Thank you! We will contact you within 24 hours.',
+    order_mailto_note: 'Your email app should open with the order pre-filled — hit send to confirm. We will reply within 24 hours.',
 
     /* Footer */
     footer_desc: 'AI Video Producer & Storyteller',
@@ -341,6 +342,7 @@ const I18N = {
     order_message_placeholder: 'أخبرنا عن مشروعك، الأسلوب المفضل، الجمهور المستهدف...',
     order_submit: 'إرسال طلب الشراء',
     order_success: 'شكراً لك! سنتواصل معك خلال ٢٤ ساعة.',
+    order_mailto_note: 'تفتح الآن نافذة بريدك مع تفاصيل الطلب جاهزة — أرسل الرسالة لتأكيد طلبك، وسنرد خلال ٢٤ ساعة.',
 
     /* Footer */
     footer_desc: 'منتج فيديو بالذكاء الاصطناعي وروائي بصري',
@@ -515,6 +517,7 @@ const I18N = {
     order_message_placeholder: '描述您的專案、風格偏好、目標受眾...',
     order_submit: '送出訂單',
     order_success: '感謝您！我們將於 24 小時內回覆您。',
+    order_mailto_note: '您的郵件應用程式應已開啟並預填訂單內容——請按下寄出以確認訂單，我們將於 24 小時內回覆。',
 
     /* Footer */
     footer_desc: 'AI 影片製作人 · 敘事藝術家',

@@ -93,43 +93,110 @@
 
   /* ---- Order Form ---- */
   var orderForm = document.getElementById('orderForm');
+
+  /* Orders go to a public webhook if one is configured
+     (js/webhook-config.js; content.json site.webhookUrl wins — read at
+     submit time so the content-loader.js overlay is already in effect).
+     An empty/localhost URL means "no server yet": the order opens as a
+     pre-filled email instead, so it always reaches the site owner. */
+  function currentStrings() {
+    var lang = document.documentElement.getAttribute('lang') || 'en';
+    return I18N[lang] || I18N.en;
+  }
+
+  function isPublicWebhook(u) {
+    if (typeof u !== 'string') return false;
+    var m = u.match(/^https:\/\/([^\/]+)/i);
+    if (!m) return false;
+    var host = m[1].toLowerCase();
+    return host !== 'localhost' && host.indexOf('127.') !== 0 &&
+      host !== '0.0.0.0' && host !== '::' && host !== '[::]';
+  }
+
+  function orderEmailTo() {
+    var el = document.querySelector('a[data-cfg="email"]');
+    if (el && /^mailto:/i.test(el.href)) {
+      var a = el.href.replace(/^mailto:/i, '').split('?')[0].trim();
+      if (a) return a;
+    }
+    return 'abdalla2.1993@gmail.com';
+  }
+
+  function openOrderEmail(data) {
+    var PKG = { basic: 'Basic', standard: 'Standard', professional: 'Professional', monthly: 'Monthly Subscription' };
+    var subject = 'New order request — ' + (PKG[data.package] || data.package || '');
+    var body = [
+      'Name: ' + data.name,
+      'Email: ' + data.email,
+      'Package: ' + (PKG[data.package] || data.package),
+      '',
+      'Project description:',
+      data.message,
+      '',
+      '---',
+      'Sent from the portfolio site · ' + data.date
+    ].join('\n');
+    var a = document.createElement('a');
+    a.href = 'mailto:' + orderEmailTo() +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
   if (orderForm) {
     orderForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      
+
       var formData = new FormData(orderForm);
       var data = {};
       formData.forEach(function (value, key) {
         data[key] = value;
       });
-      
-      // Webhook URL — set this to your deployed webhook server
-      var WEBHOOK_URL = window.__WEBHOOK_URL__ || 'http://127.0.0.1:5000/webhook/order';
-      
-      fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(function (response) { return response.json(); })
-      .then(function (result) {
-        var successMsg = document.getElementById('formSuccess');
+      data.date = new Date().toISOString();
+      data.source = location.href;
+
+      var successMsg = document.getElementById('formSuccess');
+
+      function showMailtoResult() {
         if (successMsg) {
-          successMsg.textContent = (window.__I18N__ && window.__I18N__.order_success) || 'شكراً لتواصلك معنا! سنتواصل معك خلال ٢٤ ساعة.';
+          successMsg.textContent = currentStrings().order_mailto_note;
           successMsg.classList.add('show');
         }
-        trackEvent('order_submit', { package: data.package || 'unknown' });
-      })
-      .catch(function (error) {
-        console.error('Order submission error:', error);
-        var successMsg = document.getElementById('formSuccess');
-        if (successMsg) {
-          successMsg.textContent = 'تم استلام طلبك! (وضع تجريبي — لم يتم الإرسال للخادم)';
-          successMsg.classList.add('show');
-        }
-      });
-      
-      // Don't reset immediately so user sees success message
+        trackEvent('order_email', { package: data.package || 'unknown' });
+      }
+
+      var webhookUrl = window.__WEBHOOK_URL__ || '';
+
+      if (!isPublicWebhook(webhookUrl)) {
+        /* No public server configured — open the order as a pre-filled email. */
+        openOrderEmail(data);
+        showMailtoResult();
+      } else {
+        fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        .then(function (response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          if (successMsg) {
+            successMsg.textContent = currentStrings().order_success;
+            successMsg.classList.add('show');
+          }
+          trackEvent('order_submit', { package: data.package || 'unknown' });
+        })
+        .catch(function (error) {
+          console.error('Order submission error:', error);
+          /* Webhook down — fall back to email so the order is not lost. */
+          openOrderEmail(data);
+          showMailtoResult();
+        });
+      }
+
+      // Don't reset immediately so the user sees the result message
       setTimeout(function () { orderForm.reset(); }, 3000);
     });
   }

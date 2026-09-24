@@ -252,10 +252,20 @@
       baseline = res[1];
 
       var draftRaw = localStorage.getItem(DRAFT_KEY);
+      var staleDraft = false;
       if (draftRaw) {
         try {
-          state = JSON.parse(draftRaw);
-          if (!state.i18n || !state.site) throw new Error('bad draft');
+          var d = JSON.parse(draftRaw);
+          if (!d.i18n || !d.site) throw new Error('bad draft');
+          /* A draft saved before the currently published content is stale
+             (e.g. created while content.json was not published yet) and
+             would otherwise shadow the published values forever. */
+          if (baseline && baseline.updated && d.updated && String(d.updated) < String(baseline.updated)) {
+            localStorage.removeItem(DRAFT_KEY);
+            staleDraft = true;
+          } else {
+            state = d;
+          }
         } catch (e) { state = null; localStorage.removeItem(DRAFT_KEY); }
       }
       if (!state) state = buildState();
@@ -279,6 +289,7 @@
       renderSidebar();
       renderFields();
       updateDirty();
+      if (staleDraft) toast('تم تجاهل مسودة قديمة (أقدم من آخر نشر)');
     }).catch(function (err) {
       loadStatus.textContent = 'تعذر التحميل';
       fieldsHost.innerHTML =
