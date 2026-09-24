@@ -576,7 +576,7 @@
         baseline = JSON.parse(currentJSON());
         baselineJSON = JSON.stringify(buildState());
         updateDirty();
-        publishModal.hidden = true; publishStatus.textContent = ""; publishStatus.className = "modal-status";
+        setTimeout(function () { publishModal.hidden = true; publishStatus.textContent = ""; publishStatus.className = "modal-status"; }, 800);
       })
       .catch(function (err) {
         publishStatus.textContent = 'فشل النشر: ' + err.message;
