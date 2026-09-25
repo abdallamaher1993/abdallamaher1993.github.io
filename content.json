@@ -33,7 +33,13 @@
     "projects": {
       "p1": {
         "image": "img/menes.jpg",
-        "url": "https://www.youtube.com/playlist?list=PLRDPMFG0u-NM"
+        "url": "https://www.youtube.com/playlist?list=PLRDPMFG0u-NM",
+        "case_study": {
+          "title": "King Menes: Absolute Character Consistency",
+          "challenge": "Maintaining identity and attire across diverse environments (Palace, Battlefield, Temple).",
+          "solution": "Developed a Master Character Sheet and enforced a Face-Verification Loop to eliminate visual drift.",
+          "result": "A believable and consistent protagonist, enabling a high-quality narrative arc."
+        }
       },
       "p2": {
         "image": "img/titanic.jpg",
@@ -49,7 +55,13 @@
       },
       "p5": {
         "image": "img/chernobyl.jpg",
-        "url": "https://www.youtube.com/watch?v=iAp6u-50q3s"
+        "url": "https://www.youtube.com/watch?v=iAp6u-50q3s",
+        "case_study": {
+          "title": "Chernobyl: Atmospheric Oppression",
+          "challenge": "Creating a consistent 'radioactive haze' and oppressive atmosphere across a devastated city.",
+          "solution": "Implemented an Atmospheric Engineering strategy using Volumetric Fog and a custom desaturated color LUT, paired with procedurally synthesized low-frequency drones.",
+          "result": "A visually cohesive and emotionally heavy environment that evokes fear and tension."
+        }
       },
       "p6": {
         "image": "img/tunguska.jpg",
