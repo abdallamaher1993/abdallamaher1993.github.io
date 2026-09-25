@@ -61,8 +61,7 @@
 61|  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 62|  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 63|
-64|  <link rel="stylesheet" href="css/style.css">
-65|  <link rel="stylesheet" href="css/pricing.css">
+<link rel="stylesheet" href="css/style.css">
 66|</head>
 67|<body>
 68|
@@ -74,11 +73,10 @@
 74|      <a href="#hero" class="nav-logo" aria-label="Home">A<span class="accent">.</span>M</a>
 75|      <ul class="nav-links" id="navLinks">
 76|        <li><a href="#about" data-i18n="nav_about">About</a></li>
-77|        <li><a href="#services" data-i18n="nav_services">Services</a></li>
-78|        <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
-79|        <li><a href="#work" data-i18n="nav_work">Work</a></li>
-80|        <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
-81|        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+<li><a href="#services" data-i18n="nav_services">Services</a></li>
+        <li><a href="#work" data-i18n="nav_work">Work</a></li>
+        <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Consultation</a></li>
 82|      </ul>
 83|      <div class="nav-actions">
 84|        <div class="lang-switcher" role="group" aria-label="Language switcher">
@@ -239,107 +237,36 @@
 239|  </section>
 240|
 241|
-242|  <!-- ========== PRICING ========== -->
-243|  <section id="pricing" class="pricing">
-244|    <div class="container">
-245|      <div class="section-header">
-246|        <span class="section-num">03</span>
-247|        <h2 class="section-title" data-i18n="pricing_title">Packages &amp; Pricing</h2>
-248|      </div>
-249|      <p class="section-subtitle" data-i18n="pricing_subtitle">Choose the package that fits your project — all include AI video production, voiceover, and delivery within 48 hours.</p>
-250|      <div class="pricing-grid">
-251|        <!-- Basic -->
-252|        <div class="pricing-card">
-253|          <div class="pricing-header">
-254|            <h3 data-i18n="pricing_basic_title">Basic</h3>
-255|            <div class="pricing-price">
-256|              <span class="price-num" data-price="basic">1,000</span>
-257|              <span class="price-currency" data-i18n="pricing_currency">TWD</span>
-258|            </div>
-259|          </div>
-260|          <ul class="pricing-features">
-261|            <li data-i18n="pricing_basic_f1">1 AI video (30 seconds)</li>
-262|            <li data-i18n="pricing_basic_f2">Script &amp; concept development</li>
-263|            <li data-i18n="pricing_basic_f3">AI voiceover (Arabic/English/Chinese)</li>
-264|            <li data-i18n="pricing_basic_f4">Music &amp; sound design</li>
-265|            <li data-i18n="pricing_basic_f5">Delivery within 3 days</li>
-266|            <li data-i18n="pricing_basic_f6">2 revision rounds</li>
-267|          </ul>
-268|          <a href="#order" class="btn btn-primary btn-block" data-i18n="pricing_cta">Order Now</a>
-269|        </div>
-270|        <!-- Standard -->
-271|        <div class="pricing-card featured">
-272|          <div class="pricing-badge" data-i18n="pricing_popular">Most Popular</div>
-273|          <div class="pricing-header">
-274|            <h3 data-i18n="pricing_standard_title">Standard</h3>
-275|            <div class="pricing-price">
-276|              <span class="price-num" data-price="standard">2,500</span>
-277|              <span class="price-currency" data-i18n="pricing_currency">TWD</span>
-278|            </div>
-279|          </div>
-280|          <ul class="pricing-features">
-281|            <li data-i18n="pricing_standard_f1">3 AI videos (30 sec each)</li>
-282|            <li data-i18n="pricing_standard_f2">Full script &amp; storyboard</li>
-283|            <li data-i18n="pricing_standard_f3">AI voiceover + custom music</li>
-284|            <li data-i18n="pricing_standard_f4">Multi-language subtitles</li>
-285|            <li data-i18n="pricing_standard_f5">Delivery within 5 days</li>
-286|            <li data-i18n="pricing_standard_f6">4 revision rounds</li>
-287|            <li data-i18n="pricing_standard_f7">Commercial usage rights</li>
-288|          </ul>
-289|          <a href="#order" class="btn btn-primary btn-block" data-i18n="pricing_cta">Order Now</a>
-290|        </div>
-291|        <!-- Professional -->
-292|        <div class="pricing-card">
-293|          <div class="pricing-header">
-294|            <h3 data-i18n="pricing_pro_title">Professional</h3>
-295|            <div class="pricing-price">
-296|              <span class="price-num" data-price="pro">4,500–6,000</span>
-297|              <span class="price-currency" data-i18n="pricing_currency">TWD</span>
-298|            </div>
-299|          </div>
-300|          <ul class="pricing-features">
-301|            <li data-i18n="pricing_pro_f1">5 AI videos (60 sec each)</li>
-302|            <li data-i18n="pricing_pro_f2">Premium script &amp; art direction</li>
-303|            <li data-i18n="pricing_pro_f3">Studio AI voiceover</li>
-304|            <li data-i18n="pricing_pro_f4">Full post-production &amp; grading</li>
-305|            <li data-i18n="pricing_pro_f5">Delivery within 7 days</li>
-306|            <li data-i18n="pricing_pro_f6">Unlimited revisions</li>
-307|            <li data-i18n="pricing_pro_f7">Full commercial rights</li>
-308|            <li data-i18n="pricing_pro_f8">Rush delivery available</li>
-309|          </ul>
-310|          <a href="#order" class="btn btn-primary btn-block" data-i18n="pricing_cta">Order Now</a>
-311|        </div>
-312|        <!-- Monthly -->
-313|        <div class="pricing-card monthly">
-314|          <div class="pricing-header">
-315|            <h3 data-i18n="pricing_monthly_title">Monthly Subscription</h3>
-316|            <div class="pricing-price">
-317|              <span class="price-num" data-price="monthly">8,000</span>
-318|              <span class="price-currency" data-i18n="pricing_currency">TWD</span>
-319|              <span class="price-period" data-i18n="pricing_period">/month</span>
-320|            </div>
-321|          </div>
-322|          <ul class="pricing-features">
-323|            <li data-i18n="pricing_monthly_f1">10 AI videos / month</li>
-324|            <li data-i18n="pricing_monthly_f2">Unlimited concepts &amp; scripts</li>
-325|            <li data-i18n="pricing_monthly_f3">Priority support 24/7</li>
-326|            <li data-i18n="pricing_monthly_f4">Dedicated account manager</li>
-327|            <li data-i18n="pricing_monthly_f5">Full commercial rights</li>
-328|            <li data-i18n="pricing_monthly_f6">Unused videos roll over</li>
-329|            <li data-i18n="pricing_monthly_f7">Cancel anytime</li>
-330|          </ul>
-331|          <a href="#order" class="btn btn-outline btn-block" data-i18n="pricing_cta_monthly">Subscribe Now</a>
-332|        </div>
-333|      </div>
-334|      <p class="pricing-note" data-i18n="pricing_note">Need something custom? <a href="#contact">Contact us</a> for a tailored quote.</p>
-335|    </div>
-336|  </section>
-337|
-338|  <!-- ========== WORK ========== -->
-339|  <section id="work" class="work">
-340|    <div class="container">
-341|      <div class="section-header">
-342|        <span class="section-num">04</span>
+242|  <!-- ========== PIPELINE (Proof of Workflow) ========== -->
+  <section id="pipeline" class="pipeline">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title" data-i18n="pipeline_title">The Production Pipeline</h2>
+      </div>
+      <div class="pipeline-grid">
+        <div class="pipeline-step"><div class="step-num">01</div><h3>Strategic Blueprinting</h3><p>Using Gemini 2.0 Flash to transform complex historical references into a precise cinematic shot-by-shot breakdown.</p></div>
+        <div class="pipeline-step"><div class="step-num">02</div><h3>Identity & Style Lock</h3><p>Eliminating visual drift by locking character identities and color grading.</p></div>
+        <div class="pipeline-step"><div class="step-num">03</div><h3>Precision Generation</h3><p>Combining RunPod and Draw Things for 4K visuals with programmatic text overlays.</p></div>
+        <div class="pipeline-step"><div class="step-num">04</div><h3>The QC Gates</h3><p>Every frame passes through Quality Control: Anatomy, Motion, Identity checks.</p></div>
+        <div class="pipeline-step"><div class="step-num">05</div><h3>The Cinematic Master</h3><p>Final assembly with procedurally synthesized soundtracks.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WORK ========== -->
+  <section id="work" class="work">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title" data-i18n="work_title">Work</h2>
+
+  <!-- ========== WORK ========== -->
+  <section id="work" class="work">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title" data-i18n="work_title">Work</h2>
 343|        <h2 class="section-title" data-i18n="work_title">Work</h2>
 344|      </div>
 345|            <div class="latest-wrap">
@@ -701,7 +628,7 @@
 719|          <a href="#about" data-i18n="nav_about">About</a>
 720|          <a href="#services" data-i18n="nav_services">Services</a>
 721|          <a href="#work" data-i18n="nav_work">Work</a>
-722|          <a href="#contact" data-i18n="nav_contact">Contact</a>
+722|          <a href="#contact" data-i18n="nav_contact">Consultation</a>
 723|        </div>
 724|        <div class="footer-copy">
 725|          <p>&copy; <span id="footerYear"></span> Abdalla Maher</p>
