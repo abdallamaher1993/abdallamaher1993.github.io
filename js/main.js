@@ -119,7 +119,7 @@
       var a = el.href.replace(/^mailto:/i, '').split('?')[0].trim();
       if (a) return a;
     }
-    return 'abdalla2.1993@gmail.com';
+    return 'hello@abdalla.design';
   }
 
   function openOrderEmail(data) {
