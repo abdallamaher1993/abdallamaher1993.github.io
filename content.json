@@ -7,7 +7,7 @@
     "sections": {
       "about": true,
       "services": true,
-      "pricing": true,
+      "pricing": false,
       "work": true,
       "skills": true,
       "contact": true,
@@ -69,7 +69,13 @@
       },
       "p10": {
         "image": "img/sphinx.jpg",
-        "url": "https://www.youtube.com/watch?v=7gbQvuQcGu0"
+        "url": "https://www.youtube.com/watch?v=7gbQvuQcGu0",
+        "case_study": {
+          "title": "The Sphinx: Absolute Visual Consistency",
+          "challenge": "Maintaining architectural precision and 4K detail during camera movement.",
+          "solution": "Implemented Identity Lock with a 3-angle master reference and a custom Golden Hour color grade.",
+          "result": "Cinematic realism with 0% visual drift across shots."
+        }
       },
       "p11": {
         "image": "img/minecraft.jpg",
