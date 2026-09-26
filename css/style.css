@@ -383,6 +383,7 @@ p { max-width: 65ch; line-height: var(--lh-normal); }
   position: relative;
   width: 100%;
   max-width: 100%;
+  min-height: 60vh;
   aspect-ratio: 16 / 9;
   background: var(--c-bg-elevated);
   margin-bottom: var(--space-8);
@@ -458,7 +459,9 @@ p { max-width: 65ch; line-height: var(--lh-normal); }
 
 .hero-title {
   text-align: center;
-  font-size: clamp(36px, 6vw, 72px);
+  font-size: clamp(48px, 8vw, 96px);
+  margin-top: 2rem;
+  margin-bottom: 4rem;
   font-weight: 700;
   letter-spacing: var(--ls-tight);
   line-height: var(--lh-tight);
