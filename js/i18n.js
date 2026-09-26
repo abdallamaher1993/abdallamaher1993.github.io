@@ -149,6 +149,25 @@ const I18N = {
     project_watch_yt: 'Watch on YouTube',
     project_related: 'More Projects',
 
+    /* Case Study */
+    case_view_study: 'View Case Study',
+    case_home: 'Home',
+    case_challenge_title: 'The Challenge',
+    case_solution_title: 'The Solution',
+    case_result_title: 'The Result',
+    case_pipeline_title: 'Production Pipeline',
+    case_tech_title: 'Technical Stack',
+    case_bts_title: 'Behind the Scenes',
+    case_cta_title: 'Have a Similar Project?',
+    case_cta_desc: 'Let\'s discuss how we can bring your story to life with cinematic AI video production.',
+    case_cta_btn: 'Start a Conversation',
+    case_views: 'Views',
+    case_duration: 'Duration',
+    case_episodes: 'Episodes',
+    case_prod_time: 'Production',
+    case_before: 'Before',
+    case_after: 'After',
+
     /* A11y */
     back_to_top_label: 'Back to top',
     skip_link: 'Skip to content'
@@ -300,6 +319,25 @@ const I18N = {
     project_watch_yt: 'شاهد على يوتيوب',
     project_related: 'مشاريع أخرى',
 
+    /* Case Study */
+    case_view_study: 'عرض دراسة الحالة',
+    case_home: 'الرئيسية',
+    case_challenge_title: 'التحدي',
+    case_solution_title: 'الحل',
+    case_result_title: 'النتيجة',
+    case_pipeline_title: 'خط الإنتاج',
+    case_tech_title: 'البنية التقنية',
+    case_bts_title: 'ما وراء الكواليس',
+    case_cta_title: 'لديك مشروع مشابه؟',
+    case_cta_desc: 'لنتناقش كيف يمكننا إحياء قصتك بإنتاج فيديو سينمائي بالذكاء الاصطناعي.',
+    case_cta_btn: 'ابدأ المحادثة',
+    case_views: 'المشاهدات',
+    case_duration: 'المدة',
+    case_episodes: 'الحلقات',
+    case_prod_time: 'الإنتاج',
+    case_before: 'قبل',
+    case_after: 'بعد',
+
     /* A11y */
     back_to_top_label: 'العودة للأعلى',
     skip_link: 'تخطي للمحتوى'
@@ -450,6 +488,25 @@ const I18N = {
     project_about: '關於此專案',
     project_watch_yt: '在 YouTube 觀看',
     project_related: '更多專案',
+
+    /* Case Study */
+    case_view_study: '查看案例研究',
+    case_home: '首頁',
+    case_challenge_title: '挑戰',
+    case_solution_title: '解決方案',
+    case_result_title: '成果',
+    case_pipeline_title: '製作流程',
+    case_tech_title: '技術棧',
+    case_bts_title: '幕後花絮',
+    case_cta_title: '有類似專案？',
+    case_cta_desc: '讓我們討論如何用電影級 AI 影片製作讓您的故事活靈活現。',
+    case_cta_btn: '開始對話',
+    case_views: '觀看數',
+    case_duration: '時長',
+    case_episodes: '集數',
+    case_prod_time: '製作週期',
+    case_before: '之前',
+    case_after: '之後',
 
     /* A11y */
     back_to_top_label: '回到頂部',

@@ -34,6 +34,7 @@
       "p1": {
         "image": "img/menes.jpg",
         "url": "https://www.youtube.com/playlist?list=PLRDPMFG0u-NM",
+        "slug": "king-menes",
         "case_study": {
           "title": "King Menes: Absolute Character Consistency",
           "challenge": "Maintaining identity and attire across diverse environments (Palace, Battlefield, Temple).",
@@ -56,6 +57,7 @@
       "p5": {
         "image": "img/chernobyl.jpg",
         "url": "https://www.youtube.com/watch?v=iAp6u-50q3s",
+        "slug": "chernobyl",
         "case_study": {
           "title": "Chernobyl: Atmospheric Oppression",
           "challenge": "Creating a consistent 'radioactive haze' and oppressive atmosphere across a devastated city.",
@@ -82,6 +84,7 @@
       "p10": {
         "image": "img/sphinx.jpg",
         "url": "https://www.youtube.com/watch?v=7gbQvuQcGu0",
+        "slug": "sphinx",
         "case_study": {
           "title": "The Sphinx: Absolute Visual Consistency",
           "challenge": "Maintaining architectural precision and 4K detail during camera movement.",
