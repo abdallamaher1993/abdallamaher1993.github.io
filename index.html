@@ -193,7 +193,7 @@
     .hero-accent-line{position:absolute;top:0;left:0;width:1px;height:100%;background:var(--c-accent)}
     .hero-scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c-text-dim);animation:bounce 2s infinite}
     @keyframes bounce{0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0)}40%{transform:translateX(-50%) translateY(-10px)}60%{transform:translateX(-50%) translateY(-5px)}}
-    @media (max-width:1024px){.hero-grid{grid-template-columns:1fr;gap:3rem}.hero-visual{order:-1;min-height:350px}.hero-stats{gap:1.5rem}}
+    @media (max-width:1024px){.hero-grid{grid-template-columns:1fr;gap:3rem}.hero-visual{min-height:350px}.hero-stats{gap:1.5rem}}
     @media (max-width:768px){.hero{min-height:auto;padding-bottom:4rem}.hero-stats{flex-wrap:wrap;gap:2rem}.stat{flex:1 1 50%;text-align:center}.hero-cta{justify-content:center}.btn-lg{width:100%;justify-content:center}.hero-trust{text-align:center}.trust-logos{justify-content:center}.hero-scroll-indicator{display:none}}
     @media (prefers-reduced-motion:reduce){.hero-scroll-indicator,.hero-video-dot{animation:none}}
   </style>
@@ -239,6 +239,16 @@
       </div>
       <div class="container">
         <div class="hero-grid">
+          <div class="hero-visual">
+            <div class="hero-video-frame">
+              <video class="hero-video" src="assets/intro.mp4" poster="img/hero-poster.jpg" muted playsinline preload="metadata" aria-hidden="true"></video>
+              <button class="hero-play-btn" aria-label="Play showreel" type="button">
+                <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              </button>
+              <div class="hero-video-cap"><span class="hero-video-dot"></span><span data-i18n="hero_video_cap">Showreel · 2026</span></div>
+            </div>
+          </div>
           <div class="hero-content">
             <p class="hero-label" data-i18n="hero_label">AI Video Producer & Storyteller</p>
             <h1 class="hero-title" id="hero-title" data-i18n="hero_title">Abdalla Maher</h1>
