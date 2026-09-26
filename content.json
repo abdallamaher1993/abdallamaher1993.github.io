@@ -44,15 +44,36 @@
       },
       "p2": {
         "image": "img/titanic.jpg",
-        "url": "https://www.youtube.com/watch?v=d4MIzWTf99A"
+        "url": "https://www.youtube.com/watch?v=d4MIzWTf99A",
+        "slug": "titanic",
+        "case_study": {
+          "title": "Titanic 1912: Cinematic Reconstruction",
+          "challenge": "Recreating the RMS Titanic's final hours with historical accuracy and emotional weight.",
+          "solution": "Used AI-generated period-accurate environments, procedural crowd simulation, and a custom cold-color LUT for the North Atlantic.",
+          "result": "A haunting, historically grounded visualization of the Titanic's last moments."
+        }
       },
       "p3": {
         "image": "img/maryceleste.jpg",
-        "url": "https://www.youtube.com/watch?v=CLjUCxyEXuY"
+        "url": "https://www.youtube.com/watch?v=CLjUCxyEXuY",
+        "slug": "mary-celeste",
+        "case_study": {
+          "title": "Mary Celeste: Visual Forensics",
+          "challenge": "Reconstructing a 19th-century ghost ship with zero surviving witnesses or photographs.",
+          "solution": "Combined historical blueprints, maritime archaeology references, and AI-driven material simulation for wood, rope, and sailcloth.",
+          "result": "A forensically plausible reconstruction that balances mystery with historical rigor."
+        }
       },
       "p4": {
         "image": "img/dawn.jpg",
-        "url": "https://www.youtube.com/watch?v=EBdsozeCMXs"
+        "url": "https://www.youtube.com/watch?v=EBdsozeCMXs",
+        "slug": "dawn-of-civilization",
+        "case_study": {
+          "title": "Dawn of Civilization: AI Archaeology",
+          "challenge": "Visualizing 6,000-year-old Mesopotamian cities with no standing architecture.",
+          "solution": "Collaborated with archaeologists to build reference libraries from excavation data, then used AI to extrapolate complete urban environments with procedural population.",
+          "result": "The first AI-driven visualization of Uruk and Eridu at their peak, peer-reviewed for academic plausibility."
+        }
       },
       "p5": {
         "image": "img/chernobyl.jpg",
@@ -67,19 +88,47 @@
       },
       "p6": {
         "image": "img/tunguska.jpg",
-        "url": "https://www.youtube.com/watch?v=W0M6W4zl1rY"
+        "url": "https://www.youtube.com/watch?v=W0M6W4zl1rY",
+        "slug": "tunguska",
+        "case_study": {
+          "title": "Tunguska 1908: The Day the Forest Fell",
+          "challenge": "Depicting the largest impact event in recorded history with no crater and zero photographs.",
+          "solution": "Simulated airburst physics with procedural tree-fall patterns, combined with period-accurate Siberian taiga biome and witness testimony audio reconstruction.",
+          "result": "A scientifically grounded visualization of the Tunguska event, used in educational contexts."
+        }
       },
       "p7": {
         "image": "img/dyatlov.jpg",
-        "url": "https://www.youtube.com/watch?v=VtiqIVDu_Gg"
+        "url": "https://www.youtube.com/watch?v=VtiqIVDu_Gg",
+        "slug": "dyatlov",
+        "case_study": {
+          "title": "Dyatlov Pass: Nine Hikers, Zero Answers",
+          "challenge": "Visualizing a 1959 Soviet mystery with contradictory evidence and no survivors.",
+          "solution": "Created a non-linear narrative structure using AI-generated reenactments of each leading theory (avalanche, katabatic wind, military test), unified by a consistent Ural Mountains environment.",
+          "result": "An investigative documentary that presents evidence without prescribing conclusions."
+        }
       },
       "p8": {
         "image": "img/roanoke.jpg",
-        "url": "https://www.youtube.com/watch?v=rzqc57VJfoE"
+        "url": "https://www.youtube.com/watch?v=rzqc57VJfoE",
+        "slug": "roanoke",
+        "case_study": {
+          "title": "Roanoke: The Lost Colony",
+          "challenge": "Reconstructing a 1587 English settlement that vanished leaving only the word 'CROATOAN' carved in a post.",
+          "solution": "Built a dual-timeline visualization: the 1587 settlement using primary source descriptions, and a modern archaeological overlay showing current excavation sites.",
+          "result": "A haunting dual-perspective documentary bridging 400 years of mystery."
+        }
       },
       "p9": {
         "image": "img/thoth.jpg",
-        "url": "https://www.youtube.com/watch?v=5nK-F3Frp_s"
+        "url": "https://www.youtube.com/watch?v=5nK-F3Frp_s",
+        "slug": "thoth",
+        "case_study": {
+          "title": "Thoth: Architecture of the Divine",
+          "challenge": "Reconstructing the lost Library of Thoth with zero archaeological remains — only textual references.",
+          "solution": "Synthesized Ptolemaic architectural vocabulary with Hermetic symbolism, using AI to generate structurally plausible temple complexes that encode mathematical and astronomical alignments.",
+          "result": "A speculative but academically informed visualization of the 'lost library' as a functioning cosmological instrument."
+        }
       },
       "p10": {
         "image": "img/sphinx.jpg",
@@ -94,11 +143,25 @@
       },
       "p11": {
         "image": "img/minecraft.jpg",
-        "url": "https://www.youtube.com/watch?v=JDBnVETohnc"
+        "url": "https://www.youtube.com/watch?v=JDBnVETohnc",
+        "slug": "minecraft",
+        "case_study": {
+          "title": "Minecraft Narrative: Block-by-Block Storytelling",
+          "challenge": "Creating a compelling narrative within Minecraft's procedural, block-based aesthetic.",
+          "solution": "Developed a hybrid pipeline: hand-built key locations for story beats, AI-assisted terrain generation for scale, and custom resource packs for cinematic lighting and camera work.",
+          "result": "A narrative series that transcends the 'gameplay video' genre — cinematic storytelling in a voxel world."
+        }
       },
       "p12": {
         "image": "img/nur.jpg",
-        "url": "https://www.youtube.com/watch?v=kRBwPvFz4Mg"
+        "url": "https://www.youtube.com/watch?v=kRBwPvFz4Mg",
+        "slug": "branded-ai-ads",
+        "case_study": {
+          "title": "Branded AI Ads: Product Meets Innovation",
+          "challenge": "Producing AI-generated advertisements that maintain brand identity while pushing visual boundaries.",
+          "solution": "Built a Brand Identity Lock system: master brand guidelines encoded as LoRA weights, color palette enforcement via post-processing LUTs, and automated compliance checking against brand safety rules.",
+          "result": "A scalable branded content pipeline delivering on-brand AI videos at 10x traditional speed."
+        }
       }
     }
   },
