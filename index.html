@@ -93,56 +93,82 @@
 
   <main id="main">
 
-  <!-- ========== HERO ========== -->
-  <section id="hero" class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <p class="hero-label" data-i18n="hero_label">AI Video Producer &amp; Storyteller</p>
-          <h1 class="hero-title" data-i18n="hero_title">Abdalla Maher</h1>
-          <p class="hero-desc" data-i18n="hero_desc">Crafting cinematic AI-generated documentaries, branded content, and narrative series that captivate audiences across the globe.</p>
-          <div class="hero-skills" role="list" aria-label="Core skills">
-            <span class="hero-chip" role="listitem" data-i18n="hero_skill_1">Scriptwriting</span>
-            <span class="hero-chip" role="listitem" data-i18n="hero_skill_2">AI Visuals</span>
-            <span class="hero-chip" role="listitem" data-i18n="hero_skill_3">Motion / I2V</span>
-            <span class="hero-chip" role="listitem" data-i18n="hero_skill_4">Voice &amp; Sound</span>
-            <span class="hero-chip" role="listitem" data-i18n="hero_skill_5">Editing &amp; Grading</span>
-            <span class="hero-chip" role="listitem" data-i18n="hero_skill_6">SEO &amp; Marketing</span>
+    <!-- ========== HERO ========== -->
+    <section id="hero" class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true">
+        <video class="hero-bg-video" src="assets/intro.mp4" poster="img/hero-poster.jpg"
+               autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+        <div class="hero-bg-overlay"></div>
+      </div>
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <p class="hero-label" data-i18n="hero_label">AI Video Producer & Storyteller</p>
+            <h1 class="hero-title" id="hero-title" data-i18n="hero_title">Abdalla Maher</h1>
+            <p class="hero-desc" data-i18n="hero_desc">Crafting cinematic AI-generated documentaries, branded content, and narrative series that captivate audiences across the globe.</p>
+            <div class="hero-skills" role="list" aria-label="Core skills">
+              <span class="hero-chip" role="listitem" data-i18n="hero_skill_1">Scriptwriting</span>
+              <span class="hero-chip" role="listitem" data-i18n="hero_skill_2">AI Visuals</span>
+              <span class="hero-chip" role="listitem" data-i18n="hero_skill_3">Motion / I2V</span>
+              <span class="hero-chip" role="listitem" data-i18n="hero_skill_4">Voice & Sound</span>
+              <span class="hero-chip" role="listitem" data-i18n="hero_skill_5">Editing & Grading</span>
+              <span class="hero-chip" role="listitem" data-i18n="hero_skill_6">SEO & Marketing</span>
+            </div>
+            <div class="hero-stats" role="list" aria-label="Key metrics">
+              <div class="stat" role="listitem">
+                <span class="stat-num" data-i18n="hero_stat1_num">32</span>
+                <span class="stat-label" data-i18n="hero_stat1_label">Videos Produced</span>
+              </div>
+              <div class="stat" role="listitem">
+                <span class="stat-num" data-i18n="hero_stat2_num">6</span>
+                <span class="stat-label" data-i18n="hero_stat2_label">Active Platforms</span>
+              </div>
+              <div class="stat" role="listitem">
+                <span class="stat-num" data-i18n="hero_stat3_num">6,000+</span>
+                <span class="stat-label" data-i18n="hero_stat3_label">Total Views</span>
+              </div>
+              <div class="stat" role="listitem">
+                <span class="stat-num" data-i18n="hero_stat4_num">12</span>
+                <span class="stat-label" data-i18n="hero_stat4_label">Case Studies</span>
+              </div>
+            </div>
+            <div class="hero-cta">
+              <a href="#work" class="btn btn-primary btn-lg" data-i18n="hero_cta1">View Work</a>
+              <a href="#contact" class="btn btn-outline btn-lg" data-i18n="hero_cta2">Start a Project</a>
+            </div>
+            <div class="hero-trust" aria-label="Trust indicators">
+              <span class="trust-label" data-i18n="hero_trust_label">Trusted by</span>
+              <div class="trust-logos" aria-hidden="true">
+                <span class="trust-logo" style="--logo: 'YouTube';">YouTube</span>
+                <span class="trust-logo" style="--logo: 'LinkedIn';">LinkedIn</span>
+                <span class="trust-logo" style="--logo: 'GitHub';">GitHub</span>
+                <span class="trust-logo" style="--logo: 'Bilibili';">Bilibili</span>
+              </div>
+            </div>
           </div>
-          <div class="hero-stats">
-            <div class="stat">
-              <span class="stat-num" data-i18n="hero_stat1_num">32</span>
-              <span class="stat-label" data-i18n="hero_stat1_label">Videos</span>
+          <div class="hero-visual">
+            <div class="hero-video-frame">
+              <video class="hero-video" src="assets/intro.mp4" poster="img/hero-poster.jpg"
+                     autoplay muted loop playsinline preload="metadata"
+                     aria-label="Showreel — Abdalla Maher"></video>
+              <button class="hero-play-btn" aria-label="Play showreel" aria-expanded="false">
+                <svg class="play-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                <svg class="pause-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              </button>
+              <div class="hero-video-cap">
+                <span class="hero-video-dot" aria-hidden="true"></span>
+                <span data-i18n="hero_video_cap">Showreel · 2026</span>
+              </div>
             </div>
-            <div class="stat">
-              <span class="stat-num" data-i18n="hero_stat2_num">6</span>
-              <span class="stat-label" data-i18n="hero_stat2_label">Platforms</span>
-            </div>
-            <div class="stat">
-              <span class="stat-num" data-i18n="hero_stat3_num">6,000+</span>
-              <span class="stat-label" data-i18n="hero_stat3_label">Total Views</span>
-            </div>
-          </div>
-          <div class="hero-cta">
-            <a href="#work" class="btn btn-primary" data-i18n="hero_cta1">View Work</a>
-            <a href="#contact" class="btn btn-outline" data-i18n="hero_cta2">Get in Touch</a>
+            <div class="hero-accent-line" aria-hidden="true"></div>
           </div>
         </div>
-        <div class="hero-visual">
-          <div class="hero-video-frame">
-            <video class="hero-video" src="assets/intro.mp4" poster="img/hero-poster.jpg"
-                   autoplay muted loop playsinline preload="metadata"
-                   aria-label="Showreel — Abdalla Maher"></video>
-            <div class="hero-video-cap">
-              <span class="hero-video-dot"></span>
-              <span data-i18n="hero_video_cap">Showreel · 2026</span>
-            </div>
-          </div>
-          <div class="hero-accent-line"></div>
+        <div class="hero-scroll-indicator" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+          <span data-i18n="hero_scroll">Explore</span>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
   <!-- ========== ABOUT ========== -->
   <section id="about" class="about">

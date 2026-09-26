@@ -220,6 +220,27 @@
     });
   });
 
+  /* ---- Hero Play Button ---- */
+  var heroPlayBtn = document.querySelector('.hero-play-btn');
+  var heroVideo = document.querySelector('.hero-video');
+  if (heroPlayBtn && heroVideo) {
+    heroPlayBtn.addEventListener('click', function () {
+      var isPlaying = heroVideo.paused;
+      if (isPlaying) {
+        heroVideo.play().catch(function () { /* autoplay blocked */ });
+        heroPlayBtn.classList.add('playing');
+        heroPlayBtn.setAttribute('aria-expanded', 'true');
+        heroPlayBtn.setAttribute('aria-label', currentStrings().hero_pause_video || 'Pause showreel');
+      } else {
+        heroVideo.pause();
+        heroPlayBtn.classList.remove('playing');
+        heroPlayBtn.setAttribute('aria-expanded', 'false');
+        heroPlayBtn.setAttribute('aria-label', currentStrings().hero_play_video || 'Play showreel');
+      }
+      trackEvent('hero_video_toggle', { playing: isPlaying });
+    });
+  }
+
   /* ---- Navbar Scroll State ---- */
   var navbar = document.querySelector('.navbar');
   if (navbar) {
