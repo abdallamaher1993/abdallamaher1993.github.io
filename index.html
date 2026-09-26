@@ -180,22 +180,19 @@
     .trust-label{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;color:var(--c-text-dim);margin-bottom:1rem}
     .trust-logos{display:flex;flex-wrap:wrap;gap:1.5rem}
     .trust-logo{font-family:var(--f-mono);font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--c-text-dim);opacity:.6}
-    .hero-visual{position:relative;height:100%;min-height:400px;display:flex;align-items:center;justify-content:center}
-    .hero-video-frame{position:relative;width:100%;max-width:560px;aspect-ratio:16/9;margin:0 auto;border:1px solid var(--c-border);border-radius:12px;overflow:hidden;background:var(--c-bg-elevated);box-shadow:0 24px 48px rgba(0,0,0,.4)}
+    .hero-visual{position:relative;min-height:50vh;display:flex;align-items:center;justify-content:center;margin-bottom:3rem}
+    .hero-video-frame{position:relative;width:100%;max-width:720px;aspect-ratio:16/9;margin:0 auto;border:1px solid var(--c-border);border-radius:16px;overflow:hidden;background:var(--c-bg-elevated);box-shadow:0 32px 64px rgba(0,0,0,.5)}
     .hero-video{width:100%;height:100%;object-fit:cover;display:block}
-    .hero-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:var(--c-white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 32px rgba(0,0,0,.3);transition:transform .2s,box-shadow .2s;z-index:3}
-    .hero-play-btn:hover{transform:translate(-50%,-50%) scale(1.1);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+    .hero-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:100px;border-radius:50%;background:var(--c-white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 16px 48px rgba(0,0,0,.4);transition:transform .2s,box-shadow .2s;z-index:3}
+    .hero-play-btn:hover{transform:translate(-50%,-50%) scale(1.1);box-shadow:0 24px 64px rgba(0,0,0,.5)}
     .play-icon{display:block}.pause-icon{display:none}
     .hero-play-btn.playing .play-icon{display:none}.hero-play-btn.playing .pause-icon{display:block}
-    .hero-video-cap{position:absolute;bottom:0;left:0;z-index:2;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .75rem;background:rgba(10,10,10,.85);color:var(--c-text-dim)}
-    .hero-video-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c-accent);margin-right:.5rem;animation:pulse 2s infinite}
+    .hero-video-cap{position:absolute;bottom:0;left:0;right:0;z-index:2;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1rem;background:rgba(10,10,10,.9);color:var(--c-text-dim);display:flex;align-items:center;gap:.5rem;justify-content:center}
+    .hero-video-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c-accent);animation:pulse 2s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-    .hero-accent-line{position:absolute;top:0;left:0;width:1px;height:100%;background:var(--c-accent)}
-    .hero-scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c-text-dim);animation:bounce 2s infinite}
-    @keyframes bounce{0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0)}40%{transform:translateX(-50%) translateY(-10px)}60%{transform:translateX(-50%) translateY(-5px)}}
-    @media (max-width:1024px){.hero-grid{grid-template-columns:1fr;gap:3rem}.hero-visual{min-height:350px}.hero-stats{gap:1.5rem}}
-    @media (max-width:768px){.hero{min-height:auto;padding-bottom:4rem}.hero-stats{flex-wrap:wrap;gap:2rem}.stat{flex:1 1 50%;text-align:center}.hero-cta{justify-content:center}.btn-lg{width:100%;justify-content:center}.hero-trust{text-align:center}.trust-logos{justify-content:center}.hero-scroll-indicator{display:none}}
-    @media (prefers-reduced-motion:reduce){.hero-scroll-indicator,.hero-video-dot{animation:none}}
+    .hero-title{text-align:center;font-size:clamp(2.5rem,6vw,4.5rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--c-white);margin-top:1rem}
+    @media (max-width:768px){.hero-visual{min-height:40vh}.hero-video-frame{max-width:100%;border-radius:12px}.hero-play-btn{width:80px;height:80px}.hero-title{font-size:clamp(2rem,8vw,3.5rem)}}
+    @media (prefers-reduced-motion:reduce){.hero-video-dot{animation:none}}
   </style>
 
 <link rel="stylesheet" href="css/style.css">
@@ -232,288 +229,22 @@
 
     <!-- ========== HERO ========== -->
     <section id="hero" class="hero" aria-labelledby="hero-title">
-      <div class="hero-bg" aria-hidden="true">
-        <video class="hero-bg-video" src="assets/intro.mp4" poster="img/hero-poster.jpg"
-               autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
-        <div class="hero-bg-overlay"></div>
-      </div>
-      <div class="container">
-        <div class="hero-grid">
-          <div class="hero-visual">
-            <div class="hero-video-frame">
-              <video class="hero-video" src="assets/intro.mp4" poster="img/hero-poster.jpg" muted playsinline preload="metadata" aria-hidden="true"></video>
-              <button class="hero-play-btn" aria-label="Play showreel" type="button">
-                <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-              </button>
-              <div class="hero-video-cap"><span class="hero-video-dot"></span><span data-i18n="hero_video_cap">Showreel · 2026</span></div>
-            </div>
-          </div>
-          <div class="hero-content">
-            <p class="hero-label" data-i18n="hero_label">AI Video Producer & Storyteller</p>
-            <h1 class="hero-title" id="hero-title" data-i18n="hero_title">Abdalla Maher</h1>
-            <p class="hero-desc" data-i18n="hero_desc">Crafting cinematic AI-generated documentaries, branded content, and narrative series that captivate audiences across the globe.</p>
-            <div class="hero-skills" role="list" aria-label="Core skills">
-              <span class="hero-chip" role="listitem" data-i18n="hero_skill_1">Scriptwriting</span>
-              <span class="hero-chip" role="listitem" data-i18n="hero_skill_2">AI Visuals</span>
-              <span class="hero-chip" role="listitem" data-i18n="hero_skill_3">Motion / I2V</span>
-              <span class="hero-chip" role="listitem" data-i18n="hero_skill_4">Voice & Sound</span>
-              <span class="hero-chip" role="listitem" data-i18n="hero_skill_5">Editing & Grading</span>
-              <span class="hero-chip" role="listitem" data-i18n="hero_skill_6">SEO & Marketing</span>
-            </div>
-            <div class="hero-stats" role="list" aria-label="Key metrics">
-              <div class="stat" role="listitem">
-                <span class="stat-num" data-i18n="hero_stat1_num">32</span>
-                <span class="stat-label" data-i18n="hero_stat1_label">Videos Produced</span>
-              </div>
-              <div class="stat" role="listitem">
-                <span class="stat-num" data-i18n="hero_stat2_num">6</span>
-                <span class="stat-label" data-i18n="hero_stat2_label">Active Platforms</span>
-              </div>
-              <div class="stat" role="listitem">
-                <span class="stat-num" data-i18n="hero_stat3_num">6,000+</span>
-                <span class="stat-label" data-i18n="hero_stat3_label">Total Views</span>
-              </div>
-              <div class="st
-
-... [OUTPUT TRUNCATED - 22,306 chars omitted out of 72,233 total] ...
-
-           <p data-i18n="work_p11_desc"></p>
-            <a href="work/roanoke/" class="project-link" aria-label="View Roanoke case study">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              <span data-i18n="case_view_study">View Case Study</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Work 9 -->
-        <article class="project-card" data-project="p9">
-          <div class="project-img-wrap">
-            <img src="img/thoth.jpg" alt="Thoth" loading="lazy" decoding="async" width="600" height="400">
-          </div>
-          <div class="project-info">
-            <span class="project-tag" data-i18n="work_p6_tag"></span>
-            <h3 data-i18n="work_p6_title"></h3>
-            <p data-i18n="work_p6_desc"></p>
-            <a href="work/thoth/" class="project-link" aria-label="View Thoth case study">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              <span data-i18n="case_view_study">View Case Study</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Work 10 -->
-        <article class="project-card" data-project="p10">
-          <div class="project-img-wrap">
-            <img src="img/sphinx.jpg" alt="The Sphinx" loading="lazy" decoding="async" width="600" height="400">
-          </div>
-          <div class="project-info">
-            <span class="project-tag" data-i18n="work_p12_tag"></span>
-            <h3 data-i18n="work_p12_title"></h3>
-            <p data-i18n="work_p12_desc"></p>
-            <a href="work/sphinx/" class="project-link" aria-label="View The Sphinx case study">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              <span data-i18n="case_view_study">View Case Study</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Work 11 -->
-        <article class="project-card" data-project="p11">
-          <div class="project-img-wrap">
-            <img src="img/minecraft.jpg" alt="Minecraft" loading="lazy" decoding="async" width="600" height="400">
-          </div>
-          <div class="project-info">
-            <span class="project-tag" data-i18n="work_p5_tag"></span>
-            <h3 data-i18n="work_p5_title"></h3>
-            <p data-i18n="work_p5_desc"></p>
-            <a href="work/minecraft/" class="project-link" aria-label="View Minecraft Narrative case study">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              <span data-i18n="case_view_study">View Case Study</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Work 12 -->
-        <article class="project-card" data-project="p12">
-          <div class="project-img-wrap">
-            <img src="img/nur.jpg" alt="Branded AI Ads" loading="lazy" decoding="async" width="600" height="400">
-          </div>
-          <div class="project-info">
-            <span class="project-tag" data-i18n="work_p8_tag"></span>
-            <h3 data-i18n="work_p8_title"></h3>
-            <p data-i18n="work_p8_desc"></p>
-            <a href="work/branded-ai-ads/" class="project-link" aria-label="View Branded AI Ads case study">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              <span data-i18n="case_view_study">View Case Study</span>
-            </a>
-          </div>
-        </article>
+    <div class="hero-visual">
+      <div class="hero-video-frame">
+        <video class="hero-video" src="assets/intro.mp4" poster="img/hero-poster.jpg" muted playsinline preload="metadata" aria-hidden="true"></video>
+        <button class="hero-play-btn" aria-label="Play showreel" type="button">
+          <svg class="play-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <div class="hero-video-cap"><span class="hero-video-dot"></span><span data-i18n="hero_video_cap">Showreel · 2026</span></div>
       </div>
     </div>
-  </section>
-
-  <!-- ========== PIPELINE ========== -->
-  <section id="pipeline" class="pipeline" aria-labelledby="pipeline-title">
     <div class="container">
-      <div class="section-header">
-        <span class="section-num">04</span>
-        <h2 class="section-title" data-i18n="pipeline_title"></h2>
-        <p class="section-subtitle" data-i18n="pipeline_subtitle"></p>
-      </div>
-      <div class="pipeline-grid" role="list" aria-label="Production pipeline steps">
-        <!-- Step 1 -->
-        <article class="pipeline-step" data-step="1">
-          <div class="step-visual">
-            <span class="step-num" aria-hidden="true">01</span>
-            <div class="step-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/><path d="M15 5l4 4"/></svg>
-            </div>
-          </div>
-          <h3 data-i18n="pipeline_s1_title"></h3>
-          <p class="step-desc" data-i18n="pipeline_s1_desc"></p>
-          <div class="step-detail">
-            <h4 data-i18n="pipeline_detail_label">What happens</h4>
-            <ul>
-              <li data-i18n="pipeline_s1_d1"></li>
-              <li data-i18n="pipeline_s1_d2"></li>
-              <li data-i18n="pipeline_s1_d3"></li>
-            </ul>
-            <h4 data-i18n="pipeline_tools_label">Tools</h4>
-            <ul class="tool-tags">
-              <li data-i18n="pipeline_s1_t1"></li>
-              <li data-i18n="pipeline_s1_t2"></li>
-              <li data-i18n="pipeline_s1_t3"></li>
-            </ul>
-          </div>
-          <button class="step-expand" aria-expanded="false" aria-controls="step1-detail">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </article>
-        <!-- Step 2 -->
-        <article class="pipeline-step" data-step="2">
-          <div class="step-visual">
-            <span class="step-num" aria-hidden="true">02</span>
-            <div class="step-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            </div>
-          </div>
-          <h3 data-i18n="pipeline_s2_title"></h3>
-          <p class="step-desc" data-i18n="pipeline_s2_desc"></p>
-          <div class="step-detail">
-            <h4 data-i18n="pipeline_detail_label">What happens</h4>
-            <ul>
-              <li data-i18n="pipeline_s2_d1"></li>
-              <li data-i18n="pipeline_s2_d2"></li>
-              <li data-i18n="pipeline_s2_d3"></li>
-            </ul>
-            <h4 data-i18n="pipeline_tools_label">Tools</h4>
-            <ul class="tool-tags">
-              <li data-i18n="pipeline_s2_t1"></li>
-              <li data-i18n="pipeline_s2_t2"></li>
-              <li data-i18n="pipeline_s2_t3"></li>
-            </ul>
-          </div>
-          <button class="step-expand" aria-expanded="false" aria-controls="step2-detail">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </article>
-        <!-- Step 3 -->
-        <article class="pipeline-step" data-step="3">
-          <div class="step-visual">
-            <span class="step-num" aria-hidden="true">03</span>
-            <div class="step-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </div>
-          </div>
-          <h3 data-i18n="pipeline_s3_title"></h3>
-          <p class="step-desc" data-i18n="pipeline_s3_desc"></p>
-          <div class="step-detail">
-            <h4 data-i18n="pipeline_detail_label">What happens</h4>
-            <ul>
-              <li data-i18n="pipeline_s3_d1"></li>
-              <li data-i18n="pipeline_s3_d2"></li>
-              <li data-i18n="pipeline_s3_d3"></li>
-            </ul>
-            <h4 data-i18n="pipeline_tools_label">Tools</h4>
-            <ul class="tool-tags">
-              <li data-i18n="pipeline_s3_t1"></li>
-              <li data-i18n="pipeline_s3_t2"></li>
-              <li data-i18n="pipeline_s3_t3"></li>
-            </ul>
-          </div>
-          <button class="step-expand" aria-expanded="false" aria-controls="step3-detail">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </article>
-        <!-- Step 4 -->
-        <article class="pipeline-step" data-step="4">
-          <div class="step-visual">
-            <span class="step-num" aria-hidden="true">04</span>
-            <div class="step-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5"/><line x1="11" y1="19" x2="18" y2="12"/><line x1="18" y1="19" x2="11" y2="12"/></svg>
-            </div>
-          </div>
-          <h3 data-i18n="pipeline_s4_title"></h3>
-          <p class="step-desc" data-i18n="pipeline_s4_desc"></p>
-          <div class="step-detail">
-            <h4 data-i18n="pipeline_detail_label">What happens</h4>
-            <ul>
-              <li data-i18n="pipeline_s4_d1"></li>
-              <li data-i18n="pipeline_s4_d2"></li>
-              <li data-i18n="pipeline_s4_d3"></li>
-            </ul>
-            <h4 data-i18n="pipeline_tools_label">Tools</h4>
-            <ul class="tool-tags">
-              <li data-i18n="pipeline_s4_t1"></li>
-              <li data-i18n="pipeline_s4_t2"></li>
-              <li data-i18n="pipeline_s4_t3"></li>
-            </ul>
-          </div>
-          <button class="step-expand" aria-expanded="false" aria-controls="step4-detail">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </article>
-        <!-- Step 5 -->
-        <article class="pipeline-step" data-step="5">
-          <div class="step-visual">
-            <span class="step-num" aria-hidden="true">05</span>
-            <div class="step-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            </div>
-          </div>
-          <h3 data-i18n="pipeline_s5_title"></h3>
-          <p class="step-desc" data-i18n="pipeline_s5_desc"></p>
-          <div class="step-detail">
-            <h4 data-i18n="pipeline_detail_label">What happens</h4>
-            <ul>
-              <li data-i18n="pipeline_s5_d1"></li>
-              <li data-i18n="pipeline_s5_d2"></li>
-              <li data-i18n="pipeline_s5_d3"></li>
-            </ul>
-            <h4 data-i18n="pipeline_tools_label">Tools</h4>
-            <ul class="tool-tags">
-              <li data-i18n="pipeline_s5_t1"></li>
-              <li data-i18n="pipeline_s5_t2"></li>
-              <li data-i18n="pipeline_s5_t3"></li>
-            </ul>
-          </div>
-          <button class="step-expand" aria-expanded="false" aria-controls="step5-detail">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </article>
-      </div>
-      <div class="pipeline-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Pipeline scroll progress">
-        <div class="pipeline-progress-fill" id="pipelineProgressFill"></div>
-      </div>
-      <p class="pipeline-cta">
-        <a href="#contact" class="btn btn-primary" data-i18n="pipeline_cta"></a>
-      </p>
+      <h1 class="hero-title" id="hero-title" data-i18n="hero_title">Abdalla Maher</h1>
     </div>
   </section>
 
-  <!-- ========== SKILLS ========== -->
-  <section id="skills" class="skills">
+<section id="skills" class="skills">
     <div class="container">
       <div class="section-header">
         <span class="section-num">06</span>
