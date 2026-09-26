@@ -344,6 +344,153 @@
     });
   }
 
+  /* ---- Consultation Form ---- */
+  var consultationForm = document.getElementById('consultationForm');
+  if (consultationForm) {
+    var steps = consultationForm.querySelectorAll('.form-step');
+    var progressSteps = consultationForm.querySelectorAll('.form-progress-step');
+    var progressFill = document.getElementById('formProgressFill');
+    var currentStep = 1;
+
+    function showStep(stepNum) {
+      steps.forEach(function (s) { s.classList.remove('active'); });
+      progressSteps.forEach(function (p) { p.classList.remove('active'); });
+      var step = consultationForm.querySelector('.form-step[data-step="' + stepNum + '"]');
+      var prog = consultationForm.querySelector('.form-progress-step[data-step="' + stepNum + '"]');
+      if (step) step.classList.add('active');
+      if (prog) prog.classList.add('active');
+      if (progressFill) progressFill.style.width = ((stepNum - 1) * 25) + '%';
+      currentStep = stepNum;
+      window.scrollTo({ top: consultationForm.offsetTop - 80, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+
+    function validateStep(stepNum) {
+      var step = consultationForm.querySelector('.form-step[data-step="' + stepNum + '"]');
+      if (!step) return true;
+      var required = step.querySelectorAll('[required]');
+      var valid = true;
+      required.forEach(function (field) {
+        if (!field.value.trim()) {
+          field.style.borderColor = 'var(--c-error)';
+          valid = false;
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+      // For radio groups
+      var radioGroups = step.querySelectorAll('input[type="radio"][required]');
+      var checkedGroups = new Set();
+      radioGroups.forEach(function (r) { if (r.checked) checkedGroups.add(r.name); });
+      var allRadioNames = new Set();
+      radioGroups.forEach(function (r) { allRadioNames.add(r.name); });
+      allRadioNames.forEach(function (name) {
+        if (!checkedGroups.has(name)) {
+          var firstRadio = step.querySelector('input[type="radio"][name="' + name + '"]');
+          if (firstRadio) firstRadio.style.outline = '2px solid var(--c-error)';
+          valid = false;
+        }
+      });
+      return valid;
+    }
+
+    consultationForm.querySelectorAll('.btn-next').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (validateStep(currentStep)) {
+          showStep(parseInt(this.dataset.next, 10));
+          trackEvent('consultation_step_next', { step: currentStep });
+        } else {
+          trackEvent('consultation_step_invalid', { step: currentStep });
+        }
+      });
+    });
+
+    consultationForm.querySelectorAll('.btn-prev').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        showStep(parseInt(this.dataset.prev, 10));
+        trackEvent('consultation_step_prev', { step: currentStep });
+      });
+    });
+
+    consultationForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validateStep(5)) {
+        trackEvent('consultation_submit_invalid', {});
+        return;
+      }
+      var formData = new FormData(consultationForm);
+      var data = {};
+      formData.forEach(function (value, key) {
+        if (data[key]) {
+          if (!Array.isArray(data[key])) data[key] = [data[key]];
+          data[key].push(value);
+        } else {
+          data[key] = value;
+        }
+      });
+      data.date = new Date().toISOString();
+      data.source = location.href;
+
+      var successMsg = document.getElementById('formSuccess');
+      var webhookUrl = window.__WEBHOOK_URL__ || '';
+
+      function showSuccess(message) {
+        if (successMsg) {
+          successMsg.textContent = message;
+          successMsg.classList.add('show');
+        }
+      }
+
+      function submitViaEmail() {
+        var subject = 'New Consultation Request — ' + (data.projectType || 'General');
+        var body = [
+          'Project Type: ' + (data.projectType || ''),
+          'Duration: ' + (data.duration || ''),
+          'Deliverables: ' + (Array.isArray(data.deliverables) ? data.deliverables.join(', ') : (data.deliverables || '')),
+          'Timeline: ' + (data.timeline || ''),
+          'Budget: ' + (data.budget || ''),
+          'Urgency: ' + (data.urgency || ''),
+          'Reference Links: ' + (data.refLinks || ''),
+          'Style Notes: ' + (data.styleNotes || ''),
+          'Audio Refs: ' + (data.audioRefs || ''),
+          '',
+          'Name: ' + (data.name || ''),
+          'Email: ' + (data.email || ''),
+          'Company: ' + (data.company || ''),
+          'Platform: ' + (data.platform || ''),
+          'Message: ' + (data.message || ''),
+          '',
+          '---',
+          'Sent from portfolio site · ' + data.date
+        ].join('\n');
+        var a = document.createElement('a');
+        a.href = 'mailto:hello@abdalla.design' + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        showSuccess(currentStrings().form_mailto_note);
+        trackEvent('consultation_email', { projectType: data.projectType || 'unknown' });
+      }
+
+      function isPublicWebhook(u) {
+        if (typeof u !== 'string') return false;
+        var m = u.match(/^https:\/\/([^/]+)/i);
+        if (!m) return false;
+        var host = m[1].toLowerCase();
+        return host !== 'localhost' && host.indexOf('127.') !== 0 && host !== '0.0.0.0' && host !== '::' && host !== '[::]';
+      }
+
+      if (!isPublicWebhook(webhookUrl)) {
+        submitViaEmail();
+      } else {
+        fetch(webhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+          .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); showSuccess(currentStrings().form_submit_success); trackEvent('consultation_submit', { projectType: data.projectType || 'unknown' }); })
+          .catch(function () { submitViaEmail(); });
+      }
+      setTimeout(function () { consultationForm.reset(); showStep(1); if (successMsg) successMsg.classList.remove('show'); }, 5000);
+    });
+  }
+
   /* ---- Track outbound links (social / projects) ---- */
   document.querySelectorAll('a[target="_blank"]').forEach(function (a) {
     a.addEventListener('click', function () {
