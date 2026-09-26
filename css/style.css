@@ -291,14 +291,14 @@ p { max-width: 65ch; line-height: var(--lh-normal); }
   left: 0;
   right: 0;
   z-index: var(--z-navbar);
-  background: rgba(10, 10, 10, 0.92);
+  background: var(--c-bg-elevated);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--c-divider);
   transition: box-shadow var(--transition), background var(--transition);
 }
 .navbar.scrolled {
-  background: rgba(10, 10, 10, 0.98);
+  background: var(--c-bg-elevated);
   box-shadow: var(--shadow-md);
 }
 .nav-inner {
