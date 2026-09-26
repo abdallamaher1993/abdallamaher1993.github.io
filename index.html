@@ -237,19 +237,102 @@
   </section>
 
 
-  <!-- ========== PIPELINE (Proof of Workflow) ========== -->
-  <section id="pipeline" class="pipeline">
+  <!-- ========== PIPELINE (Interactive Proof of Workflow) ========== -->
+  <section id="pipeline" class="pipeline" aria-labelledby="pipeline-title">
     <div class="container">
       <div class="section-header">
         <span class="section-num">03</span>
-        <h2 class="section-title" data-i18n="pipeline_title">The Production Pipeline</h2>
+        <h2 class="section-title" id="pipeline-title" data-i18n="pipeline_title">The Production Pipeline</h2>
+        <p class="section-subtitle" data-i18n="pipeline_subtitle">Every frame passes through 5 quality gates — from strategic blueprint to cinematic master.</p>
       </div>
-      <div class="pipeline-grid">
-        <div class="pipeline-step"><div class="step-num">01</div><h3>Strategic Blueprinting</h3><p>Using Gemini 2.0 Flash to transform complex historical references into a precise cinematic shot-by-shot breakdown.</p></div>
-        <div class="pipeline-step"><div class="step-num">02</div><h3>Identity & Style Lock</h3><p>Eliminating visual drift by locking character identities and color grading.</p></div>
-        <div class="pipeline-step"><div class="step-num">03</div><h3>Precision Generation</h3><p>Combining RunPod and Draw Things for 4K visuals with programmatic text overlays.</p></div>
-        <div class="pipeline-step"><div class="step-num">04</div><h3>The QC Gates</h3><p>Every frame passes through Quality Control: Anatomy, Motion, Identity checks.</p></div>
-        <div class="pipeline-step"><div class="step-num">05</div><h3>The Cinematic Master</h3><p>Final assembly with procedurally synthesized soundtracks.</p></div>
+      <div class="pipeline-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Pipeline progress">
+        <div class="pipeline-progress-fill" id="pipelineProgressFill"></div>
+      </div>
+      <div class="pipeline-grid" id="pipelineGrid">
+        <article class="pipeline-step" data-step="1" data-i18n-step="pipeline_s1">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3 data-i18n="pipeline_s1_title">Strategic Blueprinting</h3>
+            <p data-i18n="pipeline_s1_desc">Transforming complex historical references into precise cinematic shot-by-shot breakdowns using Gemini 2.0 Flash.</p>
+            <div class="step-details" aria-hidden="true">
+              <h4 data-i18n="pipeline_s1_details_title">What happens here</h4>
+              <ul>
+                <li data-i18n="pipeline_s1_detail_1">Script analysis & shot listing</li>
+                <li data-i18n="pipeline_s1_detail_2">Reference gathering & mood boards</li>
+                <li data-i18n="pipeline_s1_detail_3">AI prompt engineering strategy</li>
+                <li data-i18n="pipeline_s1_detail_4">Production timeline & resource allocation</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-connector" aria-hidden="true"></div>
+        </article>
+        <article class="pipeline-step" data-step="2" data-i18n-step="pipeline_s2">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3 data-i18n="pipeline_s2_title">Identity & Style Lock</h3>
+            <p data-i18n="pipeline_s2_desc">Eliminating visual drift by locking character identities, environments, and color grading through master references.</p>
+            <div class="step-details" aria-hidden="true">
+              <h4 data-i18n="pipeline_s2_details_title">What happens here</h4>
+              <ul>
+                <li data-i18n="pipeline_s2_detail_1">Character sheet creation (3-angle)</li>
+                <li data-i18n="pipeline_s2_detail_2">Environment & lighting reference locks</li>
+                <li data-i18n="pipeline_s2_detail_3">Color LUT development & approval</li>
+                <li data-i18n="pipeline_s2_detail_4">Face-verification loop setup</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-connector" aria-hidden="true"></div>
+        </article>
+        <article class="pipeline-step" data-step="3" data-i18n-step="pipeline_s3">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3 data-i18n="pipeline_s3_title">Precision Generation</h3>
+            <p data-i18n="pipeline_s3_desc">Combining RunPod and Draw Things for 4K visuals with programmatic text overlays and batch processing.</p>
+            <div class="step-details" aria-hidden="true">
+              <h4 data-i18n="pipeline_s3_details_title">What happens here</h4>
+              <ul>
+                <li data-i18n="pipeline_s3_detail_1">Batch generation via RunPod Wan 2.2</li>
+                <li data-i18n="pipeline_s3_detail_2">Local refinement in Draw Things/ComfyUI</li>
+                <li data-i18n="pipeline_s3_detail_3">Programmatic text/logo overlays</li>
+                <li data-i18n="pipeline_s3_detail_4">Frame-by-frame QC: Anatomy check</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-connector" aria-hidden="true"></div>
+        </article>
+        <article class="pipeline-step" data-step="4" data-i18n-step="pipeline_s4">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3 data-i18n="pipeline_s4_title">The QC Gates</h3>
+            <p data-i18n="pipeline_s4_desc">Every frame passes through Quality Control: Anatomy, Motion, Identity, and Temporal Stability checks.</p>
+            <div class="step-details" aria-hidden="true">
+              <h4 data-i18n="pipeline_s4_details_title">What happens here</h4>
+              <ul>
+                <li data-i18n="pipeline_s4_detail_1">Anatomy & proportion verification</li>
+                <li data-i18n="pipeline_s4_detail_2">Motion coherence & physics check</li>
+                <li data-i18n="pipeline_s4_detail_3">Identity consistency across shots</li>
+                <li data-i18n="pipeline_s4_detail_4">Temporal stability (flicker/jitter)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-connector" aria-hidden="true"></div>
+        </article>
+        <article class="pipeline-step" data-step="5" data-i18n-step="pipeline_s5">
+          <div class="step-num">05</div>
+          <div class="step-content">
+            <h3 data-i18n="pipeline_s5_title">The Cinematic Master</h3>
+            <p data-i18n="pipeline_s5_desc">Final assembly with procedurally synthesized soundtracks, color grading, and multi-platform delivery.</p>
+            <div class="step-details" aria-hidden="true">
+              <h4 data-i18n="pipeline_s5_details_title">What happens here</h4>
+              <ul>
+                <li data-i18n="pipeline_s5_detail_1">DaVinci Resolve color grading</li>
+                <li data-i18n="pipeline_s5_detail_2">Procedural sound design & voiceover sync</li>
+                <li data-i18n="pipeline_s5_detail_3">Multi-format export (4K, 1080p, vertical)</li>
+                <li data-i18n="pipeline_s5_detail_4">n8n auto-publish to 6 platforms</li>
+              </ul>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>

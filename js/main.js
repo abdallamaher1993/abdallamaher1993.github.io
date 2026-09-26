@@ -224,10 +224,70 @@
   var navbar = document.querySelector('.navbar');
   if (navbar) {
     window.addEventListener('scroll', function () {
+      var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--c-accent').trim() || '#D53829';
       navbar.style.boxShadow = window.pageYOffset > 100
-        ? '0 1px 0 rgba(213,56,41,0.1)'
+        ? '0 1px 0 ' + accentColor + '1A'
         : 'none';
     }, { passive: true });
+  }
+
+  /* ---- Pipeline Interactions ---- */
+  var pipelineGrid = document.getElementById('pipelineGrid');
+  var pipelineProgressFill = document.getElementById('pipelineProgressFill');
+  var pipelineSteps = pipelineGrid ? pipelineGrid.querySelectorAll('.pipeline-step') : [];
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (pipelineGrid && pipelineSteps.length && 'IntersectionObserver' in window && !prefersReducedMotion) {
+    // Animate progress bar and vertical line on scroll
+    var pipelineObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          pipelineGrid.classList.add('animate');
+          // Progress fill based on scroll within section
+          var progressObserver = new IntersectionObserver(function (progEntries) {
+            progEntries.forEach(function (progEntry) {
+              var ratio = Math.max(0, Math.min(1, 1 - progEntry.intersectionRatio));
+              if (pipelineProgressFill) {
+                pipelineProgressFill.style.width = (ratio * 100) + '%';
+              }
+            });
+          }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+          progressObserver.observe(pipelineGrid);
+          pipelineObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    pipelineObserver.observe(pipelineGrid);
+
+    // Click to expand step details
+    pipelineSteps.forEach(function (step) {
+      step.style.cursor = 'pointer';
+      step.addEventListener('click', function () {
+        var isExpanded = this.classList.toggle('expanded');
+        trackEvent('pipeline_step_click', { step: this.dataset.step, expanded: isExpanded });
+      });
+      // Keyboard support
+      step.setAttribute('tabindex', '0');
+      step.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.click();
+        }
+      });
+    });
+  } else if (pipelineSteps.length) {
+    // Reduced motion or no IntersectionObserver - show everything
+    pipelineGrid.classList.add('animate');
+    if (pipelineProgressFill) pipelineProgressFill.style.width = '100%';
+    pipelineSteps.forEach(function (step) {
+      step.style.opacity = '1';
+      step.style.transform = 'translateX(0)';
+      step.style.cursor = 'pointer';
+      step.addEventListener('click', function () {
+        this.classList.toggle('expanded');
+        trackEvent('pipeline_step_click', { step: this.dataset.step });
+      });
+    });
   }
 
   /* ---- Scrollspy: mark active nav link ---- */
