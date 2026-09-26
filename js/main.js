@@ -526,4 +526,21 @@
   /* Exposed for js/content-loader.js (content.json overlay + admin preview) */
   window.__applyLang = applyLang;
 
+  /* ---- Pipeline scroll progress ---- */
+  var pipelineSection = document.getElementById('pipeline');
+  var pipelineProgressFill = document.getElementById('pipelineProgressFill');
+  if (pipelineSection && pipelineProgressFill) {
+    function updatePipelineProgress() {
+      var rect = pipelineSection.getBoundingClientRect();
+      var windowHeight = window.innerHeight;
+      var sectionHeight = pipelineSection.offsetHeight;
+      var visibleHeight = Math.max(0, Math.min(windowHeight, rect.bottom) - Math.max(0, rect.top));
+      var progress = (visibleHeight / (sectionHeight + windowHeight)) * 100;
+      pipelineProgressFill.style.width = Math.min(100, Math.max(0, progress)) + '%';
+    }
+    window.addEventListener('scroll', updatePipelineProgress, { passive: true });
+    window.addEventListener('resize', updatePipelineProgress);
+    updatePipelineProgress();
+  }
+
 })();
