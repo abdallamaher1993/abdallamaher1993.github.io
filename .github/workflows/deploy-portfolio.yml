@@ -2,6 +2,7 @@
 name: Deploy Portfolio
 
 on:
+  workflow_dispatch:
   push:
     branches: [main, portfolio]
     paths: ['index.html', 'css/**', 'js/**', 'img/**', 'content.json', 'admin/**', '404.html', 'favicon.svg', 'favicon.ico', '.github/workflows/deploy-portfolio.yml']
