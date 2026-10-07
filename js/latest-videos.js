@@ -1,12 +1,12 @@
-/* Generated 2026-10-07 from the channel page (public videos only)
+/* Generated 2026-10-07 from the channel RSS feed (public videos only)
 */
 window.LATEST_VIDEOS = [
-  { id: "5llV8SKMXo8", title: "She Called 7 Times… I Said “Later” | Seven Missed Calls (Sad K-Pop Ballad)", thumb: "https://i.ytimg.com/vi/5llV8SKMXo8/hqdefault.jpg", duration: "2:51", published: "1 day ago" },
-  { id: "a7wHCXGiE0M", title: "NEON_HEARTBEAT - YELLOW SKY (Official MV) | AI K-pop idol", thumb: "https://i.ytimg.com/vi/a7wHCXGiE0M/hqdefault.jpg", duration: "2:43", published: "2 days ago" },
-  { id: "KSLPBc6GaxA", title: "NEON HEARTBEAT (Official MV) | Abdalla – AI K-Pop Idol Synth-Pop Debut", thumb: "https://i.ytimg.com/vi/KSLPBc6GaxA/hqdefault.jpg", duration: "2:44", published: "3 days ago" },
-  { id: "XqJSeEXkWDA", title: "I rode in Amelia Earhart's cockpit on the flight that never came back.", thumb: "https://i.ytimg.com/vi/XqJSeEXkWDA/hqdefault.jpg", duration: "1:05", published: "1 week ago" },
-  { id: "CTtOL3dIo7A", title: "I came to Baghdad for its books. I arrived on the day the river turned black with ink.", thumb: "https://i.ytimg.com/vi/CTtOL3dIo7A/hqdefault.jpg", duration: "1:05", published: "1 week ago" },
-  { id: "FEUzT9AIZS0", title: "The first cough came at breakfast. By nightfall, the village was already counting its dead.", thumb: "https://i.ytimg.com/vi/FEUzT9AIZS0/hqdefault.jpg", duration: "1:05", published: "1 week ago" },
-  { id: "A6aM2jlHwqw", title: "The Ships That Sailed Into Silence: Franklin Expedition 1845 | The Arctic's Greatest Mystery", thumb: "https://i.ytimg.com/vi/A6aM2jlHwqw/hqdefault.jpg", duration: "6:37", published: "1 week ago" },
-  { id: "7gbQvuQcGu0", title: "I saw the Sphinx when it was new — painted red, blue and gold", thumb: "https://i.ytimg.com/vi/7gbQvuQcGu0/hqdefault.jpg", duration: "1:04", published: "2 weeks ago" }
+  { "id": "VB_2HoB3diU", "title": "One light turns on. Then the whole stage. #shorts", "thumb": "https://i.ytimg.com/vi/VB_2HoB3diU/hqdefault.jpg", "published": "today" },
+  { "id": "hwpD4aki5FE", "title": "Mama Called 7 Times… Watch for the 8th Call | Seven Missed Calls #Shorts", "thumb": "https://i.ytimg.com/vi/hwpD4aki5FE/hqdefault.jpg", "published": "1 day ago" },
+  { "id": "5llV8SKMXo8", "title": "She Called 7 Times… I Said “Later” | Seven Missed Calls (Sad K-Pop Ballad)", "thumb": "https://i.ytimg.com/vi/5llV8SKMXo8/hqdefault.jpg", "published": "1 day ago" },
+  { "id": "ePs06WcUYjA", "title": "Break the Code, Touch the Yellow Sky | NEON_HEARTBEAT #Shorts", "thumb": "https://i.ytimg.com/vi/ePs06WcUYjA/hqdefault.jpg", "published": "2 days ago" },
+  { "id": "a7wHCXGiE0M", "title": "NEON_HEARTBEAT - YELLOW SKY (Official MV) | AI K-pop idol", "thumb": "https://i.ytimg.com/vi/a7wHCXGiE0M/hqdefault.jpg", "published": "2 days ago" },
+  { "id": "KSLPBc6GaxA", "title": "NEON HEARTBEAT (Official MV) | Abdalla – AI K-Pop Idol Synth-Pop Debut", "thumb": "https://i.ytimg.com/vi/KSLPBc6GaxA/hqdefault.jpg", "published": "3 days ago" },
+  { "id": "wY1SykhZqVw", "title": "NEON HEARTBEAT (MV Preview) | Abdalla – AI K-Pop Idol #Shorts", "thumb": "https://i.ytimg.com/vi/wY1SykhZqVw/hqdefault.jpg", "published": "3 days ago" },
+  { "id": "aSdmY2u2NAs", "title": "MH370: The Plane That Vanished Without a Trace ✈️ #shorts", "thumb": "https://i.ytimg.com/vi/aSdmY2u2NAs/hqdefault.jpg", "published": "6 days ago" }
 ];
