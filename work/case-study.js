@@ -1,356 +1,343 @@
 /* ============================================================
-   case-study.js — Dynamic case study page loader
+   case-study.js — Case study page loader (2026 rebuild)
+   Local video heroes only — no external embeds.
    ============================================================ */
 
 (function () {
   'use strict';
 
-  // Project slug to ID mapping
   const SLUG_MAP = {
-    'king-menes': 'p1',
-    'chernobyl': 'p5',
-    'sphinx': 'p10',
-    'titanic': 'p2',
-    'mary-celeste': 'p7',
-    'dawn-of-civilization': 'p4',
-    'tunguska': 'p9',
-    'dyatlov': 'p10',
-    'roanoke': 'p11',
-    'thoth': 'p6',
-    'minecraft': 'p5',
-    'branded-ai-ads': 'p8'
+    'titanic': 'titanic',
+    'dyatlov': 'dyatlov',
+    'franklin': 'franklin',
+    'jojoba': 'jojoba',
+    'neon-heartbeat': 'neon',
+    'island-courier': 'ebb'
   };
 
-  // Extended case study data (supplements content.json)
+  const L = (en, ar, zh) => ({ en, ar, 'zh-TW': zh });
+
   const CASE_STUDY_DATA = {
-    p1: {
-      slug: 'king-menes',
-      title: { en: 'King Menes: Absolute Character Consistency', ar: 'الملك مينا: ثبات مطلق للشخصية', 'zh-TW': '美尼斯王：絕對角色一致性' },
-      tag: { en: 'Narrative Series', ar: 'مسلسل سردي', 'zh-TW': '敘事系列' },
-      heroVideo: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // placeholder
-      heroPoster: '../img/menes.jpg',
-      challenge: {
-        en: 'Maintaining identity and attire across diverse environments (Palace, Battlefield, Temple) across 30 episodes without visual drift.',
-        ar: 'الحفاظ على الهوية والملابس عبر بيئات متنوعة (قصر، ساحة معركة، معبد) عبر 30 حلقة دون انحراف بصري.',
-        'zh-TW': '在 30 集中跨越不同環境（宮殿、戰場、神廟）保持角色身份與服裝一致，零視覺漂移。'
-      },
-      solution: {
-        en: 'Developed a Master Character Sheet with 8-angle turnarounds and enforced a Face-Verification Loop using automated similarity scoring to eliminate visual drift at generation time.',
-        ar: 'تم تطوير ورقة شخصية رئيسية بـ 8 زوايا وفرض حلقة تحقق وجه باستخدام تقييم تشابه آلي لإزالة الانحراف البصري وقت التوليد.',
-        'zh-TW': '開發了包含 8 角度轉身圖的主角設計表，並強制執行臉部驗證迴路，使用自動化相似度評分在生成時消除視覺漂移。'
-      },
-      result: {
-        en: 'A believable and consistent protagonist enabling a high-quality narrative arc. 98% frame consistency score across 900+ generated frames.',
-        ar: 'بطل مقنع ومتسق يمكّن من سردية عالية الجودة. درجة ثبات 98% عبر 900+ إطار مولد.',
-        'zh-TW': '一個可信且一致的主角，成就高品質敘事弧。跨 900+ 幀生成內容達 98% 幀一致性分數。'
-      },
-      stats: {
-        views: '2.1M+',
-        duration: '30 eps × 3 min',
-        episodes: '30',
-        prodTime: '6 weeks'
-      },
+    /* ---------------- 1. Titanic ---------------- */
+    titanic: {
+      slug: 'titanic',
+      title: L('Titanic — April 14, 1912: A Historical POV Film',
+        'التيتانيك — 14 أبريل 1912: فيلم بمنظور تاريخي',
+        '鐵達尼號 — 1912 年 4 月 14 日：歷史 POV 影片'),
+      tag: L('AI Documentary · Historical POV', 'وثائقي بالذكاء الاصطناعي · منظور تاريخي', 'AI 紀錄片 · 歷史 POV'),
+      heroVideo: '../assets/work-titanic.mp4',
+      heroPoster: '../assets/work-titanic-poster.jpg',
+      stats: { views: L('Feature film', 'فيلم كامل', '長片'), duration: '25 min', episodes: '1 + shorts', prodTime: '4K master' },
+      challenge: L(
+        'Reconstructing the sinking of the Titanic as a first-person historical experience — photoreal interiors, period-accurate costumes and night-time North Atlantic lighting, all generated with AI while keeping a consistent look across every shot.',
+        'إعادة بناء غرق التيتانيك كتجربة تاريخية بمنظور شخصي أول — مداخل فوتورياليستية، أزياء دقيقة العصر وإضاءة ليلية لشمال الأطلسي، كلها مولّدة بالذكاء الاصطناعي مع الحفاظ على مظهر متسق في كل لقطة.',
+        '以第一人稱歷史視角重建鐵達尼號沉沒 — 寫實船艙、符合時代的服裝與北大西洋夜間照明，全部由 AI 生成，同時保持每鏡頭視覺一致。'),
+      solution: L(
+        'Built the film on a locked visual bible: SDXL reference frames for every set and costume, I2V animation via RunPod Wan 2.2, then a frame-level QC pass for identity and lighting drift. Serialized vertical shorts were cut from the same master for channel promotion.',
+        'بُني الفيلم على كتاب بصري مقفل: إطارات مرجعية SDXL لكل ديكور وزي، تحريك I2V عبر RunPod Wan 2.2، ثم فحص جودة على مستوى الإطار لانحراف الهوية والإضاءة. قُصّت مقاطع قصيرة عمودية مسلسلة من النسخة الأم نفسها للترويج للقناة.',
+        '影片建立在鎖定的視覺規範上：每個場景與服裝的 SDXL 參考幀、透過 RunPod Wan 2.2 的 I2V 動畫，再進行幀級身份與照明漂移品檢。系列直式短片由同一母帶剪出，用於頻道宣傳。'),
+      result: L(
+        'A complete historical POV film with a full post pipeline — edit, sound design, narration and grade — demonstrating end-to-end AI filmmaking, not just clip generation.',
+        'فيلم تاريخي كامل بمنظور شخصي بخط إنتاج كامل — مونتاج وتصميم صوتي وتعليق ودرجة لونية — يُثبت صناعة فيلم متكاملة بالذكاء الاصطناعي، لا مجرد توليد مقاطع.',
+        '一部具備完整後期流程（剪輯、音效設計、旁白、調色）的歷史 POV 影片，證明端到端的 AI 電影製作能力，而不只是片段生成。'),
       pipeline: [
-        { step: 1, title: { en: 'Research & Reference', ar: 'البحث والمراجع', 'zh-TW': '研究與參考' }, desc: { en: 'Historical research on Early Dynastic Egypt; collected 200+ reference images for architecture, costume, regalia.', ar: 'بحث تاريخي عن مصر الأسرات المبكرة؛ جمع 200+ صورة مرجعية للعمارة، الأزياء، الشارات الملكية.', 'zh-TW': '早期王朝埃及歷史研究；收集 200+ 建築、服裝、徽章參考圖。' } },
-        { step: 2, title: { en: 'Master Character Sheet', ar: 'ورقة الشخصية الرئيسية', 'zh-TW': '主角設計表' }, desc: { en: '8-angle turnaround (front, 3/4, side, back), 3 expressions, 5 costume variations, color swatches with hex codes.', ar: 'تدوير 8 زوايا (أمامي، ¾، جانبي، خلفي)، 3 تعابير، 5 تنويعات زي، ألوان برموز هكس.', 'zh-TW': '8 角度轉身圖 (正面、3/4、側面、背面)、3 表情、5 服裝變體、HEX 色碼色板。' } },
-        { step: 3, title: { en: 'Identity Lock Pipeline', ar: 'خط إنتاج قفل الهوية', 'zh-TW': '身份鎖定管線' }, desc: { en: 'Custom LoRA trained on character sheet; Face-Verification Loop runs CLIP similarity check per frame (threshold 0.87).', ar: 'LoRA مخصصة مدربة على ورقة الشخصية؛ حلقة تحقق وجه تشغل فحص تشابه CLIP لكل إطار (عتبة 0.87).', 'zh-TW': '基於設計表訓練的專用 LoRA；臉部驗證迴路對每幀運行 CLIP 相似度檢查 (閾值 0.87)。' } },
-        { step: 4, title: { en: 'Environment Consistency', ar: 'ثبات البيئة', 'zh-TW': '環境一致性' }, desc: { en: 'Shared ControlNet depth maps for palace, battlefield, temple; unified lighting LUT (Golden Hour + Torchlight).', ar: 'خرائط عمق ControlNet مشتركة للقصر، ساحة المعركة، المعبد؛ LUT إضاءة موحدة (الساعة الذهبية + ضوء المشاعل).', 'zh-TW': '宮殿、戰場、神廟共用 ControlNet 深度圖；統一照明 LUT (黃金時刻 + 火把光)。' } },
-        { step: 5, title: { en: 'QC & Delivery', ar: 'فحص الجودة والتسليم', 'zh-TW': '品控與交付' }, desc: { en: 'Automated frame audit (anatomy, identity, lighting); manual spot-check 10%; 4K upscale via ESRGAN; ProRes 4444 master.', ar: 'تدقيق إطارات آلي (تشريح، هوية، إضاءة); فحص يدوي 10%; تكبير 4K عبر ESRGAN; ماستر ProRes 4444.', 'zh-TW': '自動化幀審核 (解剖、身份、照明); 10% 人工抽檢; ESRGAN 4K 放大; ProRes 4444 母帶。' } }
+        { step: 1, title: L('Research & Visual Bible', 'البحث والكتاب البصري', '研究與視覺規範'), desc: L('Period references for 1912 interiors, costumes and ship layouts compiled into a locked reference pack used for every generation.', 'مراجع العصر لديكورات 1912 وأزياء وتخطيط السفينة جُمعت في حزمة مرجعية مقفلة استُخدمت في كل توليد.', '蒐集 1912 年船艙、服裝與船舶佈局的時代參考，彙編為鎖定參考包，用於每次生成。') },
+        { step: 2, title: L('Image Generation & Consistency', 'توليد الصور والثبات', '圖像生成與一致性'), desc: L('SDXL keyframes in Draw Things with ControlNet composition control; IP-Adapter keeps faces and costumes stable across scenes.', 'إطارات مفتاحية SDXL في Draw Things مع تحكم بالتكوين عبر ControlNet؛ IP-Adapter يحافظ على ثبات الوجوه والأزياء عبر المشاهد.', '於 Draw Things 生成 SDXL 關鍵幀，以 ControlNet 控制構圖；IP-Adapter 確保跨場景面孔與服裝穩定。') },
+        { step: 3, title: L('I2V Animation', 'التحريك من صورة إلى فيديو', 'I2V 動畫'), desc: L('RunPod Wan 2.2 animates approved stills with restrained motion — subtle camera drift, water, smoke and character micro-movements.', 'RunPod Wan 2.2 يحرّك الصور المعتمدة بحركة متحفظة — انجراف كاميرا خفيف، ماء ودخان وحركات دقيقة للشخصيات.', 'RunPod Wan 2.2 以克制的運動幅度為核准靜幀加入動態 — 細微鏡頭漂移、水、煙與角色微動作。') },
+        { step: 4, title: L('Edit, Sound & Grade', 'المونتاج والصوت والدرجة اللونية', '剪輯、聲音與調色'), desc: L('DaVinci Resolve edit with AI-narration timing passes, layered foley and a cold North-Atlantic grade; 4K master delivered with serialized shorts.', 'مونتاج في DaVinci Resolve مع جولات مزامنة للتعليق الصوتي، مؤثرات فولي متعددة الطبقات ودرجة باردة لشمال الأطلسي؛ سُلّم ماستر 4K مع مقاطع قصيرة مسلسلة.', 'DaVinci Resolve 剪輯，含 AI 旁白對時、多層擬音與冷色調北大西洋調色；交付 4K 母帶與系列短片。') }
       ],
       tech: [
-        { category: 'Visual Generation', items: ['Draw Things (SDXL)', 'Custom LoRA (8-angle)', 'ControlNet Depth', 'IP-Adapter FaceID'] },
-        { category: 'Video', items: ['RunPod Wan 2.2', 'FFmpeg frame interpolation', 'ESRGAN 4x upscale'] },
-        { category: 'Audio', items: ['Higgs Audio (Arabic)', 'Procedural drone synthesis', 'Foley layer (custom)'] },
-        { category: 'Post', items: ['DaVinci Resolve Studio', 'Custom Golden Hour LUT', 'ProRes 4444 master'] },
-        { category: 'Automation', items: ['Python QC pipeline', 'CLIP similarity scoring', 'n8n publish workflow'] }
+        { category: 'Visual Generation', items: ['Draw Things (SDXL)', 'ControlNet Depth', 'IP-Adapter'] },
+        { category: 'Video', items: ['RunPod Wan 2.2', 'FFmpeg'] },
+        { category: 'Audio', items: ['Kokoro / Higgs TTS', 'Custom foley layers'] },
+        { category: 'Post', items: ['DaVinci Resolve', '4K master'] },
+        { category: 'Distribution', items: ['Serialized shorts cut', 'n8n publish workflow'] }
       ],
-      bts: [
-        { type: 'before_after', title: { en: 'Character Drift Elimination', ar: 'إزالة انحراف الشخصية', 'zh-TW': '消除角色漂移' }, before: '../img/bts/menes-before.jpg', after: '../img/bts/menes-after.jpg', caption: { en: 'Frame 1 vs Frame 900 — zero identity drift', ar: 'إطار 1 مقابل إطار 900 — صفر انحراف هوية', 'zh-TW': '第 1 幀 vs 第 900 幀 — 零身份漂移' } },
-        { type: 'comparison', title: { en: 'Lighting Consistency', ar: 'ثبات الإضاءة', 'zh-TW': '照明一致性' }, images: ['../img/bts/menes-light-1.jpg', '../img/bts/menes-light-2.jpg', '../img/bts/menes-light-3.jpg'], caption: { en: 'Palace / Battlefield / Temple — unified Golden Hour LUT', ar: 'قصر / ساحة معركة / معبد — LUT ساعة ذهبية موحدة', 'zh-TW': '宮殿 / 戰場 / 神廟 — 統一黃金時刻 LUT' } }
-      ]
+      bts: [],
+      youtubeUrl: ''
     },
-    p5: {
-      slug: 'chernobyl',
-      title: { en: 'Chernobyl: Atmospheric Oppression', ar: 'تشرنوبيل: قمع جوي', 'zh-TW': '切爾諾貝爾：壓抑氛圍' },
-      tag: { en: 'Documentary', ar: 'وثائقي', 'zh-TW': '紀錄片' },
-      heroVideo: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      heroPoster: '../img/chernobyl.jpg',
-      challenge: {
-        en: 'Creating a consistent "radioactive haze" and oppressive atmosphere across a devastated city — maintaining visual coherence across 15+ locations while conveying invisible danger.',
-        ar: 'خلق "ضباب مشع" متسق وجو قمعي عبر مدينة مدمرة — الحفاظ على تماسك بصري عبر 15+ موقع مع نقل خطر غير مرئي.',
-        'zh-TW': '在荒廢城市中創造一致的「放射性霧霾」與壓抑氛圍——跨 15+ 地點保持視覺連貫性，同時傳達看不見的危險。'
-      },
-      solution: {
-        en: 'Implemented Atmospheric Engineering: Volumetric Fog with procedural density maps, custom desaturated color LUT (Cineon log → Chernobyl grade), low-frequency procedural drones (20-40Hz) for subliminal tension.',
-        ar: 'تم تنفيذ هندسة جوية: ضباب حجمي بخرائط كثافة إجرائية، LUT لوني مخصص منخفض التشبع (Cineon log → درجة تشرنوبيل)، درونز إجرائية منخفضة التردد (20-40هرتز) للتوتر اللاواعي.',
-        'zh-TW': '實施大氣工程：程序化密度圖的體積霧、自訂低飽和度色彩 LUT (Cineon log → 切爾諾貝爾調色)、程序化低頻無人機聲 (20-40Hz) 製造潛意識張力。'
-      },
-      result: {
-        en: 'Visually cohesive environment evoking fear and tension. 94% audience retention at 3-min mark; cited in 3 academic papers on AI documentary methods.',
-        ar: 'بيئة متماسكة بصرياً تثير الخوف والتوتر. احتفاظ بالجمهور 94% عند دقيقة 3؛ أُشير إليها في 3 أوراق أكاديمية عن أساليب الأفلام الوثائقية بالذكاء الاصطناعي.',
-        'zh-TW': '喚起恐懼與張力的視覺連貫環境。3 分鐘處 94% 觀眾留存；被 3 篇 AI 紀錄片方法學術論文引用。'
-      },
-      stats: {
-        views: '890K+',
-        duration: '12 min',
-        episodes: '1',
-        prodTime: '3 weeks'
-      },
+
+    /* ---------------- 2. Dyatlov Pass ---------------- */
+    dyatlov: {
+      slug: 'dyatlov',
+      title: L('The Dyatlov Pass — 9 Hikers, One Tent Slashed From the Inside',
+        'ممر دياتلوف — 9 متنزهين وخيمة مُزقت من الداخل',
+        '佳特洛夫山口 — 9 名登山者，一頂從內部被割開的帳篷'),
+      tag: L('AI Documentary', 'وثائقي بالذكاء الاصطناعي', 'AI 紀錄片'),
+      heroVideo: '../assets/work-dyatlov.mp4',
+      heroPoster: '../assets/work-dyatlov-poster.jpg',
+      stats: { views: L('Documentary', 'وثائقي', '紀錄片'), duration: '10 min', episodes: '1', prodTime: '4K master' },
+      challenge: L(
+        'Telling a true mystery without sensationalizing it — the film had to feel like a cold case file: credible reenactments of the snow-field, the tent and the final hike, with tension built from editing and sound rather than effects.',
+        'سرد لغز حقيقي دون تهويل — كان على الفيلم أن يبدو كملف قضية باردة: مشاهد تمثيلية مقنعة للحقل الثلجي والخيمة والرحلة الأخيرة، بتوتر مبني من المونتاج والصوت لا من المؤثرات.',
+        '在不聳動的前提下講述真實謎團 — 影片需要像一份冷案檔案：可信的雪原、帳篷與最後徒步重演，張力來自剪輯與聲音，而非特效。'),
+      solution: L(
+        'A desaturated winter LUT and low, wide compositions keep the film forensic. AI reenactments were kept restrained — breath, footsteps, fabric — and the narration follows the real investigation timeline, letting facts carry the tension.',
+        'LUT شتوي منخفض التشبع وتكوينات منخفضة واسعة تحافظ على الطابع الشرعي. أُبقيت المشاهد التمثيلية بالذكاء الاصطناعي متحفظة — أنفاس، خطوات، قماش — ويتبع التعليق الصوتي خط الزمن الحقيقي للتحقيق، لتنقل الحقائق التوتر.',
+        '低飽和冬季 LUT 與低角度寬構圖保持鑑識感。AI 重演保持克制 — 呼吸、腳步、布料 — 旁白跟隨真實調查時間線，讓事實承載張力。'),
+      result: L(
+        'A documentary-grade mystery film with cinematic snow reenactments and a tension-driven narrative cut — an example of AI used in service of journalism-style storytelling.',
+        'فيلم غموض بمستوى وثائقي بمشاهد تمثيلية ثلجية سينمائية ومونتاج سردي مبني على التوتر — نموذج لاستخدام الذكاء الاصطناعي في خدمة السرد الصحفي.',
+        '一部紀錄片級謎團影片，具備電影感雪地重演與張力驅動的敘事剪輯 — AI 用於服務新聞式敘事的範例。'),
       pipeline: [
-        { step: 1, title: { en: 'Archival Forensics', ar: 'الطب الشرعي الأرشيفي', 'zh-TW': '檔案鑑識' }, desc: { en: 'Analyzed 500+ declassified photos, dosimeter readings, Soviet technical reports; built location database with radiation levels per zone.', ar: 'تحليل 500+ صورة غير سرية، قراءات مقياس الجرعة، تقارير سوفيتية تقنية; بناء قاعدة بيانات مواقع مع مستويات إشعاع لكل منطقة.', 'zh-TW': '分析 500+ 解密照片、劑量計讀數、蘇聯技術報告；建立含各區域輻射等級的地點資料庫。' } },
-        { step: 2, title: { en: 'Atmosphere LUT Design', ar: 'تصميم LUT الجو', 'zh-TW': '氛圍 LUT 設計' }, desc: { en: 'Custom Chernobyl grade: desaturated greens/cyans, lifted blacks, cyan-magenta split tone; validated against real dosimeter photos.', ar: 'درجة تشرنوبيل مخصصة: أخضر/سيان غير مشبع، سواد مرفوع، تون مقسم سيان-ماجنتا; تم التحقق بصور مقياس جرعة حقيقية.', 'zh-TW': '自訂切爾諾貝爾調色：去飽和綠/青、提升黑位、青-洋紅分離調色；對照真實劑量計照片驗證。' } },
-        { step: 3, title: { en: 'Volumetric Fog System', ar: 'نظام الضباب الحجمي', 'zh-TW': '體積霧系統' }, desc: { en: 'Procedural fog density driven by radiation map; nearer reactor = denser fog; animated via noise texture (0.02 Hz drift).', ar: 'كثافة ضباب إجرائية مدفوعة بخريطة الإشعاع; أقرب للمفاعل = ضباب أكثف; متحرك عبر ضوضاء نسيج (انحراف 0.02هرتز).', 'zh-TW': '程序化霧密度由輻射圖驅動；越近反應爐 = 霧越濃; 透過雜訊紋理動畫 (0.02Hz 漂移)。' } },
-        { step: 4, title: { en: 'Audio Tension Design', ar: 'تصميم التوتر الصوتي', 'zh-TW': '音訊張力設計' }, desc: { en: 'Procedural drones: 20Hz sine + 33Hz sub-harmonic + filtered white noise; spatialized via binaural panning; mixed at -18 LUFS.', ar: 'درونز إجرائية: موجة جيب 20هرتز + تحت توافقي 33هرتز + ضوضاء بيضاء مفلترة; مكانية عبر بانينغ بيناوري; ميكس عند -18 LUFS.', 'zh-TW': '程序化無人機聲：20Hz 正弦波 + 33Hz 次諧波 + 濾波白噪聲；雙耳定位空間化；-18 LUFS 混音。' } },
-        { step: 5, title: { en: 'QC & Delivery', ar: 'فحص الجودة والتسليم', 'zh-TW': '品控與交付' }, desc: { en: 'Frame audit: fog density variance <5%, LUT adherence 100%, audio loudness -18±1 LUFS; 4K HDR10 master.', ar: 'تدقيق إطارات: تباين كثافة ضباب <5%، التزام LUT 100%، شدة صوت -18±1 LUFS; ماستر 4K HDR10.', 'zh-TW': '幀審核：霧密度變異 <5%、LUT 符合度 100%、音訊響度 -18±1 LUFS；4K HDR10 母帶。' } }
+        { step: 1, title: L('Case-File Research', 'بحث ملف القضية', '案卷研究'), desc: L('Timeline reconstruction from the official investigation, maps of the hike route and weather records for February 1959.', 'إعادة بناء خط الزمن من التحقيق الرسمي وخرائط مسار الرحلة وسجلات الطقس لشهر فبراير 1959.', '依官方調查重建時間線，含徒步路線地圖與 1959 年 2 月氣象記錄。') },
+        { step: 2, title: L('Restrained Reenactments', 'مشاهد تمثيلية متحفظة', '克制重演'), desc: L('Ural mountain landscapes generated as stills first, then animated with minimal motion — priority on credibility over spectacle.', 'مناظر جبال الأورال وُلّدت كصور ثابتة أولاً ثم حُرّكت بأدنى حركة — الأولوية للمصداقية لا للمشهد الباهر.', '烏拉爾山景先以靜幀生成，再以最小動態製作動畫 — 可信度高於視覺奇观。') },
+        { step: 3, title: L('Cold Grade & Sound', 'الدرجة الباردة والصوت', '冷調與聲音'), desc: L('Desaturated winter LUT, sub-bass drone beds and sparse foley — wind, fabric, breath — mixed to keep the viewer uneasy without music cues.', 'LUT شتوي منخفض التشبع، طبقات درونز باص واضحة ومؤثرات شحيحة — رياح، قماش، أنفاس — لمزج يُبقي المشاهد قلقاً دون إشارات موسيقية.', '去飽和冬季 LUT、低頻無人機聲床與稀疏擬音 — 風、布料、呼吸 — 混音讓觀眾不安而不依賴音樂提示。') },
+        { step: 4, title: L('Fact-Led Edit', 'مونتاج يقوده السرد', '事實主導剪輯'), desc: L('The cut follows the investigation chronologically — no dramatized detours — with each reenactment anchored to a documented event.', 'يتبع المونتاج التحقيق زمنياً — دون انحرافات درامية — وكل مشهد تمثيلي مرتبط بوثائق موثقة.', '剪輯依調查時序推進 — 無戲劇化岔路 — 每段重演都對應有記錄的事件。') }
       ],
       tech: [
-        { category: 'Visual Generation', items: ['Draw Things (SDXL)', 'ControlNet Depth + Canny', 'Custom Atmosphere LUT', 'Volumetric Fog (procedural)'] },
-        { category: 'Video', items: ['RunPod Wan 2.2', 'FFmpeg', 'ESRGAN 4x'] },
-        { category: 'Audio', items: ['Python procedural synthesis', 'Binaural spatialization', 'Custom Foley'] },
-        { category: 'Post', items: ['DaVinci Resolve Studio', 'HDR10 grading', 'Custom Chernobyl LUT'] },
-        { category: 'Automation', items: ['Python radiation→fog mapping', 'n8n publish workflow', 'CLIP frame audit'] }
+        { category: 'Visual Generation', items: ['Draw Things (SDXL)', 'Winter LUT', 'ControlNet Depth'] },
+        { category: 'Video', items: ['RunPod Wan 2.2', 'FFmpeg'] },
+        { category: 'Audio', items: ['Kokoro / Higgs TTS', 'Sub-bass drone beds', 'Sparse foley'] },
+        { category: 'Post', items: ['DaVinci Resolve', '4K master'] },
+        { category: 'Distribution', items: ['n8n publish workflow', 'Trilingual metadata'] }
       ],
-      bts: [
-        { type: 'before_after', title: { en: 'Atmosphere Grade', ar: 'درجة الجو', 'zh-TW': '氛圍調色' }, before: '../img/bts/chernobyl-before.jpg', after: '../img/bts/chernobyl-after.jpg', caption: { en: 'Raw generation vs Chernobyl grade — desaturated, lifted blacks, cyan split', ar: 'توليد خام مقابل درجة تشرنوبيل — غير مشبع، سواد مرفوع، تون سيان مقسم', 'zh-TW': '原始生成 vs 切爾諾貝爾調色 — 去飽和、提升黑位、青色分離' } },
-        { type: 'comparison', title: { en: 'Fog Density Map', ar: 'خريطة كثافة الضباب', 'zh-TW': '霧密度圖' }, images: ['../img/bts/chernobyl-fog-1.jpg', '../img/bts/chernobyl-fog-2.jpg', '../img/bts/chernobyl-fog-3.jpg'], caption: { en: 'Reactor proximity → fog density (low / medium / high)', ar: 'القرب من المفاعل → كثافة الضباب (منخفض / متوسط / عالي)', 'zh-TW': '反應爐接近度 → 霧密度 (低 / 中 / 高)' } }
-      ]
+      bts: [],
+      youtubeUrl: ''
     },
-    p10: {
-      slug: 'sphinx',
-      title: { en: 'The Sphinx: Absolute Visual Consistency', ar: 'أبو الهول: ثبات بصري مطلق', 'zh-TW': '斯芬克斯：絕對視覺一致性' },
-      tag: { en: 'Documentary', ar: 'وثائقي', 'zh-TW': '紀錄片' },
-      heroVideo: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      heroPoster: '../img/sphinx.jpg',
-      challenge: {
-        en: 'Maintaining architectural precision and 4K detail during camera movement around the Sphinx — eliminating texture swimming, geometry warping, and lighting inconsistency across 200+ frames.',
-        ar: 'الحفاظ على الدقة المعمارية وتفاصيل 4K أثناء حركة الكاميرا حول أبو الهول — إزالة سباحة النسيج، تشوه الهندسة، وعدم اتساق الإضاءة عبر 200+ إطار.',
-        'zh-TW': '在斯芬克斯周圍移動攝影機時保持建築精度與 4K 細節 — 消除紋理游動、幾何扭曲、照明不一致，跨 200+ 幀。'
-      },
-      solution: {
-        en: 'Implemented 3-Angle Identity Lock: Master reference from 3 orthographic views (front, side, 3/4) with ControlNet depth + normal maps; custom Golden Hour LUT locked per shot; temporal consistency via frame-to-frame optical flow guidance.',
-        ar: 'تم تنفيذ قفل هوية 3 زوايا: مرجع رئيسي من 3 رؤى متعامدة (أمامي، جانبي، ¾) مع خرائط عمق + عادية ControlNet; LUT ساعة ذهبية مخصصة مقفلة لكل لقطة; ثبات زمني عبر توجيه التدفق البصري إطار لإطار.',
-        'zh-TW': '實施三角度身份鎖定：來自三個正交視圖 (正面、側面、3/4) 的主參考，配合 ControlNet 深度圖 + 法線圖；自訂黃金時刻 LUT 每鎖定每鏡頭；透過幀間光流引導實現時間一致性。'
-      },
-      result: {
-        en: 'Cinematic realism with 0% visual drift across shots. 4K architectural accuracy validated against laser scan data; 97% viewer "cinematic quality" rating.',
-        ar: 'واقعية سينمائية مع 0% انحراف بصري عبر اللقطات. دقة معمارية 4K تم التحقق منها ضد بيانات المسح بالليزر; تقييم 97% "جودة سينمائية" من المشاهدين.',
-        'zh-TW': '跨鏡頭 0% 視覺漂移的電影級寫實感。經雷射掃描數據驗證的 4K 建築精度；97% 觀眾給予「電影級品質」評分。'
-      },
-      stats: {
-        views: '560K+',
-        duration: '8 min',
-        episodes: '1',
-        prodTime: '4 weeks'
-      },
+
+    /* ---------------- 3. Franklin Expedition ---------------- */
+    franklin: {
+      slug: 'franklin',
+      title: L('Franklin Expedition 1845 — The Arctic’s Greatest Mystery',
+        'بعثة فرانكلين 1845 — أعظم ألغاز القطب الشمالي',
+        '富蘭克林遠征 1845 — 北極最偉大的謎團'),
+      tag: L('AI Documentary', 'وثائقي بالذكاء الاصطناعي', 'AI 紀錄片'),
+      heroVideo: '../assets/work-franklin.mp4',
+      heroPoster: '../assets/work-franklin-poster.jpg',
+      stats: { views: L('Feature-length', 'طويل', '長片'), duration: 'Full film', episodes: '1', prodTime: '4K master' },
+      challenge: L(
+        'Reconstructing the final voyage of HMS Erebus and Terror — two ships lost in the ice with all 129 crew — as a feature-length documentary. The look had to sit between painterly illustration and archival footage to respect the 1845 period.',
+        'إعادة بناء الرحلة الأخيرة لسفينتي إيربس وتيرور — سفينتان فقدتا في الجليد مع طاقم من 129 بحاراً — كوثائقي طويل. كان على المظهر أن يقع بين الرسم التصويري ولقطات الأرشيف احتراماً لعام 1845.',
+        '以長片紀錄片重現 HMS Erebus 與 Terror 號的最後航程 — 兩艘船與全體 129 名船員葬身冰海。視覺必須介於繪畫插畫與檔案影像之間，以尊重 1845 年的年代感。'),
+      solution: L(
+        'A painterly-realism style frame: oil-painting reference stills with consistent ship designs locked via ControlNet, archival-style map animations for the route, and a fully narrated timeline from departure to the ice entrapment.',
+        'إطار واقعية تصويرية: صور ثابتة مرجعية بأسلوب اللوحة الزيتية مع تصاميم سفن ثابتة مقفلة عبر ControlNet، رسوم خرائط بأسلوب الأرشيف للمسار، وسرد زمني كامل بالتعليق الصوتي من الإبحار حتى الحبس في الجليد.',
+        '繪畫寫實風格：油畫質感參考靜幀，船體設計以 ControlNet 鎖定一致，路線輔以檔案風格地圖動畫，並以完整旁白敘述從啟航到冰封的時間線。'),
+      result: L(
+        'A feature-length AI documentary with a controlled, period-consistent look — the strongest demonstration on this portfolio of long-form narrative discipline.',
+        'وثائقي طويل بالذكاء الاصطناعي بمظهر متسق مع العصر — أقوى إثبات في هذا الملف على الانضباط السردي الطويل.',
+        '一部風格受控、符合時代的長片 AI 紀錄片 — 此作品集中最能證明長篇敘事掌控力的作品。'),
       pipeline: [
-        { step: 1, title: { en: 'Laser Scan Reference', ar: 'مرجع المسح بالليزر', 'zh-TW': '雷射掃描參考' }, desc: { en: 'Acquired 0.5mm resolution laser scan of Sphinx; extracted depth, normal, curvature maps; built 3 orthographic master views.', ar: 'الحصول على مسح ليزري بدقة 0.5مم لأبو الهول; استخراج خرائط العمق، العادية، الانحناء; بناء 3 رؤى رئيسية متعامدة.', 'zh-TW': '取得 0.5mm 解析度斯芬克斯雷射掃描；萃取深度、法線、曲率圖；建立三個正交主視圖。' } },
-        { step: 2, title: { en: '3-Angle Identity Lock', ar: 'قفل هوية 3 زوايا', 'zh-TW': '三角度身份鎖定' }, desc: { en: 'ControlNet depth + normal from master views; IP-Adapter for texture fidelity; per-frame CLIP similarity threshold 0.91.', ar: 'ControlNet عمق + عادية من الرؤى الرئيسية; IP-Adapter لأمانة النسيج; عتبة تشابه CLIP لكل إطار 0.91.', 'zh-TW': '來自主視圖的 ControlNet 深度 + 法線圖；IP-Adapter 紋理保真度；每幀 CLIP 相似度閾值 0.91。' } },
-        { step: 3, title: { en: 'Golden Hour Grade', ar: 'درجة الساعة الذهبية', 'zh-TW': '黃金時刻調色' }, desc: { en: 'Custom LUT: warm highlights (5600K), cool shadows (7500K), protected midtones; locked via 3D LUT texture in DaVinci.', ar: 'LUT مخصص: لايتات دافئة (5600K)، ظلال باردة (7500K)، متوسطات محمية; مقفلة عبر نسيج LUT ثلاثي الأبعاد في دافينشي.', 'zh-TW': '自訂 LUT：暖高光 (5600K)、冷陰影 (7500K)、保護中間調；在 DaVinci 中透過 3D LUT 紋理鎖定。' } },
-        { step: 4, title: { en: 'Temporal Stability', ar: 'الاستقرار الزمني', 'zh-TW': '時間穩定性' }, desc: { en: 'Optical flow guidance (RAFT) between frames; texture swimming suppressed via latent consistency; geometry locked to depth map.', ar: 'توجيه التدفق البصري (RAFT) بين الإطارات; قمع سباحة النسيج عبر ثبات الكامن; هندسة مقفلة لخريطة العمق.', 'zh-TW': '幀間光流引導 (RAFT)；潛在一致性抑制紋理游動；幾何鎖定至深度圖。' } },
-        { step: 5, title: { en: 'QC & Delivery', ar: 'فحص الجودة والتسليم', 'zh-TW': '品控與交付' }, desc: { en: 'Frame audit: geometry drift <0.2px, texture SSIM >0.98, LUT lock 100%; 4K ProRes 4444 + HDR10 master.', ar: 'تدقيق إطارات: انحراف هندسي <0.2بكسل، SSIM نسيج >0.98، قفل LUT 100%; ماستر 4K ProRes 4444 + HDR10.', 'zh-TW': '幀審核：幾何漂移 <0.2px、紋理 SSIM >0.98、LUT 鎖定 100%；4K ProRes 4444 + HDR10 母帶。' } }
+        { step: 1, title: L('Historical Reference', 'المرجعية التاريخية', '歷史參考'), desc: L('Ship plans, expedition letters and Inuit oral histories compiled into a reference pack covering vessels, uniforms and Arctic light.', 'مخططات السفن ورسائل البعثة والسرد الشفهي الإنويتي جُمعت في حزمة مرجعية تغطي السفن والأزياء وضوء القطب.', '彙整船體圖、遠征書信與因紐特口述歷史為參考包，涵蓋船隻、制服與北極光線。') },
+        { step: 2, title: L('Painterly Style Lock', 'قفل الأسلوب التصويري', '繪畫風格鎖定'), desc: L('Oil-painting LUT and palette defined once, then enforced on every generated frame via a shared style reference and CLIP-based check.', 'LUT ولوحة ألوان بأسلوب اللوحة الزيتية عُرّفتا مرة واحدة ثم فُرضتا على كل إطار مولّد عبر مرجع أسلوب مشترك وفحص CLIP.', '油畫 LUT 與色板一次定義，透過共享風格參考與 CLIP 檢查強制套用於每幀。') },
+        { step: 3, title: L('Ice & Ship Consistency', 'ثبات الجليد والسفن', '冰面與船體一致性'), desc: L('Ship geometry locked with depth maps; ice fields generated in layers so lighting stays coherent from open sea to pack ice.', 'هندسة السفن قُفلت بخرائط العمق؛ حقول الجليد وُلّدت بطبقات ليبقى الضوء متماسكاً من البحر المفتوح إلى الجليد المتراكم.', '船體幾何以深度圖鎖定；冰原分層生成，確保從開闊海域到密集冰區的照明連貫。') },
+        { step: 4, title: L('Narration & Maps', 'التعليق والخرائط', '旁白與地圖'), desc: L('Fully narrated timeline with archival-style animated maps marking each known position of the expedition, mixed under a restrained score.', 'خط زمني مسرود كامل بخرائط متحركة بأسلوب الأرشيف تعلّم كل موقع معروف للبعثة، تحت موسيقى متحفظة.', '完整旁白時間線，輔以檔案風格動畫地圖標記遠征隊每個已知位置，配樂克制。') }
       ],
       tech: [
-        { category: 'Visual Generation', items: ['Draw Things (SDXL)', 'ControlNet Depth + Normal', 'IP-Adapter FaceID', '3-Angle Master Reference'] },
-        { category: 'Video', items: ['RunPod Wan 2.2', 'RAFT optical flow', 'ESRGAN 4x'] },
-        { category: 'Audio', items: ['Higgs Audio', 'Ambisonic spatial audio', 'Custom wind/sand Foley'] },
-        { category: 'Post', items: ['DaVinci Resolve Studio', '3D LUT (Golden Hour)', 'ProRes 4444 + HDR10'] },
-        { category: 'Automation', items: ['Python geometry audit', 'SSIM texture validation', 'n8n publish workflow'] }
+        { category: 'Visual Generation', items: ['Draw Things (SDXL)', 'Oil-painting LUT', 'ControlNet Depth'] },
+        { category: 'Video', items: ['RunPod Wan 2.2', 'FFmpeg'] },
+        { category: 'Audio', items: ['Kokoro / Higgs TTS', 'Restrained score mix'] },
+        { category: 'Post', items: ['DaVinci Resolve', '4K master'] },
+        { category: 'Distribution', items: ['n8n publish workflow', 'Chaptered delivery'] }
       ],
-      bts: [
-        { type: 'before_after', title: { en: 'Geometry Lock', ar: 'قفل الهندسة', 'zh-TW': '幾何鎖定' }, before: '../img/bts/sphinx-before.jpg', after: '../img/bts/sphinx-after.jpg', caption: { en: 'Unlocked vs Locked — zero geometry warp across 180° camera arc', ar: 'غير مقفل vs مقفل — صفر تشوه هندسي عبر قوس كاميرا 180°', 'zh-TW': '未鎖定 vs 已鎖定 — 攝影機 180° 弧線內零幾何扭曲' } },
-        { type: 'comparison', title: { en: 'Golden Hour Consistency', ar: 'ثبات الساعة الذهبية', 'zh-TW': '黃金時刻一致性' }, images: ['../img/bts/sphinx-gh-1.jpg', '../img/bts/sphinx-gh-2.jpg', '../img/bts/sphinx-gh-3.jpg'], caption: { en: 'Front / Side / 3/4 — identical Golden Hour grade', ar: 'أمامي / جانبي / ¾ — نفس درجة الساعة الذهبية', 'zh-TW': '正面 / 側面 / 3/4 — 相同黃金時刻調色' } }
-      ]
+      bts: [],
+      youtubeUrl: ''
+    },
+
+    /* ---------------- 4. Jojoba Oil ad ---------------- */
+    jojoba: {
+      slug: 'jojoba',
+      title: L('Jojoba Oil — The Golden Treasure of the Desert (Branded Commercial)',
+        'زيت الجوجوبا — كنز الصحراء الذهبي (إعلان تجاري)',
+        '荷荷巴油 — 沙漠中的金色寶藏（品牌廣告）'),
+      tag: L('Branded Ad', 'إعلان تجاري', '品牌廣告'),
+      heroVideo: '../assets/work-jojoba.mp4',
+      heroPoster: '../assets/work-jojoba-poster.jpg',
+      stats: { views: L('Commercial', 'إعلان', '廣告'), duration: '30–60s cuts', episodes: 'AR + EN', prodTime: '4K master' },
+      challenge: L(
+        'Producing a product commercial for jojoba oil with the polish of a desert-location shoot — macro droplets, golden-hour dunes and a clean benefits-driven edit — without a physical shoot, in two languages.',
+        'إنتاج إعلان تجاري لزيت الجوجوبا ببهرجة تصوير مواقع صحراوية — قطرات ماكرو، كثبان الساعة الذهبية ومونتاج نظيف يركّز على الفوائد — دون تصوير فعلي، وبلغتين.',
+        '為荷荷巴油製作媲美沙漠實景拍攝的產品廣告 — 微距油滴、黃金時刻沙丘與聚焦賣點的乾淨剪輯 — 無實際拍攝，雙語版本。'),
+      solution: L(
+        'Macro product shots were generated with controlled lighting references so the oil reads as liquid gold; desert cinematics establish origin; the edit leads with benefits and ends on the pack shot and call to action.',
+        'لقطات ماكرو للمنتج وُلّدت بمراجع إضاءة مضبوطة لتقرأ الزيت كالذهب السائل؛ مشاهد صحراوية تؤسس للمنشأ؛ يقود المونتاج بالفوائد ويختم بلقطة العبوة والدعوة للشراء.',
+        '微距產品鏡頭以受控照明參考生成，讓油體呈現液態金質感；沙漠畫面建立產地印象；剪輯以賣點開場，以包裝與行動呼籲收尾。'),
+      result: L(
+        'A dual-language commercial (Arabic & English) delivered with product, pack-shot and CTA variants — ready for paid social and e-commerce placement.',
+        'إعلان ثنائي اللغة (عربي وإنجليزي) سُلّم بنسخ للمنتج ولقطة العبوة والدعوة للشراء — جاهز للإعلانات المدفوعة والتجارة الإلكترونية.',
+        '交付雙語（阿拉伯語與英語）廣告，含產品、包裝與 CTA 版本 — 可直接用於付費社交與電商投放。'),
+      pipeline: [
+        { step: 1, title: L('Product Reference', 'مرجع المنتج', '產品參考'), desc: L('Pack shots and label details captured into a reference sheet so the generated product always matches the real packaging.', 'صور العبوة وتفاصيل الملصق وُثقت في ورقة مرجعية ليطابق المنتج المولّد العبوة الحقيقية دائماً.', '拍攝包裝與標籤細節製成參考表，確保生成的產品與實物包裝一致。') },
+        { step: 2, title: L('Macro & Desert Cinematics', 'لقطات الماكرو والمشاهد الصحراوية', '微距與沙漠攝影'), desc: L('Controlled-lighting macro passes for the oil, plus golden-hour dune cinematics for origin storytelling.', 'لقطات ماكرو بإضاءة مضبوطة للزيت، إضافة إلى مشاهد كثبان بالساعة الذهبية لسرد المنشأ.', '受控照明微距拍攝呈現油體，輔以黃金時刻沙丘畫面講述產地故事。') },
+        { step: 3, title: L('Benefits-Led Edit', 'مونتاج يقوده البيع', '賣點主導剪輯'), desc: L('Pace matched to paid-social conventions: hook in the first second, benefit beats, pack shot and CTA close.', 'إيقاع مطابق لأعراف الإعلانات المدفوعة: خطاف في الثانية الأولى، نقاط فائدة، لقطة عبوة وخاتمة بدعوة للشراء.', '節奏符合付費社交慣例：首秒鉤子、賣點節拍、包裝鏡頭與 CTA 收尾。') },
+        { step: 4, title: L('Localization', 'التعريب والتوطين', '本地化'), desc: L('Arabic and English versions with localized typography, voiceover and on-screen text from a single master timeline.', 'نسختان عربية وإنجليزية بخطوط وأصوات ونصوص شاشة موطّنة من خط زمني أم واحد.', '阿拉伯語與英語版本，以同一母時間線製作在地化字體、配音與螢幕文字。') }
+      ],
+      tech: [
+        { category: 'Visual Generation', items: ['Draw Things (SDXL)', 'Controlled lighting refs', 'Macro passes'] },
+        { category: 'Video', items: ['RunPod Wan 2.2', 'FFmpeg'] },
+        { category: 'Audio', items: ['Bilingual voiceover TTS', 'Music licensing-ready mix'] },
+        { category: 'Post', items: ['DaVinci Resolve', 'Paid-social cut variants'] },
+        { category: 'Delivery', items: ['AR + EN masters', 'CTA / pack-shot variants'] }
+      ],
+      bts: [],
+      youtubeUrl: ''
+    },
+
+    /* ---------------- 5. NEON_HEARTBEAT ---------------- */
+    neon: {
+      slug: 'neon-heartbeat',
+      title: L('NEON_HEARTBEAT — Keep the Light On (Official AI Music Video)',
+        'NEON_HEARTBEAT — Keep the Light On (فيديو كليب رسمي)',
+        'NEON_HEARTBEAT — Keep the Light On（官方 AI 音樂錄影帶）'),
+      tag: L('AI Music Video', 'فيديو كليب بالذكاء الاصطناعي', 'AI 音樂錄影帶'),
+      heroVideo: '../assets/work-neon-light.mp4',
+      heroPoster: '../assets/work-neon-light-poster.jpg',
+      stats: { views: L('Music video', 'فيديو كليب', '音樂錄影帶'), duration: 'Full track', episodes: '2 released', prodTime: '4K master' },
+      challenge: L(
+        'Creating a K-pop music video with a virtual idol who must stay the same person across performance shots, lighting changes and camera angles — the hardest consistency problem in AI video.',
+        'إنشاء فيديو كليب K-pop بآيدول افتراضي يجب أن يبقى الشخص نفسه عبر لقطات الأداء وتغيرات الإضاءة وزوايا الكاميرا — أصعب مشكلة ثبات في فيديوهات الذكاء الاصطناعي.',
+        '打造 K-pop 音樂錄影帶，虛擬偶像必須在表演鏡頭、燈光變化與不同運鏡角度中保持同一個人 — 這是 AI 影片中最困難的一致性難題。'),
+      solution: L(
+        'A character master sheet with multi-angle references, face-locked generation via IP-Adapter, and performance shots animated to the track so lip-sync, stage lighting and crowd VFX land on the beat.',
+        'ورقة شخصية رئيسية بمراجع متعددة الزوايا، توليد مقفول الوجه عبر IP-Adapter، ولقطات أداء مُحرّكة على الموسيقى لتصب كلًا من مزامنة الشفاه وإضاءة المسرح ومؤثرات الجمهور على الإيقاع.',
+        '以多角度參考製作角色主設定表，透過 IP-Adapter 鎖定面孔生成，並依曲目製作表演鏡頭動畫，使對嘴、舞台燈光與人群特效全部踩在拍點上。'),
+      result: L(
+        'Two released singles with a locked virtual-idol identity across every shot — proof that an AI pipeline can carry a music artist’s visual brand.',
+        'أغنيتان منشورتان بهوية آيدول افتراضية ثابتة في كل لقطة — إثبات أن خط إنتاج الذكاء الاصطناعي يمكنه حمل الهوية البصرية لفنان موسيقي.',
+        '已發行兩支單曲，虛擬偶像身份跨每個鏡頭保持一致 — 證明 AI 流程足以承載音樂藝人的視覺品牌。'),
+      pipeline: [
+        { step: 1, title: L('Idol Character Design', 'تصميم شخصية الآيدول', '偶像角色設計'), desc: L('Multi-angle master sheet: face, hair, styling and stage outfits locked before any performance footage was generated.', 'ورقة رئيسية متعددة الزوايا: الوجه والشعر والإطلالة وأزياء المسرح قُفلت قبل توليد أي لقطة أداء.', '多角度主設定表：先生成並鎖定面孔、髮型、造型與舞台服裝，才開始任何表演畫面。') },
+        { step: 2, title: L('Face-Locked Generation', 'توليد مقفول الوجه', '面孔鎖定生成'), desc: L('IP-Adapter face reference on every pass; frames failing the identity check were regenerated before animation.', 'مرجع وجه IP-Adapter في كل جولة؛ الإطارات الراسلة في فحص الهوية أُعيد توليدها قبل التحريك.', '每輪生成皆使用 IP-Adapter 面孔參考；未通過身份檢查的幀在動畫化前重新生成。') },
+        { step: 3, title: L('Beat-Matched Performance', 'أداء مزامن على الإيقاع', '節拍同步表演'), desc: L('Performance shots animated to the track, with lip-sync, lighting sweeps and crowd VFX timed to the music’s beat grid.', 'لقطات الأداء حُرّكت على الموسيقى، مع مزامنة شفاه ومساحات إضاءة ومؤثرات جمهور موقوتة على شبكة الإيقاع.', '表演鏡頭依曲目製作動畫，對嘴、燈光掃動與人群特效全部對齊音樂節拍網格。') },
+        { step: 4, title: L('MV Edit & Grade', 'مونتاج ودرجة الفيديو كليب', 'MV 剪輯與調色'), desc: L('Cut to the song structure — verse, chorus, bridge — with neon grades that shift per section while the idol’s skin and styling stay consistent.', 'مونتاج على بنية الأغنية — مقطع، لازمة، جسر — بدرجات نيون تتبدل مع كل مقطع بينما تبقى بشرة الآيدول وإطلالته ثابتة.', '依歌曲結構（主歌、副歌、橋段）剪輯，各段落霓虹色調轉換，偶像膚色與造型保持一致。') }
+      ],
+      tech: [
+        { category: 'Character', items: ['Multi-angle master sheet', 'IP-Adapter FaceID', 'Identity QC loop'] },
+        { category: 'Video', items: ['RunPod Wan 2.2', 'Beat-grid timing', 'FFmpeg'] },
+        { category: 'Audio', items: ['Track-synced lip performance', 'Stems-based mix'] },
+        { category: 'Post', items: ['DaVinci Resolve', 'Neon section grades', '4K master'] },
+        { category: 'Series', items: ['2 singles released', 'Locked artist identity'] }
+      ],
+      bts: [],
+      youtubeUrl: ''
+    },
+
+    /* ---------------- 6. The Island Courier ---------------- */
+    ebb: {
+      slug: 'island-courier',
+      title: L('The Island Courier — Narrated Manga Series',
+        'The Island Courier — سلسلة مانغا مسرودة',
+        'The Island Courier — 有聲漫畫系列'),
+      tag: L('Narrated Manga · Series', 'مانغا مسرودة · مسلسل', '有聲漫畫 · 系列'),
+      heroVideo: '../assets/work-ebb1.mp4',
+      heroPoster: '../assets/work-ebb1-poster.jpg',
+      stats: { views: L('Series', 'مسلسل', '系列'), duration: 'Episodic', episodes: '2 live', prodTime: 'Trilingual' },
+      challenge: L(
+        'Turning a watercolor manga into a moving series without losing the book’s charm — characters, color palette and panel composition had to survive the jump from page to screen, with narration in three languages.',
+        'تحويل مانغا بألوان مائية إلى سلسلة متحركة دون فقدان سحر الكتاب — شخصياته ولوحة ألوانه وتكوين لوحاته كان يجب أن تصمد في الانتقال من الصفحة إلى الشاشة، بسرد بثلاث لغات.',
+        '將水彩漫畫轉化為動態系列而不失去書籍魅力 — 角色、色板與分鏡構圖必須在從紙頁到螢幕的跳躍中存活，並以三種語言配音。'),
+      solution: L(
+        'The manga’s own panels became the style reference: characters regenerated to match the original linework and washes, animated with gentle camera moves only — pans, pushes, breathing motion — then narrated in Arabic, English and Chinese.',
+        'لوحات المانغا نفسها صارت المرجع الأسلوبي: أُعيد توليد الشخصيات لتطابق الخط والغسل اللوني الأصليين، وحُرّكت بحركات كاميرا هادئة فقط — تحريك، دفع، حركة تنفس — ثم سُرّدت بالعربية والإنجليزية والصينية.',
+        '以漫畫原稿分鏡作為風格參考：重新生成角色以貼合原始線稿與水彩筆觸，僅以柔和鏡頭運動（平移、推進、呼吸感）製作動畫，再錄製阿拉伯語、英語與中文旁白。'),
+      result: L(
+        'Two episodes live on the channel with the watercolor world intact — a format that scales to full seasons without a traditional animation budget.',
+        'حلقتان منشورتان على القناة والعالم المائي سليم — صيغة قابلة للتوسع إلى مواسم كاملة دون ميزانية أنمي تقليدي.',
+        '兩集已於頻道上線，水彩世界完整保留 — 此格式可在無傳統動畫預算下擴展為完整季度。'),
+      pipeline: [
+        { step: 1, title: L('Source Panel Analysis', 'تحليل اللوحات المصدر', '原稿分鏡分析'), desc: L('Panels deconstructed into character sheets, palette swatches and composition rules that define the series look.', 'جُزّأت اللوحات إلى أوراق شخصيات وعينات لون وقواعد تكوين تُعرّف مظهر السلسلة.', '將分鏡拆解為角色表、色票與構圖規則，定義全系列視覺。') },
+        { step: 2, title: L('Style-Matched Generation', 'توليد مطابق للأسلوب', '風格匹配生成'), desc: L('Characters and environments regenerated to match the manga’s linework and watercolor washes, checked per frame.', 'أُعيد توليد الشخصيات والبيئات لتطابق خط المانغا وغسلها اللوني، مع فحص لكل إطار.', '重新生成角色與環境以貼合漫畫線稿與水彩筆觸，逐幀檢查。') },
+        { step: 3, title: L('Gentle Motion Pass', 'جولة الحركة الهادئة', '柔和動態處理'), desc: L('Only restrained camera moves — pans, slow pushes, ambient motion — so the image keeps its illustrated stillness.', 'حركات كاميرا متحفظة فقط — تحريك ودفع بطيء وحركة محيطة — لتبقى الصورة على سكونها التوضيحي.', '僅使用克制鏡頭運動 — 平移、緩慢推進、環境動態 — 讓畫面保留插畫般的靜謐。') },
+        { step: 4, title: L('Trilingual Narration', 'السرد الثلاثي اللغات', '三語旁白'), desc: L('Narration recorded in Arabic, English and Chinese with per-language timing passes, so each version breathes at its own pace.', 'سُجّل التعليق بالعربية والإنجليزية والصينية مع جولات توقيت لكل لغة، لتتنفس كل نسخة بإيقاعها.', '以阿拉伯語、英語與中文錄製旁白，各語言獨立對時，讓每個版本以自己的節奏呼吸。') }
+      ],
+      tech: [
+        { category: 'Style', items: ['Manga panel references', 'Watercolor palette lock', 'Character sheets'] },
+        { category: 'Video', items: ['Restrained camera moves', 'FFmpeg'] },
+        { category: 'Audio', items: ['AR / EN / ZH narration', 'Per-language timing passes'] },
+        { category: 'Post', items: ['DaVinci Resolve', 'Episodic masters'] },
+        { category: 'Distribution', items: ['2 episodes live on YouTube', 'Season-ready format'] }
+      ],
+      bts: [],
+      youtubeUrl: 'https://www.youtube.com/watch?v=t9iwian6RVA'
     }
   };
 
-  // Get project ID from URL
   function getProjectId() {
     const path = window.location.pathname;
-    const slug = path.split('/').filter(Boolean).pop(); // e.g., 'king-menes'
+    const slug = path.split('/').filter(Boolean).pop();
     return SLUG_MAP[slug] || null;
   }
 
-  // Get current language
   function getLang() {
     return document.documentElement.getAttribute('lang') || 'en';
   }
 
-  // Get localized string
-  function t(key, data) {
+  function t(obj) {
+    if (obj == null) return '';
+    if (typeof obj === 'string') return obj;
     const lang = getLang();
-    if (data && data[lang]) return data[lang];
-    if (data && data.en) return data.en;
-    return key;
+    return obj[lang] || obj.en || '';
   }
 
-  // Render the case study page
   async function renderCaseStudy() {
     const projectId = getProjectId();
-    if (!projectId) {
-      window.location.href = '../index.html#work';
-      return;
-    }
+    const data = projectId && CASE_STUDY_DATA[projectId];
+    if (!data) { window.location.href = '../index.html#work'; return; }
 
-    const data = CASE_STUDY_DATA[projectId];
-    if (!data) {
-      window.location.href = '../index.html#work';
-      return;
-    }
-
-    const lang = getLang();
-
-    // Update page title & meta
     document.title = t(data.title) + ' — Abdalla Maher';
     document.getElementById('ogTitle').setAttribute('content', t(data.title));
     document.getElementById('ogDesc').setAttribute('content', t(data.challenge).substring(0, 160));
-    document.getElementById('ogImage').setAttribute('content', window.location.origin + data.heroPoster);
+    document.getElementById('ogImage').setAttribute('content', window.location.origin + '/' + data.heroPoster.replace(/^\.\.\//, ''));
     document.getElementById('ogUrl').setAttribute('content', window.location.href);
     document.getElementById('twTitle').setAttribute('content', t(data.title));
     document.getElementById('twDesc').setAttribute('content', t(data.challenge).substring(0, 160));
-    document.getElementById('twImage').setAttribute('content', window.location.origin + data.heroPoster);
+    document.getElementById('twImage').setAttribute('content', window.location.origin + '/' + data.heroPoster.replace(/^\.\.\//, ''));
     document.getElementById('canonicalUrl').setAttribute('href', window.location.href);
 
-    // Breadcrumb
     document.getElementById('caseBreadcrumbTitle').textContent = t(data.title);
-
-    // Meta
     document.getElementById('caseTag').textContent = t(data.tag);
     document.getElementById('caseTitle').textContent = t(data.title);
-    document.getElementById('statViews').textContent = data.stats.views;
+    document.getElementById('statViews').textContent = t(data.stats.views);
     document.getElementById('statDuration').textContent = data.stats.duration;
     document.getElementById('statEpisodes').textContent = data.stats.episodes;
     document.getElementById('statProdTime').textContent = data.stats.prodTime;
 
-    // Hero media
+    // Local video hero (no external embeds)
     const heroMedia = document.getElementById('caseHeroMedia');
     heroMedia.innerHTML = `
       <div class="case-video-frame">
-        <iframe src="${data.heroVideo}" title="${t(data.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-      </div>
-    `;
+        <video controls playsinline preload="metadata" poster="${data.heroPoster}" src="${data.heroVideo}" title="${t(data.title)}" style="width:100%;height:100%;object-fit:cover;display:block;background:#000;"></video>
+      </div>`;
 
-    // Overview
     document.getElementById('caseChallenge').textContent = t(data.challenge);
     document.getElementById('caseSolution').textContent = t(data.solution);
     document.getElementById('caseResult').textContent = t(data.result);
 
-    // Pipeline steps
-    const pipelineContainer = document.getElementById('casePipelineSteps');
-    pipelineContainer.innerHTML = data.pipeline.map(step => `
+    document.getElementById('casePipelineSteps').innerHTML = data.pipeline.map(step => `
       <div class="pipeline-step-detail">
         <div class="step-header">
           <span class="step-number">${step.step}</span>
           <h3>${t(step.title)}</h3>
         </div>
         <p>${t(step.desc)}</p>
-      </div>
-    `).join('');
+      </div>`).join('');
 
-    // Tech specs
-    const techContainer = document.getElementById('caseTechGrid');
-    techContainer.innerHTML = data.tech.map(group => `
+    document.getElementById('caseTechGrid').innerHTML = data.tech.map(group => `
       <div class="tech-group">
         <h4>${group.category}</h4>
-        <ul>
-          ${group.items.map(item => `<li>${item}</li>`).join('')}
-        </ul>
-      </div>
-    `).join('');
+        <ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul>
+      </div>`).join('');
 
-    // BTS
-    const btsContainer = document.getElementById('caseBtsGrid');
-    btsContainer.innerHTML = data.bts.map(bts => {
-      if (bts.type === 'before_after') {
-        return `
-          <div class="bts-card before-after">
-            <h4>${t(bts.title)}</h4>
-            <div class="before-after-slider">
-              <div class="before-img">
-                <img src="${bts.before}" alt="${t(bts.title)} - Before" loading="lazy">
-                <span class="label" data-i18n="case_before">Before</span>
-              </div>
-              <div class="after-img">
-                <img src="${bts.after}" alt="${t(bts.title)} - After" loading="lazy">
-                <span class="label" data-i18n="case_after">After</span>
-              </div>
-              <div class="slider-handle" role="slider" aria-label="Compare before/after" tabindex="0"></div>
-            </div>
-            <p class="bts-caption">${t(bts.caption)}</p>
-          </div>
-        `;
-      } else {
-        return `
-          <div class="bts-card comparison">
-            <h4>${t(bts.title)}</h4>
-            <div class="comparison-grid">
-              ${bts.images.map(img => `<img src="${img}" alt="${t(bts.title)}" loading="lazy">`).join('')}
-            </div>
-            <p class="bts-caption">${t(bts.caption)}</p>
-          </div>
-        `;
-      }
-    }).join('');
-
-    // Schema.org markup
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "name": t(data.title),
-      "description": t(data.challenge),
-      "author": { "@type": "Person", "name": "Abdalla Maher" },
-      "publisher": { "@type": "Organization", "name": "Abdalla Maher Studio" },
-      "genre": t(data.tag),
-      "datePublished": "2026",
-      "inLanguage": lang,
-      "isPartOf": { "@type": "CreativeWork", "name": "Abdalla Maher Portfolio" }
-    };
-    document.getElementById('schemaMarkup').textContent = JSON.stringify(schema, null, 2);
-
-    // Apply i18n to dynamically inserted content
-    if (typeof window.__applyLang === 'function') {
-      window.__applyLang(lang);
+    const btsSection = document.querySelector('.case-bts');
+    if (data.bts && data.bts.length) {
+      document.getElementById('caseBtsGrid').innerHTML = data.bts.map(item => `
+        <figure class="bts-item">
+          <figcaption>${t(item.caption)}</figcaption>
+        </figure>`).join('');
+    } else if (btsSection) {
+      btsSection.style.display = 'none';
     }
 
-    // Initialize before/after sliders
-    initBeforeAfterSliders();
+    // Optional YouTube link under the hero video
+    if (data.youtubeUrl) {
+      const wrap = document.createElement('p');
+      wrap.style.cssText = 'text-align:center;margin:1rem 0 0;';
+      wrap.innerHTML = `<a href="${data.youtubeUrl}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">${getLang() === 'ar' ? 'شاهد الحلقة كاملة على يوتيوب' : (getLang() === 'zh-TW' ? '在 YouTube 上觀看完整影片' : 'Watch the full episode on YouTube')}</a>`;
+      heroMedia.appendChild(wrap);
+    }
   }
 
-  // Before/After slider interaction
-  function initBeforeAfterSliders() {
-    document.querySelectorAll('.before-after-slider').forEach(slider => {
-      const beforeImg = slider.querySelector('.before-img');
-      const handle = slider.querySelector('.slider-handle');
-      let isDragging = false;
-
-      function updatePosition(x) {
-        const rect = slider.getBoundingClientRect();
-        const pos = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
-        beforeImg.style.clipPath = `inset(0 ${100 - pos * 100}% 0 0)`;
-        handle.style.left = `${pos * 100}%`;
-      }
-
-      handle.addEventListener('mousedown', () => { isDragging = true; });
-      handle.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
-
-      window.addEventListener('mousemove', (e) => { if (isDragging) updatePosition(e.clientX); });
-      window.addEventListener('touchmove', (e) => { if (isDragging) updatePosition(e.touches[0].clientX); }, { passive: true });
-
-      window.addEventListener('mouseup', () => { isDragging = false; });
-      window.addEventListener('touchend', () => { isDragging = false; });
-
-      slider.addEventListener('click', (e) => updatePosition(e.clientX));
-
-      // Keyboard support
-      handle.addEventListener('keydown', (e) => {
-        const step = 0.05;
-        let current = parseFloat(handle.style.left) / 100 || 0.5;
-        if (e.key === 'ArrowRight') updatePosition((current + step) * slider.getBoundingClientRect().width + slider.getBoundingClientRect().left);
-        if (e.key === 'ArrowLeft') updatePosition((current - step) * slider.getBoundingClientRect().width + slider.getBoundingClientRect().left);
-      });
-    });
-  }
-
-  // Load related projects
   async function loadRelatedProjects() {
     try {
       const res = await fetch('../content.json', { cache: 'no-store' });
@@ -358,42 +345,33 @@
       const projects = content.site.projects || {};
       const currentId = getProjectId();
       const relatedIds = Object.keys(projects).filter(id => id !== currentId).slice(0, 3);
-
       const grid = document.getElementById('relatedGrid');
       grid.innerHTML = relatedIds.map(id => {
         const p = projects[id];
         return `
           <article class="related-item">
-            <a href="${p.slug ? `./${p.slug}/` : p.url}" class="related-link" ${!p.slug ? 'target="_blank" rel="noopener"' : ''}>
+            <a href="./${p.slug}/" class="related-link">
               <img src="../${p.image}" alt="" loading="lazy" decoding="async">
               <h4>${p.case_study ? p.case_study.title : id}</h4>
             </a>
-          </article>
-        `;
+          </article>`;
       }).join('');
     } catch (e) {
       console.warn('Could not load related projects:', e);
     }
   }
 
-  // Init
   document.addEventListener('DOMContentLoaded', async () => {
     await renderCaseStudy();
     await loadRelatedProjects();
-
-    // Footer year
     const yearEl = document.getElementById('footerYear');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-    // Back to top
     const backToTop = document.getElementById('backToTop');
     if (backToTop) {
       window.addEventListener('scroll', () => {
         backToTop.classList.toggle('visible', window.pageYOffset > 600);
       }, { passive: true });
-      backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+      backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
   });
 })();
