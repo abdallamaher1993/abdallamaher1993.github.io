@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://abdalla.design/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/"/>
@@ -12,63 +12,123 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/"/>
   </url>
   <url>
-    <loc>https://abdalla.design/work/titanic/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://abdalla.design/about.html</loc>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/titanic/"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/titanic/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/titanic/?lang=zh-TW"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/titanic/"/>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/about.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/about.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/about.html?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/about.html"/>
   </url>
   <url>
-    <loc>https://abdalla.design/work/dyatlov/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://abdalla.design/work/hawk-of-quraysh/</loc>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/dyatlov/"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/dyatlov/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/dyatlov/?lang=zh-TW"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/dyatlov/"/>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/hawk-of-quraysh/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/hawk-of-quraysh/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/hawk-of-quraysh/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/hawk-of-quraysh/"/>
   </url>
   <url>
-    <loc>https://abdalla.design/work/franklin/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://abdalla.design/work/taiwan-ai-twin/</loc>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/franklin/"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/franklin/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/franklin/?lang=zh-TW"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/franklin/"/>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/taiwan-ai-twin/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/taiwan-ai-twin/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/taiwan-ai-twin/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/taiwan-ai-twin/"/>
+  </url>
+  <url>
+    <loc>https://abdalla.design/work/australia-real-estate/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/australia-real-estate/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/australia-real-estate/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/australia-real-estate/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/australia-real-estate/"/>
+  </url>
+  <url>
+    <loc>https://abdalla.design/work/date-oasis/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/date-oasis/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/date-oasis/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/date-oasis/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/date-oasis/"/>
   </url>
   <url>
     <loc>https://abdalla.design/work/jojoba/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/jojoba/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/jojoba/?lang=ar"/>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/jojoba/?lang=zh-TW"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/jojoba/"/>
   </url>
   <url>
-    <loc>https://abdalla.design/work/neon-heartbeat/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://abdalla.design/work/normandy-1944/</loc>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/normandy-1944/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/normandy-1944/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/normandy-1944/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/normandy-1944/"/>
+  </url>
+  <url>
+    <loc>https://abdalla.design/work/baghdad-1258/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/baghdad-1258/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/baghdad-1258/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/baghdad-1258/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/baghdad-1258/"/>
+  </url>
+  <url>
+    <loc>https://abdalla.design/work/franklin/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/franklin/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/franklin/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/franklin/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/franklin/"/>
+  </url>
+  <url>
+    <loc>https://abdalla.design/work/titanic/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/titanic/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/titanic/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/titanic/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/titanic/"/>
+  </url>
+  <url>
+    <loc>https://abdalla.design/work/taipei-cafe-reel/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/taipei-cafe-reel/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/taipei-cafe-reel/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/taipei-cafe-reel/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/taipei-cafe-reel/"/>
+  </url>
+  <url>
+    <loc>https://abdalla.design/work/neon-heartbeat/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/neon-heartbeat/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/neon-heartbeat/?lang=ar"/>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/neon-heartbeat/?lang=zh-TW"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/neon-heartbeat/"/>
-  </url>
-  <url>
-    <loc>https://abdalla.design/work/island-courier/</loc>
-    <lastmod>2026-10-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://abdalla.design/work/island-courier/"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://abdalla.design/work/island-courier/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://abdalla.design/work/island-courier/?lang=zh-TW"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdalla.design/work/island-courier/"/>
   </url>
 </urlset>

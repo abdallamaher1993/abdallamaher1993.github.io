@@ -1,45 +1,89 @@
 /* ============================================================
-   main.js — Language switch, form, interactions, a11y
+   main.js — Language switch, showreel audio, live dub switcher,
+             category filters, smart video pause, pipeline & a11y
    ============================================================ */
 
 (function () {
   'use strict';
 
-  /* ---- Analytics-ready event layer (inert until GA4 is added) ---- */
-  // To enable GA4: paste your gtag snippet before </head> in index.html.
-  // The events below flow into dataLayer automatically once GA is present.
   function trackEvent(name, params) {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(Object.assign({ event: name }, params || {}));
   }
 
-  /* ---- Language Switcher ---- */
-  const html = document.documentElement;
-  const langBtns = document.querySelectorAll('.lang-btn');
-  const i18nEls = document.querySelectorAll('[data-i18n]');
-  const i18nAriaEls = document.querySelectorAll('[data-i18n-aria]');
-  const storedLang = localStorage.getItem('lang');
+  var html = document.documentElement;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var langBtns = document.querySelectorAll('.lang-btn');
+  var heroVideo = document.getElementById('heroVideo');
+  var heroSoundBtn = document.getElementById('heroSoundBtn');
+  var heroSoundLabel = document.getElementById('heroSoundLabel');
+  var heroPlayToggle = document.getElementById('heroPlayToggle');
+  var heroPlayIcon = document.getElementById('heroPlayIcon');
+  var hawkVideo = document.getElementById('hawkVideo');
+  var hawkUserSelectedDub = false;
+
+  function currentStrings() {
+    var lang = html.getAttribute('lang') || 'en';
+    return (typeof I18N !== 'undefined' && I18N[lang]) ? I18N[lang] : (typeof I18N !== 'undefined' ? I18N.en : {});
+  }
+
+  function syncHeroControlsText() {
+    var strings = currentStrings();
+    if (heroSoundLabel && heroVideo) {
+      heroSoundLabel.textContent = heroVideo.muted
+        ? (strings.hero_sound_off || 'Enable Sound (-14 LUFS)')
+        : (strings.hero_sound_on || 'Sound On · Mute');
+    }
+    if (heroPlayToggle && heroVideo) {
+      heroPlayToggle.setAttribute(
+        'aria-label',
+        heroVideo.paused
+          ? (strings.hero_play_video || 'Play showreel')
+          : (strings.hero_pause_video || 'Pause showreel')
+      );
+    }
+  }
+
+  function syncDefaultHawkLanguage(lang) {
+    if (!hawkVideo || hawkUserSelectedDub || !hawkVideo.paused || hawkVideo.currentTime > 0.5) {
+      return;
+    }
+    var map = {
+      ar: 'assets/work-hawk-ar.mp4',
+      en: 'assets/work-hawk-en.mp4',
+      'zh-TW': 'assets/work-hawk-zh.mp4'
+    };
+    var targetSrc = map[lang] || map.ar;
+    if (hawkVideo.getAttribute('src') !== targetSrc) {
+      hawkVideo.setAttribute('src', targetSrc);
+      document.querySelectorAll('.dub-btn').forEach(function (btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-dub-src') === targetSrc);
+      });
+    }
+  }
 
   function applyLang(lang) {
-    if (!I18N[lang]) return;
-    const strings = I18N[lang];
+    if (typeof I18N === 'undefined' || !I18N[lang]) {
+      return;
+    }
+    var strings = I18N[lang];
 
-    i18nEls.forEach(function (el) {
-      const key = el.getAttribute('data-i18n');
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
       if (strings[key] !== undefined) {
         el.textContent = strings[key];
       }
     });
-    i18nAriaEls.forEach(function (el) {
-      const key = el.getAttribute('data-i18n-aria');
+
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-aria');
       if (strings[key] !== undefined) {
         el.setAttribute('aria-label', strings[key]);
       }
     });
 
-    // Handle placeholders
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
-      const key = el.getAttribute('data-i18n-placeholder');
+      var key = el.getAttribute('data-i18n-placeholder');
       if (strings[key] !== undefined) {
         el.setAttribute('placeholder', strings[key]);
       }
@@ -57,19 +101,42 @@
       btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
 
-    localStorage.setItem('lang', lang);
+    syncHeroControlsText();
+    syncDefaultHawkLanguage(lang);
+
+    if (typeof window.__renderCaseStudy === 'function') {
+      window.__renderCaseStudy();
+    }
+
+    try {
+      localStorage.setItem('lang', lang);
+    } catch (e) {
+      /* ignore private mode storage errors */
+    }
     trackEvent('language_change', { language: lang });
   }
 
-  if (storedLang && I18N[storedLang]) {
-    applyLang(storedLang);
+  /* Detect initial language: ?lang= query param -> localStorage -> default 'en' */
+  var urlParams = new URLSearchParams(window.location.search);
+  var queryLang = urlParams.get('lang');
+  var storedLang = null;
+  try {
+    storedLang = localStorage.getItem('lang');
+  } catch (e) {
+    storedLang = null;
   }
+  var initialLang = (queryLang && typeof I18N !== 'undefined' && I18N[queryLang])
+    ? queryLang
+    : ((storedLang && typeof I18N !== 'undefined' && I18N[storedLang]) ? storedLang : 'en');
+  applyLang(initialLang);
 
   langBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
       applyLang(this.getAttribute('data-lang'));
     });
   });
+
+  window.__applyLang = applyLang;
 
   /* ---- Mobile Menu ---- */
   var menuToggle = document.getElementById('menuToggle');
@@ -89,206 +156,182 @@
     });
   }
 
-  /* ---- (Contact form removed) ---- */
-
-  /* ---- Order Form ---- */
-  var orderForm = document.getElementById('orderForm');
-
-  /* Orders go to a public webhook if one is configured
-     (js/webhook-config.js; content.json site.webhookUrl wins — read at
-     submit time so the content-loader.js overlay is already in effect).
-     An empty/localhost URL means "no server yet": the order opens as a
-     pre-filled email instead, so it always reaches the site owner. */
-  function currentStrings() {
-    var lang = document.documentElement.getAttribute('lang') || 'en';
-    return I18N[lang] || I18N.en;
-  }
-
-  function isPublicWebhook(u) {
-    if (typeof u !== 'string') return false;
-    var m = u.match(/^https:\/\/([^/]+)/i);
-    if (!m) return false;
-    var host = m[1].toLowerCase();
-    return host !== 'localhost' && host.indexOf('127.') !== 0 &&
-      host !== '0.0.0.0' && host !== '::' && host !== '[::]';
-  }
-
-  function orderEmailTo() {
-    var el = document.querySelector('a[data-cfg="email"]');
-    if (el && /^mailto:/i.test(el.href)) {
-      var a = el.href.replace(/^mailto:/i, '').split('?')[0].trim();
-      if (a) return a;
-    }
-    return 'hello@abdalla.design';
-  }
-
-  function openOrderEmail(data) {
-    var PKG = { basic: 'Basic', standard: 'Standard', professional: 'Professional', monthly: 'Monthly Subscription' };
-    var subject = 'New order request — ' + (PKG[data.package] || data.package || '');
-    var body = [
-      'Name: ' + data.name,
-      'Email: ' + data.email,
-      'Package: ' + (PKG[data.package] || data.package),
-      '',
-      'Project description:',
-      data.message,
-      '',
-      '---',
-      'Sent from the portfolio site · ' + data.date
-    ].join('\n');
-    var a = document.createElement('a');
-    a.href = 'mailto:' + orderEmailTo() +
-      '?subject=' + encodeURIComponent(subject) +
-      '&body=' + encodeURIComponent(body);
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }
-
-  if (orderForm) {
-    orderForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var formData = new FormData(orderForm);
-      var data = {};
-      formData.forEach(function (value, key) {
-        data[key] = value;
-      });
-      data.date = new Date().toISOString();
-      data.source = location.href;
-
-      var successMsg = document.getElementById('formSuccess');
-
-      function showMailtoResult() {
-        if (successMsg) {
-          successMsg.textContent = currentStrings().order_mailto_note;
-          successMsg.classList.add('show');
+  /* ---- Hero Showreel Autoplay & Sound Controls ---- */
+  if (heroVideo) {
+    if (!prefersReducedMotion) {
+      heroVideo.play().then(function () {
+        if (heroPlayIcon) {
+          heroPlayIcon.textContent = '❚❚';
         }
-        trackEvent('order_email', { package: data.package || 'unknown' });
+        syncHeroControlsText();
+      }).catch(function () {
+        if (heroPlayIcon) {
+          heroPlayIcon.textContent = '▶';
+        }
+        syncHeroControlsText();
+      });
+    } else if (heroPlayIcon) {
+      heroPlayIcon.textContent = '▶';
+    }
+
+    var toggleHeroSound = function () {
+      heroVideo.muted = !heroVideo.muted;
+      if (!heroVideo.muted && heroVideo.paused) {
+        heroVideo.play().catch(function () {});
+        if (heroPlayIcon) {
+          heroPlayIcon.textContent = '❚❚';
+        }
       }
+      if (heroSoundBtn) {
+        heroSoundBtn.classList.toggle('unmuted', !heroVideo.muted);
+        heroSoundBtn.setAttribute('aria-pressed', heroVideo.muted ? 'false' : 'true');
+      }
+      syncHeroControlsText();
+      trackEvent('hero_sound_toggle', { muted: heroVideo.muted });
+    };
 
-      var webhookUrl = window.__WEBHOOK_URL__ || '';
+    heroVideo.style.cursor = 'pointer';
+    heroVideo.addEventListener('click', toggleHeroSound);
 
-      if (!isPublicWebhook(webhookUrl)) {
-        /* No public server configured — open the order as a pre-filled email. */
-        openOrderEmail(data);
-        showMailtoResult();
-      } else {
-        fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        })
-        .then(function (response) {
-          if (!response.ok) throw new Error('HTTP ' + response.status);
-          if (successMsg) {
-            successMsg.textContent = currentStrings().order_success;
-            successMsg.classList.add('show');
+    if (heroSoundBtn) {
+      heroSoundBtn.addEventListener('click', toggleHeroSound);
+    }
+
+    if (heroPlayToggle) {
+      heroPlayToggle.addEventListener('click', function () {
+        if (heroVideo.paused) {
+          heroVideo.play().catch(function () {});
+          if (heroPlayIcon) {
+            heroPlayIcon.textContent = '❚❚';
           }
-          trackEvent('order_submit', { package: data.package || 'unknown' });
-        })
-        .catch(function (error) {
-          console.error('Order submission error:', error);
-          /* Webhook down — fall back to email so the order is not lost. */
-          openOrderEmail(data);
-          showMailtoResult();
-        });
-      }
-
-      // Don't reset immediately so the user sees the result message
-      setTimeout(function () { orderForm.reset(); }, 3000);
-    });
+        } else {
+          heroVideo.pause();
+          if (heroPlayIcon) {
+            heroPlayIcon.textContent = '▶';
+          }
+        }
+        syncHeroControlsText();
+        trackEvent('hero_video_toggle', { paused: heroVideo.paused });
+      });
+    }
   }
 
-  /* ---- Footer Year ---- */
-  var yearEl = document.getElementById('footerYear');
-  if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
-  }
-
-  /* ---- Smooth Scroll (respects reduced motion) ---- */
-  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-    a.addEventListener('click', function (e) {
-      var target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
-        trackEvent('nav_click', { target: this.getAttribute('href') });
+  /* ---- Smart Exclusive Video Playback (No Overlapping Audio) ---- */
+  var allVideos = document.querySelectorAll('video');
+  allVideos.forEach(function (vid) {
+    vid.addEventListener('play', function () {
+      if (vid !== heroVideo && heroVideo && !heroVideo.muted) {
+        heroVideo.muted = true;
+        if (heroSoundBtn) {
+          heroSoundBtn.classList.remove('unmuted');
+          heroSoundBtn.setAttribute('aria-pressed', 'false');
+        }
+        syncHeroControlsText();
       }
+      allVideos.forEach(function (other) {
+        if (other !== vid && other !== heroVideo && !other.paused) {
+          other.pause();
+        }
+      });
     });
   });
 
-  /* ---- Hero Play Button ---- */
-  var heroPlayBtn = document.querySelector('.hero-play-btn');
-  var heroVideo = document.querySelector('.hero-video');
-  if (heroPlayBtn && heroVideo) {
-    heroPlayBtn.addEventListener('click', function () {
-      var isPlaying = heroVideo.paused;
-      if (isPlaying) {
-        heroVideo.play().catch(function () { /* autoplay blocked */ });
-        heroPlayBtn.classList.add('playing');
-        heroPlayBtn.setAttribute('aria-expanded', 'true');
-        heroPlayBtn.setAttribute('aria-label', currentStrings().hero_pause_video || 'Pause showreel');
-      } else {
-        heroVideo.pause();
-        heroPlayBtn.classList.remove('playing');
-        heroPlayBtn.setAttribute('aria-expanded', 'false');
-        heroPlayBtn.setAttribute('aria-label', currentStrings().hero_play_video || 'Play showreel');
-      }
-      trackEvent('hero_video_toggle', { playing: isPlaying });
+  /* ---- Interactive Hawk of Quraysh Live Dub Switcher ---- */
+  var dubBtns = document.querySelectorAll('.dub-btn');
+  if (hawkVideo && dubBtns.length) {
+    dubBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var newSrc = this.getAttribute('data-dub-src');
+        if (!newSrc || hawkVideo.getAttribute('src') === newSrc) {
+          if (hawkVideo.paused) {
+            hawkVideo.play().catch(function () {});
+          }
+          return;
+        }
+        hawkUserSelectedDub = true;
+        var savedTime = hawkVideo.currentTime || 0;
+        dubBtns.forEach(function (b) {
+          b.classList.toggle('active', b === btn);
+        });
+        hawkVideo.setAttribute('src', newSrc);
+        hawkVideo.load();
+        var restoreAndPlay = function () {
+          hawkVideo.removeEventListener('loadedmetadata', restoreAndPlay);
+          if (savedTime > 0 && savedTime < hawkVideo.duration - 0.5) {
+            hawkVideo.currentTime = savedTime;
+          }
+          hawkVideo.play().catch(function () {});
+        };
+        hawkVideo.addEventListener('loadedmetadata', restoreAndPlay);
+        trackEvent('hawk_dub_switch', { src: newSrc });
+      });
     });
   }
 
-  /* ---- Navbar Scroll State ---- */
-  var navbar = document.querySelector('.navbar');
-  if (navbar) {
-    window.addEventListener('scroll', function () {
-      var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--c-accent').trim() || '#D53829';
-      navbar.style.boxShadow = window.pageYOffset > 100
-        ? '0 1px 0 ' + accentColor + '1A'
-        : 'none';
-    }, { passive: true });
+  /* ---- Portfolio Category Filter Tabs ---- */
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var workCards = document.querySelectorAll('#workGrid .project-card');
+  var workGrid = document.getElementById('workGrid');
+  var reelsSection = document.getElementById('reels');
+
+  if (filterBtns.length) {
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var filter = this.getAttribute('data-filter') || 'all';
+        filterBtns.forEach(function (b) {
+          b.classList.toggle('active', b === btn);
+        });
+
+        if (filter === 'reels') {
+          if (workGrid) {
+            workGrid.hidden = true;
+          }
+          if (reelsSection) {
+            reelsSection.hidden = false;
+            reelsSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+          }
+        } else {
+          if (workGrid) {
+            workGrid.hidden = false;
+          }
+          workCards.forEach(function (card) {
+            var cat = card.getAttribute('data-category');
+            card.hidden = (filter !== 'all' && cat !== filter);
+          });
+          if (reelsSection) {
+            reelsSection.hidden = (filter !== 'all');
+          }
+        }
+        trackEvent('work_filter', { category: filter });
+      });
+    });
   }
 
-  /* ---- Pipeline Interactions ---- */
+  /* ---- Interactive Pipeline Gate Expansion & Progress ---- */
+  var pipelineSection = document.getElementById('pipeline');
   var pipelineGrid = document.getElementById('pipelineGrid');
   var pipelineProgressFill = document.getElementById('pipelineProgressFill');
   var pipelineSteps = pipelineGrid ? pipelineGrid.querySelectorAll('.pipeline-step') : [];
-  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (pipelineGrid && pipelineSteps.length && 'IntersectionObserver' in window && !prefersReducedMotion) {
-    // Animate progress bar and vertical line on scroll
-    var pipelineObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          pipelineGrid.classList.add('animate');
-          // Progress fill based on scroll within section
-          var progressObserver = new IntersectionObserver(function (progEntries) {
-            progEntries.forEach(function (progEntry) {
-              var ratio = Math.max(0, Math.min(1, 1 - progEntry.intersectionRatio));
-              if (pipelineProgressFill) {
-                pipelineProgressFill.style.width = (ratio * 100) + '%';
-              }
-            });
-          }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
-          progressObserver.observe(pipelineGrid);
-          pipelineObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    pipelineObserver.observe(pipelineGrid);
+  function updatePipelineProgress() {
+    if (!pipelineSection || !pipelineProgressFill) {
+      return;
+    }
+    var rect = pipelineSection.getBoundingClientRect();
+    var winH = window.innerHeight || 800;
+    var secH = pipelineSection.offsetHeight || 1;
+    var scrolled = Math.min(1, Math.max(0, (winH - rect.top) / (secH + winH * 0.4)));
+    pipelineProgressFill.style.width = Math.round(scrolled * 100) + '%';
+  }
 
-    // Click to expand step details
+  if (pipelineSteps.length) {
     pipelineSteps.forEach(function (step) {
       step.style.cursor = 'pointer';
-      step.addEventListener('click', function () {
-        var isExpanded = this.classList.toggle('expanded');
-        trackEvent('pipeline_step_click', { step: this.dataset.step, expanded: isExpanded });
-      });
-      // Keyboard support
       step.setAttribute('tabindex', '0');
+      step.addEventListener('click', function () {
+        var expanded = this.classList.toggle('expanded');
+        trackEvent('pipeline_step_click', { step: this.getAttribute('data-step'), expanded: expanded });
+      });
       step.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -296,43 +339,63 @@
         }
       });
     });
-  } else if (pipelineSteps.length) {
-    // Reduced motion or no IntersectionObserver - show everything
-    pipelineGrid.classList.add('animate');
-    if (pipelineProgressFill) pipelineProgressFill.style.width = '100%';
-    pipelineSteps.forEach(function (step) {
-      step.style.opacity = '1';
-      step.style.transform = 'translateX(0)';
-      step.style.cursor = 'pointer';
-      step.addEventListener('click', function () {
-        this.classList.toggle('expanded');
-        trackEvent('pipeline_step_click', { step: this.dataset.step });
-      });
-    });
   }
 
-  /* ---- Scrollspy: mark active nav link ---- */
+  if (pipelineSection && pipelineProgressFill) {
+    window.addEventListener('scroll', updatePipelineProgress, { passive: true });
+    window.addEventListener('resize', updatePipelineProgress);
+    updatePipelineProgress();
+  }
+
+  /* ---- Smooth Scroll ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var href = this.getAttribute('href');
+      if (!href || href === '#') {
+        return;
+      }
+      var target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        if (href === '#reels' && reelsSection) {
+          reelsSection.hidden = false;
+        }
+        target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+        trackEvent('nav_click', { target: href });
+      }
+    });
+  });
+
+  /* ---- Scrollspy ---- */
   var navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
   var spyTargets = [];
   navAnchors.forEach(function (a) {
     var sec = document.querySelector(a.getAttribute('href'));
-    if (sec) spyTargets.push({ link: a, section: sec });
+    if (sec) {
+      spyTargets.push({ link: a, section: sec });
+    }
   });
   if ('IntersectionObserver' in window && spyTargets.length) {
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           spyTargets.forEach(function (item) {
-            var isActive = item.section === entry.target;
-            item.link.setAttribute('aria-current', isActive ? 'true' : 'false');
+            item.link.setAttribute('aria-current', item.section === entry.target ? 'true' : 'false');
           });
         }
       });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    spyTargets.forEach(function (item) { spy.observe(item.section); });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    spyTargets.forEach(function (item) {
+      spy.observe(item.section);
+    });
   }
 
-  /* ---- Back to Top ---- */
+  /* ---- Back to Top & Footer Year ---- */
+  var yearEl = document.getElementById('footerYear');
+  if (yearEl) {
+    yearEl.textContent = String(new Date().getFullYear());
+  }
+
   var backToTop = document.getElementById('backToTop');
   if (backToTop) {
     window.addEventListener('scroll', function () {
@@ -344,203 +407,11 @@
     });
   }
 
-  /* ---- Consultation Form ---- */
-  var consultationForm = document.getElementById('consultationForm');
-  if (consultationForm) {
-    var steps = consultationForm.querySelectorAll('.form-step');
-    var progressSteps = consultationForm.querySelectorAll('.form-progress-step');
-    var progressFill = document.getElementById('formProgressFill');
-    var currentStep = 1;
-
-    function showStep(stepNum) {
-      steps.forEach(function (s) { s.classList.remove('active'); });
-      progressSteps.forEach(function (p) { p.classList.remove('active'); });
-      var step = consultationForm.querySelector('.form-step[data-step="' + stepNum + '"]');
-      var prog = consultationForm.querySelector('.form-progress-step[data-step="' + stepNum + '"]');
-      if (step) step.classList.add('active');
-      if (prog) prog.classList.add('active');
-      if (progressFill) progressFill.style.width = ((stepNum - 1) * 25) + '%';
-      currentStep = stepNum;
-      window.scrollTo({ top: consultationForm.offsetTop - 80, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-    }
-
-    function validateStep(stepNum) {
-      var step = consultationForm.querySelector('.form-step[data-step="' + stepNum + '"]');
-      if (!step) return true;
-      var required = step.querySelectorAll('[required]');
-      var valid = true;
-      required.forEach(function (field) {
-        if (!field.value.trim()) {
-          field.style.borderColor = 'var(--c-error)';
-          valid = false;
-        } else {
-          field.style.borderColor = '';
-        }
-      });
-      // For radio groups
-      var radioGroups = step.querySelectorAll('input[type="radio"][required]');
-      var checkedGroups = new Set();
-      radioGroups.forEach(function (r) { if (r.checked) checkedGroups.add(r.name); });
-      var allRadioNames = new Set();
-      radioGroups.forEach(function (r) { allRadioNames.add(r.name); });
-      allRadioNames.forEach(function (name) {
-        if (!checkedGroups.has(name)) {
-          var firstRadio = step.querySelector('input[type="radio"][name="' + name + '"]');
-          if (firstRadio) firstRadio.style.outline = '2px solid var(--c-error)';
-          valid = false;
-        }
-      });
-      return valid;
-    }
-
-    consultationForm.querySelectorAll('.btn-next').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        if (validateStep(currentStep)) {
-          showStep(parseInt(this.dataset.next, 10));
-          trackEvent('consultation_step_next', { step: currentStep });
-        } else {
-          trackEvent('consultation_step_invalid', { step: currentStep });
-        }
-      });
-    });
-
-    consultationForm.querySelectorAll('.btn-prev').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        showStep(parseInt(this.dataset.prev, 10));
-        trackEvent('consultation_step_prev', { step: currentStep });
-      });
-    });
-
-    consultationForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (!validateStep(5)) {
-        trackEvent('consultation_submit_invalid', {});
-        return;
-      }
-      var formData = new FormData(consultationForm);
-      var data = {};
-      formData.forEach(function (value, key) {
-        if (data[key]) {
-          if (!Array.isArray(data[key])) data[key] = [data[key]];
-          data[key].push(value);
-        } else {
-          data[key] = value;
-        }
-      });
-      data.date = new Date().toISOString();
-      data.source = location.href;
-
-      var successMsg = document.getElementById('formSuccess');
-      var webhookUrl = window.__WEBHOOK_URL__ || '';
-
-      function showSuccess(message) {
-        if (successMsg) {
-          successMsg.textContent = message;
-          successMsg.classList.add('show');
-        }
-      }
-
-      function submitViaEmail() {
-        var subject = 'New Consultation Request — ' + (data.projectType || 'General');
-        var body = [
-          'Project Type: ' + (data.projectType || ''),
-          'Duration: ' + (data.duration || ''),
-          'Deliverables: ' + (Array.isArray(data.deliverables) ? data.deliverables.join(', ') : (data.deliverables || '')),
-          'Timeline: ' + (data.timeline || ''),
-          'Budget: ' + (data.budget || ''),
-          'Urgency: ' + (data.urgency || ''),
-          'Reference Links: ' + (data.refLinks || ''),
-          'Style Notes: ' + (data.styleNotes || ''),
-          'Audio Refs: ' + (data.audioRefs || ''),
-          '',
-          'Name: ' + (data.name || ''),
-          'Email: ' + (data.email || ''),
-          'Company: ' + (data.company || ''),
-          'Platform: ' + (data.platform || ''),
-          'Message: ' + (data.message || ''),
-          '',
-          '---',
-          'Sent from portfolio site · ' + data.date
-        ].join('\n');
-        var a = document.createElement('a');
-        a.href = 'mailto:hello@abdalla.design' + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        showSuccess(currentStrings().form_mailto_note);
-        trackEvent('consultation_email', { projectType: data.projectType || 'unknown' });
-      }
-
-      function isPublicWebhook(u) {
-        if (typeof u !== 'string') return false;
-        var m = u.match(/^https:\/\/([^/]+)/i);
-        if (!m) return false;
-        var host = m[1].toLowerCase();
-        return host !== 'localhost' && host.indexOf('127.') !== 0 && host !== '0.0.0.0' && host !== '::' && host !== '[::]';
-      }
-
-      if (!isPublicWebhook(webhookUrl)) {
-        submitViaEmail();
-      } else {
-        fetch(webhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-          .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); showSuccess(currentStrings().form_submit_success); trackEvent('consultation_submit', { projectType: data.projectType || 'unknown' }); })
-          .catch(function () { submitViaEmail(); });
-      }
-      setTimeout(function () { consultationForm.reset(); showStep(1); if (successMsg) successMsg.classList.remove('show'); }, 5000);
-    });
-  }
-
-  /* ---- Track outbound links (social / projects) ---- */
+  /* ---- Outbound Click Tracking ---- */
   document.querySelectorAll('a[target="_blank"]').forEach(function (a) {
     a.addEventListener('click', function () {
       trackEvent('outbound_click', { url: this.getAttribute('href') });
     });
   });
-
-  /* ---- Section fade-in (skipped for reduced motion) ----
-     Fail-safe: sections are visible by default; they only animate
-     (start hidden off-screen) after the user has actually scrolled,
-     so a headless render or a no-IntersectionObserver client never
-     sees a blank page. */
-  if ('IntersectionObserver' in window && !prefersReducedMotion) {
-    var sections = document.querySelectorAll('section');
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        } else if (window.pageYOffset > 0) {
-          entry.target.style.opacity = '0';
-          entry.target.style.transform = 'translateY(24px)';
-        }
-      });
-    }, { threshold: 0.1 });
-
-    sections.forEach(function (s) {
-      s.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(s);
-    });
-  }
-
-  /* Exposed for js/content-loader.js (content.json overlay + admin preview) */
-  window.__applyLang = applyLang;
-
-  /* ---- Pipeline scroll progress ---- */
-  var pipelineSection = document.getElementById('pipeline');
-  var pipelineProgressFill = document.getElementById('pipelineProgressFill');
-  if (pipelineSection && pipelineProgressFill) {
-    function updatePipelineProgress() {
-      var rect = pipelineSection.getBoundingClientRect();
-      var windowHeight = window.innerHeight;
-      var sectionHeight = pipelineSection.offsetHeight;
-      var visibleHeight = Math.max(0, Math.min(windowHeight, rect.bottom) - Math.max(0, rect.top));
-      var progress = (visibleHeight / (sectionHeight + windowHeight)) * 100;
-      pipelineProgressFill.style.width = Math.min(100, Math.max(0, progress)) + '%';
-    }
-    window.addEventListener('scroll', updatePipelineProgress, { passive: true });
-    window.addEventListener('resize', updatePipelineProgress);
-    updatePipelineProgress();
-  }
 
 })();
