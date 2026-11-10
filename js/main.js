@@ -21,6 +21,96 @@
   var heroPlayIcon = document.getElementById('heroPlayIcon');
   var hawkVideo = document.getElementById('hawkVideo');
   var hawkUserSelectedDub = false;
+  var selectedScope = '';
+  var SCOPE_TEMPLATES = {
+    en: {
+      defaultSubject: 'Studio Production Inquiry — TSC Studio',
+      realestate: {
+        subject: 'Real Estate AI Digital Twin Inquiry — TSC Studio',
+        body: 'Hello Abdalla,\n\nWe would like to discuss a Pre-Sale Real Estate AI Virtual Sample House / Property Market Video.\n\nProject Location & Timeline:\n'
+      },
+      commercial: {
+        subject: 'Luxury Brand / B2B Commercial Inquiry — TSC Studio',
+        body: 'Hello Abdalla,\n\nWe are interested in commissioning a 1080p Commercial / B2B Explainer Film.\n\nBrand & Target Market:\n'
+      },
+      cinema: {
+        subject: 'Historical Drama / Documentary Series Inquiry — TSC Studio',
+        body: 'Hello Abdalla,\n\nWe would like to discuss a Historical Drama or Remastered Documentary production.\n\nProject Scope & Episodes:\n'
+      },
+      dubbing: {
+        subject: 'Trilingual Dubbing & 24fps Lip-Sync Inquiry — TSC Studio',
+        body: 'Hello Abdalla,\n\nWe need native-grade localization and 24fps lip-sync dubbing (AR / EN / ZH-TW).\n\nFootage Duration & Languages:\n'
+      }
+    },
+    ar: {
+      defaultSubject: 'استفسار عن إنتاج سينمائي — استوديو TSC',
+      realestate: {
+        subject: 'طلب مشروع توأم رقمي عقاري — استوديو TSC',
+        body: 'مرحباً عبدالله،\n\nنود مناقشة إنتاج جولة عقارية افتراضية بالذكاء الاصطناعي / فيديو تسويق عقاري.\n\nالدولة والجدول الزمني للمشروع:\n'
+      },
+      commercial: {
+        subject: 'طلب إعلان تجاري أو فيديو شركات B2B — استوديو TSC',
+        body: 'مرحباً عبدالله،\n\nنرغب في التعاون لإنتاج إعلان سينمائي فاخر بدقة 1080p لعلامتنا التجارية.\n\nنبذة عن المشروع والسوق المستهدف:\n'
+      },
+      cinema: {
+        subject: 'طلب إنتاج دراما تاريخية أو وثائقي — استوديو TSC',
+        body: 'مرحباً عبدالله،\n\nنود مناقشة إنتاج عمل درامي تاريخي أو سلسلة وثائقية بمعايير الاستوديو.\n\nتفاصيل المشروع وعدد الحلقات:\n'
+      },
+      dubbing: {
+        subject: 'طلب دبلجة تمثيلية وتطابق شفاه 24fps — استوديو TSC',
+        body: 'مرحباً عبدالله،\n\nنحتاج إلى دبلجة احترافية مع مطابقة حركة الشفاه (عربي / إنجليزي / صيني).\n\nمدة الفيديو واللغات المطلوبة:\n'
+      }
+    },
+    'zh-TW': {
+      defaultSubject: '影視專案合作洽談 — TSC Studio',
+      realestate: {
+        subject: '預售屋 AI 虛擬樣品屋 / 房產影音洽談 — TSC Studio',
+        body: 'Abdalla 您好，\n\n我們希望洽談「預售屋 AI 虛擬樣品屋」或房地產市場行銷影片製作。\n\n建案地點與預計時程：\n'
+      },
+      commercial: {
+        subject: '品牌商業廣告 / B2B 企業影音洽談 — TSC Studio',
+        body: 'Abdalla 您好，\n\n我們希望委託製作 1080p 高質感品牌商業廣告或 B2B 企業解析影片。\n\n品牌類型與目標市場：\n'
+      },
+      cinema: {
+        subject: '歷史劇集 / 視覺重製紀錄片合作洽談 — TSC Studio',
+        body: 'Abdalla 您好，\n\n我們希望洽談精品歷史劇集或 AI 視覺重製紀錄片專案。\n\n題材方向與預計集數：\n'
+      },
+      dubbing: {
+        subject: '三語戲劇配音與 24fps 對嘴修復洽談 — TSC Studio',
+        body: 'Abdalla 您好，\n\n我們需要跨語系配音與 24fps 零誤差唇形同步服務（阿 / 英 / 繁中）。\n\n影片長度與目標語言：\n'
+      }
+    }
+  };
+
+  function getStudioEmail() {
+    var span = document.querySelector('#studioEmailLink [data-cfg-email-text]');
+    if (span && span.textContent.trim()) {
+      return span.textContent.trim();
+    }
+    return 'hello@abdalla.design';
+  }
+
+  function syncScopeMailto() {
+    var mailBtn = document.getElementById('startProjectMailBtn');
+    if (!mailBtn) {
+      return;
+    }
+    var lang = html.getAttribute('lang') || 'en';
+    var pack = SCOPE_TEMPLATES[lang] || SCOPE_TEMPLATES.en;
+    var email = getStudioEmail();
+    if (selectedScope && pack[selectedScope]) {
+      var tpl = pack[selectedScope];
+      mailBtn.setAttribute(
+        'href',
+        'mailto:' + email + '?subject=' + encodeURIComponent(tpl.subject) + '&body=' + encodeURIComponent(tpl.body)
+      );
+    } else {
+      mailBtn.setAttribute(
+        'href',
+        'mailto:' + email + '?subject=' + encodeURIComponent(pack.defaultSubject)
+      );
+    }
+  }
 
   function currentStrings() {
     var lang = html.getAttribute('lang') || 'en';
@@ -103,6 +193,7 @@
 
     syncHeroControlsText();
     syncDefaultHawkLanguage(lang);
+    syncScopeMailto();
 
     if (typeof window.__renderCaseStudy === 'function') {
       window.__renderCaseStudy();
@@ -142,16 +233,112 @@
   var menuToggle = document.getElementById('menuToggle');
   var navLinks = document.getElementById('navLinks');
 
+  function closeMobileMenu() {
+    if (navLinks && menuToggle) {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  }
+
   if (menuToggle && navLinks) {
     menuToggle.addEventListener('click', function () {
       var open = navLinks.classList.toggle('open');
       menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
 
     navLinks.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
-        navLinks.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
+        closeMobileMenu();
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+        closeMobileMenu();
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768 && navLinks.classList.contains('open')) {
+        closeMobileMenu();
+      }
+    });
+  }
+
+  /* ---- Copy Studio Email & Quick Project Scope Brief Pills ---- */
+  var copyEmailBtn = document.getElementById('copyEmailBtn');
+  var copyEmailLabel = document.getElementById('copyEmailLabel');
+  var copyResetTimer = null;
+
+  if (copyEmailBtn) {
+    copyEmailBtn.addEventListener('click', function () {
+      var emailAddr = getStudioEmail();
+      var onCopied = function () {
+        var strings = currentStrings();
+        copyEmailBtn.classList.add('copied');
+        if (copyEmailLabel) {
+          copyEmailLabel.textContent = strings.contact_copied_btn || 'Copied ✓';
+        }
+        if (copyResetTimer) {
+          clearTimeout(copyResetTimer);
+        }
+        copyResetTimer = setTimeout(function () {
+          copyEmailBtn.classList.remove('copied');
+          if (copyEmailLabel) {
+            var s = currentStrings();
+            copyEmailLabel.textContent = s.contact_copy_btn || 'Copy Email';
+          }
+        }, 2200);
+        trackEvent('copy_email', { email: emailAddr });
+      };
+
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(emailAddr).then(onCopied).catch(function () {
+          var ta = document.createElement('textarea');
+          ta.value = emailAddr;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand('copy');
+          } catch (err) {
+            /* ignore fallback error */
+          }
+          document.body.removeChild(ta);
+          onCopied();
+        });
+      } else {
+        var fallbackTa = document.createElement('textarea');
+        fallbackTa.value = emailAddr;
+        fallbackTa.style.position = 'fixed';
+        fallbackTa.style.opacity = '0';
+        document.body.appendChild(fallbackTa);
+        fallbackTa.select();
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          /* ignore fallback error */
+        }
+        document.body.removeChild(fallbackTa);
+        onCopied();
+      }
+    });
+  }
+
+  var scopePills = document.querySelectorAll('.scope-pill');
+  if (scopePills.length) {
+    scopePills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var val = this.getAttribute('data-scope') || '';
+        selectedScope = (selectedScope === val) ? '' : val;
+        scopePills.forEach(function (p) {
+          p.classList.toggle('active', p.getAttribute('data-scope') === selectedScope && selectedScope !== '');
+        });
+        syncScopeMailto();
+        trackEvent('contact_scope_select', { scope: selectedScope || 'none' });
       });
     });
   }

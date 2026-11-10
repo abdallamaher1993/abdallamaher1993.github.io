@@ -49,7 +49,10 @@
     if (typeof site.email === 'string' && site.email) {
       document.querySelectorAll('a[data-cfg="email"]').forEach(function (a) {
         a.setAttribute('href', 'mailto:' + site.email);
-        if (a.hasAttribute('data-cfg-text')) {
+        var txtSpan = a.querySelector('[data-cfg-email-text]');
+        if (txtSpan) {
+          txtSpan.textContent = site.email;
+        } else if (a.hasAttribute('data-cfg-text')) {
           a.textContent = site.email;
         }
       });

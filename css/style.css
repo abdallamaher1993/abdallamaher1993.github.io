@@ -283,11 +283,20 @@ html[dir="rtl"] .btn {
   left: 0;
   right: 0;
   z-index: var(--z-navbar);
+  transition: box-shadow var(--transition);
+}
+
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background: rgba(8, 8, 10, 0.86);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--c-divider);
-  transition: box-shadow var(--transition), background var(--transition);
+  transition: background var(--transition);
 }
 
 .nav-inner {
@@ -1422,12 +1431,81 @@ html[dir="rtl"] .skill-group h3 {
   background: var(--c-surface);
   border: 1px solid var(--c-gold-border);
   border-radius: var(--radius-lg);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
   flex-wrap: wrap;
+}
+
+.contact-email-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.btn-copy-email {
+  padding: 12px 20px;
+}
+
+.btn-copy-email.copied {
+  border-color: var(--c-success);
+  color: var(--c-success);
+  background: rgba(46, 204, 113, 0.1);
+}
+
+.contact-scope-wrap {
+  margin-bottom: var(--space-8);
+  padding: var(--space-4) var(--space-5);
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+}
+
+.contact-scope-label {
+  font-family: var(--f-mono);
+  font-size: var(--fs-micro);
+  color: var(--c-text-muted);
+  letter-spacing: var(--ls-wide);
+  margin-bottom: var(--space-3);
+}
+
+html[dir="rtl"] .contact-scope-label {
+  font-family: var(--f-body);
+  letter-spacing: 0;
+  font-size: var(--fs-body-sm);
+}
+
+.scope-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.scope-pill {
+  padding: 8px 15px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  color: var(--c-text-muted);
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  transition: all var(--transition);
+}
+
+.scope-pill:hover {
+  color: var(--c-white);
+  border-color: var(--c-gold-border);
+  background: var(--c-gold-dim);
+}
+
+.scope-pill.active {
+  color: var(--c-white);
+  border-color: var(--c-accent);
+  background: var(--c-accent);
+  box-shadow: var(--shadow-accent);
 }
 
 .contact-email-label {
@@ -1465,7 +1543,7 @@ html[dir="rtl"] .skill-group h3 {
 
 .social-links {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: var(--space-3);
 }
 
@@ -1613,6 +1691,10 @@ html[dir="rtl"] .skill-group h3 {
   max-width: 75ch;
 }
 
+.about-page-channel-card {
+  margin: var(--space-8) 0 var(--space-4);
+}
+
 .edu-card {
   padding: var(--space-6);
   background: var(--c-bg-card);
@@ -1757,6 +1839,14 @@ html[dir="rtl"] .skill-group h3 {
 
 .case-yt-note a {
   text-decoration: underline;
+}
+
+.case-channel-links {
+  margin-top: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
 }
 
 .case-grid {
@@ -1960,9 +2050,16 @@ html[dir="rtl"] .skill-group h3 {
     left: 0;
     right: 0;
     bottom: 0;
+    height: calc(100vh - 68px);
+    height: calc(100dvh - 68px);
     background: rgba(8, 8, 10, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--c-divider);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.85);
     padding: var(--space-10) var(--space-8);
     gap: var(--space-6);
+    overflow-y: auto;
     z-index: var(--z-modal);
   }
   .nav-links.open a {

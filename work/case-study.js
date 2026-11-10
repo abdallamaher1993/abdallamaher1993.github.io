@@ -39,6 +39,7 @@
       ),
       heroVideo: '../../assets/work-hawk-ar.mp4',
       heroPoster: '../../assets/work-hawk-poster.jpg',
+      showChannelBar: true,
       dubs: {
         ar: { label: 'العربية الفصحى', src: '../../assets/work-hawk-ar.mp4' },
         en: { label: 'English Dub', src: '../../assets/work-hawk-en.mp4' },
@@ -397,6 +398,7 @@
       ),
       heroVideo: '../../assets/work-baghdad-1258.mp4',
       heroPoster: '../../assets/work-baghdad-1258-poster.jpg',
+      showChannelBar: true,
       stats: {
         views: L('TSC Documentary', 'وثائقي قناة TSC', 'TSC 旗艦紀錄片'),
         duration: 'Full Episode + Short',
@@ -461,6 +463,7 @@
       ),
       heroVideo: '../../assets/work-franklin.mp4',
       heroPoster: '../../assets/work-franklin-poster.jpg',
+      showChannelBar: true,
       stats: {
         views: L('Feature Documentary', 'وثائقي طويل', '長篇紀錄片'),
         duration: 'Full Episode',
@@ -525,6 +528,7 @@
       ),
       heroVideo: '../../assets/work-titanic.mp4',
       heroPoster: '../../assets/work-titanic-poster.jpg',
+      showChannelBar: true,
       stats: {
         views: L('Historical POV', 'فيلم وثائقي', '歷史視角長片'),
         duration: '25 min Master',
@@ -803,10 +807,21 @@
             : (lang === 'zh-TW' ? '在 YouTube 上觀看完整影片' : 'Watch the full episode on YouTube');
           ytHtml = '<p class="case-yt-note"><a id="caseYtLink" href="' + data.youtubeUrl + '" target="_blank" rel="noopener">' + ytLabel + '</a></p>';
         }
+        var chHtml = '';
+        if (data.showChannelBar) {
+          var lblYtEn = lang === 'ar' ? 'يوتيوب (الإنجليزية · TSC)' : (lang === 'zh-TW' ? 'YouTube（英語 · TSC）' : 'YouTube (EN · TSC)');
+          var lblYtAr = lang === 'ar' ? 'يوتيوب (القناة العربية)' : (lang === 'zh-TW' ? 'YouTube（阿語頻道）' : 'YouTube (AR · عربي)');
+          var lblBili = lang === 'ar' ? 'منصة Bilibili (الصينية)' : (lang === 'zh-TW' ? 'Bilibili 官方空間' : 'Bilibili (ZH)');
+          chHtml = '<div class="case-channel-links" id="caseChannelLinks">' +
+            '<a href="https://www.youtube.com/@TIME-TRAVELERS-CONFESSIONS" target="_blank" rel="noopener" class="channel-pill-link" data-social="youtube"><span id="caseChYtEn">' + lblYtEn + '</span></a>' +
+            '<a href="https://www.youtube.com/@abdallamaher_1" target="_blank" rel="noopener" class="channel-pill-link" data-social="youtube_ar"><span id="caseChYtAr">' + lblYtAr + '</span></a>' +
+            '<a href="https://space.bilibili.com/3745026343440284" target="_blank" rel="noopener" class="channel-pill-link" data-social="bilibili"><span id="caseChBili">' + lblBili + '</span></a>' +
+            '</div>';
+        }
         heroMedia.innerHTML =
           '<div class="' + frameClass + '">' +
             '<video id="caseHeroVideo" controls playsinline preload="metadata" poster="' + data.heroPoster + '" src="' + initialVideoSrc + '"></video>' +
-          '</div>' + dubHtml + ytHtml;
+          '</div>' + dubHtml + chHtml + ytHtml;
 
         var caseVideo = document.getElementById('caseHeroVideo');
         var caseDubBtns = heroMedia.querySelectorAll('[data-case-dub]');
@@ -836,6 +851,18 @@
           ytEl.textContent = lang === 'ar'
             ? 'شاهد الحلقة كاملة على يوتيوب'
             : (lang === 'zh-TW' ? '在 YouTube 上觀看完整影片' : 'Watch the full episode on YouTube');
+        }
+        var cEn = document.getElementById('caseChYtEn');
+        var cAr = document.getElementById('caseChYtAr');
+        var cBi = document.getElementById('caseChBili');
+        if (cEn) {
+          cEn.textContent = lang === 'ar' ? 'يوتيوب (الإنجليزية · TSC)' : (lang === 'zh-TW' ? 'YouTube（英語 · TSC）' : 'YouTube (EN · TSC)');
+        }
+        if (cAr) {
+          cAr.textContent = lang === 'ar' ? 'يوتيوب (القناة العربية)' : (lang === 'zh-TW' ? 'YouTube（阿語頻道）' : 'YouTube (AR · عربي)');
+        }
+        if (cBi) {
+          cBi.textContent = lang === 'ar' ? 'منصة Bilibili (الصينية)' : (lang === 'zh-TW' ? 'Bilibili 官方空間' : 'Bilibili (ZH)');
         }
       }
     }
