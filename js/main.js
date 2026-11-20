@@ -138,8 +138,13 @@
 
   function syncDefaultHawkLanguage(lang) {
     if (heroVideo) {
-      var heroTarget = (lang === 'zh-TW') ? 'assets/showreel-2026-tw.mp4' : 'assets/showreel-2026.mp4';
-      var heroPoster = (lang === 'zh-TW') ? 'assets/showreel-2026-tw-poster.jpg' : 'assets/hero-poster.jpg';
+      var heroMap = {
+        en: 'assets/showreel-2026-en.mp4',
+        ar: 'assets/showreel-2026-ar.mp4',
+        'zh-TW': 'assets/showreel-2026-tw.mp4'
+      };
+      var heroTarget = heroMap[lang] || heroMap.en;
+      var heroPoster = 'assets/showreel-2026-tw-poster.jpg';
       if (heroVideo.getAttribute('src') !== heroTarget) {
         var wasPlaying = !heroVideo.paused;
         heroVideo.setAttribute('poster', heroPoster);
