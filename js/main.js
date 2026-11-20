@@ -241,12 +241,35 @@
     trackEvent('language_change', { language: lang });
   }
 
-  /* Detect initial language: ?lang= query param -> localStorage -> default 'en' */
+  function normalizeLang(raw) {
+    if (!raw || typeof raw !== 'string') {
+      return null;
+    }
+    var low = raw.trim().toLowerCase().replace(/_/g, '-');
+    if (low === 'zh-tw' || low === 'zh' || low === 'tw' || low === 'zh-hant' || low.indexOf('zh-hant') === 0) {
+      return 'zh-TW';
+    }
+    if (low === 'ar' || low.indexOf('ar-') === 0) {
+      return 'ar';
+    }
+    if (low === 'en' || low.indexOf('en-') === 0) {
+      return 'en';
+    }
+    return null;
+  }
+
+  /* Detect initial language: ?lang= query param (case-insensitive) -> localStorage -> default 'en' */
   var urlParams = new URLSearchParams(window.location.search);
-  var queryLang = urlParams.get('lang');
+  var queryLang = normalizeLang(urlParams.get('lang'));
+  if (!queryLang && window.location.hash && window.location.hash.indexOf('lang=') !== -1) {
+    var hm = window.location.hash.match(/lang=([a-zA-Z_-]+)/);
+    if (hm) {
+      queryLang = normalizeLang(hm[1]);
+    }
+  }
   var storedLang = null;
   try {
-    storedLang = localStorage.getItem('lang');
+    storedLang = normalizeLang(localStorage.getItem('lang'));
   } catch (e) {
     storedLang = null;
   }
@@ -257,11 +280,14 @@
 
   langBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      applyLang(this.getAttribute('data-lang'));
+      var nextLang = normalizeLang(this.getAttribute('data-lang')) || this.getAttribute('data-lang');
+      applyLang(nextLang);
     });
   });
 
-  window.__applyLang = applyLang;
+  window.__applyLang = function (l) {
+    applyLang(normalizeLang(l) || l);
+  };
 
   /* ---- Mobile Menu ---- */
   var menuToggle = document.getElementById('menuToggle');

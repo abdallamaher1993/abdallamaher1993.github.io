@@ -23,7 +23,9 @@
       }
     });
     if (typeof window.__applyLang === 'function') {
-      window.__applyLang(document.documentElement.getAttribute('lang') || 'en');
+      var params = new URLSearchParams(window.location.search);
+      var forced = params.get('lang') || document.documentElement.getAttribute('lang') || 'en';
+      window.__applyLang(forced);
     }
   }
 
