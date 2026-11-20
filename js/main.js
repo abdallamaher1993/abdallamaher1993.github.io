@@ -137,6 +137,19 @@
   }
 
   function syncDefaultHawkLanguage(lang) {
+    if (heroVideo) {
+      var heroTarget = (lang === 'zh-TW') ? 'assets/showreel-2026-tw.mp4' : 'assets/showreel-2026.mp4';
+      var heroPoster = (lang === 'zh-TW') ? 'assets/showreel-2026-tw-poster.jpg' : 'assets/hero-poster.jpg';
+      if (heroVideo.getAttribute('src') !== heroTarget) {
+        var wasPlaying = !heroVideo.paused;
+        heroVideo.setAttribute('poster', heroPoster);
+        heroVideo.setAttribute('src', heroTarget);
+        heroVideo.load();
+        if (wasPlaying && !prefersReducedMotion) {
+          heroVideo.play().catch(function () {});
+        }
+      }
+    }
     if (hawkVideo && !hawkUserSelectedDub && hawkVideo.paused && hawkVideo.currentTime <= 0.5) {
       var map = {
         ar: 'assets/work-hawk-ar.mp4',
