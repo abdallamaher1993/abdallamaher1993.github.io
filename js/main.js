@@ -21,6 +21,8 @@
   var heroPlayIcon = document.getElementById('heroPlayIcon');
   var hawkVideo = document.getElementById('hawkVideo');
   var hawkUserSelectedDub = false;
+  var oasisVideo = document.getElementById('oasisVideo');
+  var oasisUserSelectedDub = false;
   var selectedScope = '';
   var SCOPE_TEMPLATES = {
     en: {
@@ -135,20 +137,34 @@
   }
 
   function syncDefaultHawkLanguage(lang) {
-    if (!hawkVideo || hawkUserSelectedDub || !hawkVideo.paused || hawkVideo.currentTime > 0.5) {
-      return;
+    if (hawkVideo && !hawkUserSelectedDub && hawkVideo.paused && hawkVideo.currentTime <= 0.5) {
+      var map = {
+        ar: 'assets/work-hawk-ar.mp4',
+        en: 'assets/work-hawk-en.mp4',
+        'zh-TW': 'assets/work-hawk-zh.mp4'
+      };
+      var targetSrc = map[lang] || map.ar;
+      if (hawkVideo.getAttribute('src') !== targetSrc) {
+        hawkVideo.setAttribute('src', targetSrc);
+        var hawkCard = hawkVideo.closest('.project-card');
+        if (hawkCard) {
+          hawkCard.querySelectorAll('.dub-btn').forEach(function (btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-dub-src') === targetSrc);
+          });
+        }
+      }
     }
-    var map = {
-      ar: 'assets/work-hawk-ar.mp4',
-      en: 'assets/work-hawk-en.mp4',
-      'zh-TW': 'assets/work-hawk-zh.mp4'
-    };
-    var targetSrc = map[lang] || map.ar;
-    if (hawkVideo.getAttribute('src') !== targetSrc) {
-      hawkVideo.setAttribute('src', targetSrc);
-      document.querySelectorAll('.dub-btn').forEach(function (btn) {
-        btn.classList.toggle('active', btn.getAttribute('data-dub-src') === targetSrc);
-      });
+    if (oasisVideo && !oasisUserSelectedDub && oasisVideo.paused && oasisVideo.currentTime <= 0.5) {
+      var oasisTarget = (lang === 'zh-TW') ? 'assets/work-date-oasis-zh.mp4' : 'assets/work-date-oasis.mp4';
+      if (oasisVideo.getAttribute('src') !== oasisTarget) {
+        oasisVideo.setAttribute('src', oasisTarget);
+        var oasisCard = oasisVideo.closest('.project-card');
+        if (oasisCard) {
+          oasisCard.querySelectorAll('.dub-btn').forEach(function (btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-dub-src') === oasisTarget);
+          });
+        }
+      }
     }
   }
 
@@ -423,34 +439,45 @@
     });
   });
 
-  /* ---- Interactive Hawk of Quraysh Live Dub Switcher ---- */
+  /* ---- Interactive Live Dub Switchers (Hawk of Quraysh & Date Oasis) ---- */
   var dubBtns = document.querySelectorAll('.dub-btn');
-  if (hawkVideo && dubBtns.length) {
+  if (dubBtns.length) {
     dubBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
+        var card = this.closest('.project-card');
+        var targetVideo = card ? card.querySelector('video') : hawkVideo;
         var newSrc = this.getAttribute('data-dub-src');
-        if (!newSrc || hawkVideo.getAttribute('src') === newSrc) {
-          if (hawkVideo.paused) {
-            hawkVideo.play().catch(function () {});
+        if (!targetVideo || !newSrc) {
+          return;
+        }
+        if (targetVideo.getAttribute('src') === newSrc) {
+          if (targetVideo.paused) {
+            targetVideo.play().catch(function () {});
           }
           return;
         }
-        hawkUserSelectedDub = true;
-        var savedTime = hawkVideo.currentTime || 0;
-        dubBtns.forEach(function (b) {
+        if (targetVideo === hawkVideo) {
+          hawkUserSelectedDub = true;
+        }
+        if (targetVideo === oasisVideo) {
+          oasisUserSelectedDub = true;
+        }
+        var savedTime = targetVideo.currentTime || 0;
+        var cardBtns = card ? card.querySelectorAll('.dub-btn') : dubBtns;
+        cardBtns.forEach(function (b) {
           b.classList.toggle('active', b === btn);
         });
-        hawkVideo.setAttribute('src', newSrc);
-        hawkVideo.load();
+        targetVideo.setAttribute('src', newSrc);
+        targetVideo.load();
         var restoreAndPlay = function () {
-          hawkVideo.removeEventListener('loadedmetadata', restoreAndPlay);
-          if (savedTime > 0 && savedTime < hawkVideo.duration - 0.5) {
-            hawkVideo.currentTime = savedTime;
+          targetVideo.removeEventListener('loadedmetadata', restoreAndPlay);
+          if (savedTime > 0 && savedTime < targetVideo.duration - 0.5) {
+            targetVideo.currentTime = savedTime;
           }
-          hawkVideo.play().catch(function () {});
+          targetVideo.play().catch(function () {});
         };
-        hawkVideo.addEventListener('loadedmetadata', restoreAndPlay);
-        trackEvent('hawk_dub_switch', { src: newSrc });
+        targetVideo.addEventListener('loadedmetadata', restoreAndPlay);
+        trackEvent('dub_switch', { src: newSrc });
       });
     });
   }
