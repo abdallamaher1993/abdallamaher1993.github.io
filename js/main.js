@@ -423,10 +423,17 @@
 
     var toggleHeroSound = function () {
       heroVideo.muted = !heroVideo.muted;
-      if (!heroVideo.muted && heroVideo.paused) {
-        heroVideo.play().catch(function () {});
-        if (heroPlayIcon) {
-          heroPlayIcon.textContent = '❚❚';
+      if (!heroVideo.muted) {
+        document.querySelectorAll('video').forEach(function (other) {
+          if (other !== heroVideo && !other.paused) {
+            other.pause();
+          }
+        });
+        if (heroVideo.paused) {
+          heroVideo.play().catch(function () {});
+          if (heroPlayIcon) {
+            heroPlayIcon.textContent = '❚❚';
+          }
         }
       }
       if (heroSoundBtn) {
